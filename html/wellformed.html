@@ -1,0 +1,74 @@
+<html>
+<head><title>Well-formed Rules</title></head>
+<body bgcolor=white>
+<a href="special.html"><img src="next.gif" border=0></a> <a href="twophases.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="optimal.html">Optimal Rule Selection</a>
+ /<br><br>
+</font>
+<h1>Well-formed Rules</h1>
+
+<p>
+The typical structure of rules describing code selection is as follows.
+<p>
+The predicate has a distinguished input argument (the first one)
+that represents the construct to be translated;
+we call it the <i> primary argument</i>.
+<p>
+If the rule invokes conditions, this is to test certain properties
+of the primary argument
+(such as <tt> IsSuitableScaleFactor</tt> in the example above).
+<p>
+If the rule invokes predicates of the category <tt> choice</tt>,
+this is to translate
+constituents of the primary argument, e.g.
+<p>
+<PRE>
+
+   'rule' StackCode(plus(X,Y)):
+      StackCode(X)
+      StackCode(Y)
+      PLUS
+      $ 20
+</PRE>
+In some cases, the argument is simply
+passed as a whole to the invoked predicate, e.g.
+<PRE>
+
+   'rule' StackCode(X):
+      AccuCode(X)
+      ACCUTOSTACK
+      $ 10
+</PRE>
+
+Since <tt> choice</tt> predicates were introduced to specify code selection,
+we can restrict ourselves to this form in order to support an
+efficient implementation.
+<p>
+Rules of <tt> choice</tt> predicates must obey the following restrictions:
+<p>
+The first input argument (the primary argument)
+of a <tt> choice</tt> must be of a type that is defined
+with functors.
+<p>
+If <tt> condition</tt> or <tt> choice</tt> predicates are invoked in the rule body,
+then the input arguments of <tt> condition</tt> predicates
+and the primary arguments of <tt> choice</tt> predicates are given by
+constituents of the primary argument of the rule heading
+(or by that argument as a whole).
+<p>
+Rule selection does not depend on the output values of predicates in the
+rule body.
+<p>
+These restrictions make it possible to avoid an exponential search
+and to use a linear-time algorithm to find optimal rules.
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="special.html"><img src="next.gif" border=0></a> <a href="twophases.html"><img src="previous.gif" border=0></a></body>
+</html>

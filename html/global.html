@@ -1,0 +1,127 @@
+<html>
+<head><title>Handling Global Information</title></head>
+<body bgcolor=white>
+<a href="mutable.html"><img src="next.gif" border=0></a> <a href="extpred.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ /<br><br>
+</font>
+<h1>Handling Global Information</h1>
+
+<p>
+<i> Gentle</i> encourages a declarative style of programming.
+However, there are cases in which non declarative elements are appropriate.
+<p>
+One problem is parameter lists that tend to get too long if every bit of
+context information is passed explicitly.
+<p>
+Consider a programming language that features a loop-statement
+and exit-statement and specifies that an exit-statement can only occur inside
+a loop statement. To check this constraint, the predicate that processes
+statements would have to be equipped with a parameter indicating
+whether one is inside or outside a loop. This parameter must be passed
+for each statement, e.g. an if-statement, because a constituent
+of that statement - e.g. the then-part - could contain an exit-statement.
+On the other hand, the constraint checking involves only
+the loop-statement and the exit-statement.
+<p>
+<i> Gentle</i> provides global variables.
+They are often used to represent
+a concept that is global to the concept processed by a particular rule.
+<p>
+A global variable is introduced by a declaration of the form
+<ul>
+<li>
+
+   <tt> 'var'</tt> <i>Name</i> : <i>Type</i>
+</ul>
+
+For example,
+<PRE>
+
+   'var' CurLoopContext: LoopContext
+</PRE>
+declares a global variable with the name <tt> CurLoopContext</tt> of type
+<tt> LoopContext</tt> (for which we assume values <tt> inside</tt>
+and <tt> outside</tt>).
+<p>
+This variable cannot be used inside expressions and patterns.
+The only way to manipulate and inspect its value is the
+<i> update statement</i> and the <i> query statement</i>
+that can be used as a member in a rule body.
+<p>
+The update statement has the form
+<ul>
+<li>
+
+   <i>Name</i> <tt> <-</tt> <i>Expression</i>
+</ul>
+
+which assigns the value of the <i>Expression</i> to the variable given by <i>Name</i>.
+<p>
+For example,
+<PRE>
+
+   CurLoopContext <- outside
+</PRE>
+sets the variable <tt> CurLoopContext</tt> to <tt> outside</tt>.
+The old value of the variable gets lost.
+<p>
+The query statement has the form 
+<ul>
+<li>
+
+   <i>Name</i> <tt> -></tt> <i>Pattern</i>
+</ul>
+
+It takes the value of the variable and matches it against the
+given pattern. This may succeed, defining the variable inside the pattern.
+It may also fail, in which case the query statements fails.
+<p>
+For example,
+<PRE>
+
+   CurLoopContext -> outside
+</PRE>
+succeeds only if the variable holds the value <tt> outside</tt>.
+<p>
+<PRE>
+
+   CurLoopContext -> K
+</PRE>
+defines a new local variable of type <tt> LoopContext</tt> whose value
+is the current value of <tt> CurLoopContext</tt>.
+<p>
+It is an error to access a global variable in a query statement
+if the variable has not been defined by a preceding update statement.
+This error is checked when the query statement is executed.
+Hence, term data structures cannot be corrupted by uninitialized
+global variables.
+<p>
+We now show how the above loop exit constraint can be checked.
+Assume that a predicate <tt> ProcessStatement</tt> traverses the abstract syntax of
+statements (we leave out all details). This could be extended
+at two points:
+<PRE>
+
+   'rule' ProcessStatement(loop(Body)):
+      CurLoopContext -> OldLoopContext
+      CurLoopContext <- inside
+      ProcessStatement(Body)
+      CurLoopContext <- OldLoopContext
+</PRE>
+<PRE>
+
+   'rule' ProcessStatement(exit):
+      CurLoopContext -> K
+      CheckContextForExit(K)
+</PRE>
+
+
+
+<br><br>
+</ul>
+</ul>
+<a href="mutable.html"><img src="next.gif" border=0></a> <a href="extpred.html"><img src="previous.gif" border=0></a></body>
+</html>

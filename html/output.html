@@ -1,0 +1,82 @@
+<html>
+<head><title>Module <tt>output</tt></title></head>
+<body bgcolor=white>
+<a href="strings.html"><img src="next.gif" border=0></a> <a href="idents.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="library.html">LIBRARY REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>Module <tt>output</tt></h1>
+
+The module <tt> output</tt> provides procedures
+to write the target file of a compiler.
+
+<PRE>
+
+'action' OpenOutput (STRING)
+</PRE>
+<PRE>
+
+OpenOutput (Name)
+   char *Name;
+</PRE>
+If open the target file is closed.
+The procedure <tt> OpenOutput</tt> opens the target file
+for output with the file name given as parameter.
+<p>
+Before writing to the file this procedure must be called.
+
+<PRE>
+
+'action' CloseOutput
+</PRE>
+
+<PRE>
+
+CloseOutput ()
+</PRE>
+
+The procedure <tt> CloseOutput</tt> flushes and closes the target file.
+<p>
+It must be called after the last output to the target file.
+
+<PRE>
+
+'action' Put(STRING)
+</PRE>
+<PRE>
+
+Put(Str)
+   char *Str;
+</PRE>
+The procedure <tt> Put</tt> writes its argument to the target file.
+
+<PRE>
+
+'action' PutI(INT)
+</PRE>
+<PRE>
+
+PutI (N)
+   long N;
+</PRE>
+The procedure <tt> PutI</tt> writes its argument to the target file.
+
+<PRE>
+
+'action' Nl(INT)
+</PRE>
+<PRE>
+
+Nl ()
+</PRE>
+The procedure <tt> Nl</tt> writes a newline character to the output file.
+
+
+
+<br><br>
+</ul>
+</ul>
+<a href="strings.html"><img src="next.gif" border=0></a> <a href="idents.html"><img src="previous.gif" border=0></a></body>
+</html>

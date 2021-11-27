@@ -1,0 +1,326 @@
+<html>
+<head><title>Members</title></head>
+<body bgcolor=white>
+<a href="lrmroot.html"><img src="next.gif" border=0></a> <a href="lrmtables.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="lrm.html">LANGUAGE REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>Members</h1>
+
+
+Member =
+Ident ["(" [Expression{ "," Expression}] 
+["->" [Pattern{ "," Pattern}]] ")"]
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;|
+
+ContextDesignator "<-" Expression
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;|
+
+ContextDesignator "->" Pattern
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;|
+
+IdentUC "::" Ident
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;|
+
+String
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;|
+
+"(|" {Member} "||" {Member}
+{"||" {Member}} "|)"
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;|
+
+"[|" {Member} "|]" .
+<br>
+ContextDesignator =
+[IdentUC "'"] Ident .
+
+<p>
+The body of a rule is given by a sequence of members.
+A member is elaborated as follows.
+<p>
+<h3>Predicate Invocations</h3>
+
+<p>
+A member of the form
+<ul>
+<li>
+
+<i>p</i> <tt> (</tt> <i>E<SUB>1</SUB></i> <tt> ,</tt> <i>...</i> <tt> ,</tt> <i>E<SUB>n</SUB></i>
+<tt> -></tt> <i>P<SUB>1</SUB></i> <tt> ,</tt> <i>...</i> <tt> ,</tt> <i>P<SUB>m</SUB></i> <tt> )</tt>
+</ul>
+
+denotes a predicate invocation.
+<p>
+<i>p</i> must be a predicate with
+<i>n</i> input parameters
+and <i>m</i> output parameters.
+Let
+<i>T<SUB>1</SUB></i>, <i>...</i>, <i>T<SUB>n</SUB></i>
+be the input types
+and
+<i>S<SUB>1</SUB></i>, <i>...</i>, <i>S<SUB>m</SUB></i>
+the output types.
+The expressions
+<i>E<SUB>1</SUB></i>, <i>...</i>, <i>E<SUB>n</SUB></i>
+appear on positions with types
+<i>T<SUB>1</SUB></i>, <i>...</i>, <i>T<SUB>n</SUB></i>,
+and the patterns
+<i>P<SUB>1</SUB></i>, <i>...</i>, <i>P<SUB>m</SUB></i>
+appear on positions with types
+<i>S<SUB>1</SUB></i>, <i>...</i>, <i>S<SUB>m</SUB></i>.
+<p>
+The expressions
+<i>E<SUB>1</SUB></i>, <i>...</i>, <i>E<SUB>n</SUB></i>
+are evaluated, yielding values
+<i>Tau<SUB>1</SUB></i>, <i>...</i>, <i>Tau<SUB>n</SUB></i>.
+<i>p</i> is invoked with these input values.
+If the invocation fails, the member <i>M</i> fails.
+If it succeeds, it yields output values
+<i>Sigma<SUB>1</SUB></i>, <i>...</i>, <i>Sigma<SUB>m</SUB></i>.
+These values are matched against the patterns
+<i>P<SUB>1</SUB></i>, <i>...</i>, <i>P<SUB>m</SUB></i>.
+If the matching fails, the member <i>M</i> fails.
+Otherwise, the member succeeds and the variables appearing in
+<i>P<SUB>1</SUB></i>, <i>...</i>, <i>P<SUB>m</SUB></i>
+are defined.
+<p>
+
+
+
+<h3>Context Updates</h3>
+
+<p>
+A member of the form
+<ul>
+<li>
+
+<i>D</i> <tt> <-</tt> <i>E</i>
+</ul>
+
+denotes an context update.
+<p>
+The value of <i>D</i> is defined as the value of
+the expression <i>E</i>.
+If <i>T</i> is the type of <i>D</i>, <i>E</i> appears on a position with type <i>T</i>.
+<p>
+The context designator <i>D</i> may be of the form
+<i>C</i>,
+where <i>C</i> must be declared as a context variable.
+The type of the designator is the type of the context variable.
+<p>
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+
+<strong> Example</strong>
+<PRE>
+
+NestingLevel <- N
+</PRE>
+This sets the value of the context variable <tt> NestingLevel</tt>
+to the value of the local variable <tt> N</tt>.
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+<p>
+A context designator may also have the form
+<i>I</i> ' <i>F</i> ;
+<i>I</i> must be a variable of the key type of a context table <i>T</i>.
+Entries of <i>T</i> must have a field <i>F</i>.
+The type of the designator is the type of the <i>F</i>.
+<p>
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+
+<strong> Example</strong>
+<p>
+Let <tt> Lab</tt> be a local variable that refers to a table entry
+with a field <tt> Coordinate</tt>. Then
+<PRE>
+
+Lab'Coordinate <- Loc
+</PRE>
+sets this field to the value of <tt> Loc</tt>.
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+<p>
+
+
+
+<h3>Context Queries</h3>
+
+A member of the form
+<ul>
+<li>
+
+<i>D</i> <tt> -></tt> <i>P</i>
+</ul>
+
+denotes a context query.
+<p>
+The value of the context designator <i>D</i> is matched against the pattern
+<i>P</i>. If this succeeds, the member succeeds and the variables appearing in
+<i>P</i> are defined. Otherwise, the member fails.
+<p>
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+
+<strong> Examples</strong>
+<PRE>
+
+NestingLevel -> N
+</PRE>
+This defines the local variable <tt> N</tt> according to the
+current value of the context variable <tt> NestingLevel</tt>.
+<p>
+Let <tt> Lab</tt> be a local variable that refers to a table entry
+with a field <tt> Coordinate</tt>. Then
+<PRE>
+
+Lab'Coordinate -> Loc
+</PRE>
+defines the local variable <tt> Loc</tt> according to the value of
+this field.
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+<p>
+It is a checked run-time error to access an undefined context designator.
+<p>
+
+
+
+<h3>Key Definitions</h3>
+
+A member of the form
+<ul>
+<li>
+
+<i>V</i> <tt> ::</tt> <i>T</i>
+</ul>
+
+denotes a key definition.
+<p>
+The variable <i>V</i> is defined as a unique key of type <i>T</i>.
+<p>
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+
+<strong> Example</strong>
+<PRE>
+
+Lab :: Label
+</PRE>
+The value of the local variable <tt> Lab</tt> is the unique key of a newly
+created entry of table <tt> Label</tt>.
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+<p>
+
+
+
+<h3>Anonymous Tokens</h3>
+
+<p>
+A member of the form
+<ul>
+<li>
+
+<i>S</i>
+</ul>
+
+where <i>S</i> is a string,
+is equivalent to a member of the form <i>p</i>, where <i>p</i>
+is an implicitly declared predicate of class token
+whose lexical representation is <i>S</i>.
+<p>
+<h3>Alternative Statements</h3>
+
+<p>
+A member of the form
+<ul>
+<li>
+
+<tt> (|</tt> <i>A<SUB>1</SUB></i> <tt> ||</tt> <i>...</i> <tt> ||</tt> <i>A<SUB>n</SUB></i> <tt> |)</tt>
+</ul>
+
+denotes an alternative statement.
+<p>
+The alternatives
+<i>A<SUB>1</SUB></i>, <i>...</i>, <i>A<SUB>n</SUB></i>
+are evaluated from left to right until
+one alternative <i>A<SUB>i</SUB></i> succeeds.
+Then M succeeds.
+If all alternatives fail, <i>M</i> fails.
+<p>
+An alternative <i>A<SUB>i</SUB></i> has the form
+<i>M<SUB>i,1</SUB></i>, <i>...</i>, <i>M<SUB>i,n<sub>i</sub></SUB></i>.
+These members are evaluated from left to right
+until one member fails. Then the alternative fails.
+If all members succeed, the alternative succeeds.
+<p>
+A variable that is defined in all alternatives
+<i>A<SUB>1</SUB></i>, <i>...</i>, <i>A<SUB>n</SUB></i>
+is defined by the alternative statement and may be used outside it.
+Such a variable must be defined with the same type in all alternatives.
+<p>
+A variable that is defined in one but not all alternatives
+is local to that alternative.
+<p>
+<h3>Conditional Statements</h3>
+
+A member of the form
+<ul>
+<li>
+
+<tt> [|</tt> <i>A</i> <tt> |]</tt>
+</ul>
+
+is equivalent to
+<tt> (|</tt> <i>A</i> <tt> ||</tt>  /* empty */  <tt> |)</tt>.
+<p>
+
+<p>
+
+<br><br>
+</ul>
+</ul>
+<a href="lrmroot.html"><img src="next.gif" border=0></a> <a href="lrmtables.html"><img src="previous.gif" border=0></a></body>
+</html>

@@ -1,0 +1,47 @@
+<html>
+<head><title>Module <tt>strings</tt></title></head>
+<body bgcolor=white>
+<a href="implc.html"><img src="next.gif" border=0></a> <a href="output.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="library.html">LIBRARY REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>Module <tt>strings</tt></h1>
+
+The module <tt> strings</tt> provides a string memory that can handle
+strings of arbitrary length. It may be used for the lexical processing
+of strings.
+The lexer may extend the current string (which is initially empty)
+character by character using procedure <tt> AppendToString</tt>.
+The string is terminated by procedure <tt> GetStringRef</tt> which
+yields a reference to the string.
+
+<p>
+<PRE>
+
+AppendToString (ch)
+   char ch;
+</PRE>
+The procedure <tt> AppendToString</tt> appends the character given as parameter
+to the current string.
+
+<p>
+<PRE>
+
+GetStringRef(ref_string)
+   char **ref_string;
+</PRE>
+The procedure <tt> GetStringRef</tt> terminates the current string
+with a null character and assigns a reference to the string to the
+variable referred by the parameter.
+The current string is set to empty.
+
+
+<p>
+
+<br><br>
+</ul>
+</ul>
+<a href="implc.html"><img src="next.gif" border=0></a> <a href="output.html"><img src="previous.gif" border=0></a></body>
+</html>

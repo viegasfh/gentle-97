@@ -1,0 +1,61 @@
+<html>
+<head><title>A Computer with an Accumulator</title></head>
+<body bgcolor=white>
+<a href="combined.html"><img src="next.gif" border=0></a> <a href="unparsing.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="optimal.html">Optimal Rule Selection</a>
+ /<br><br>
+</font>
+<h1>A Computer with an Accumulator</h1>
+
+<p>
+Let us consider a different kind of computer
+that uses an accumulator to compute values.
+The accumulator holds one of the operands of a computation,
+the other being given as a parameter of an instruction.
+The result is placed into the accumulator.
+<p>
+These are the instructions:
+<PRE>
+
+   'action' ACCUPLUS(Variable)
+   'action' ACCUMINUS(Variable)
+   'action' LOADACCU(Variable)
+   'action' STOREACCU(Variable)
+</PRE>
+<tt> ACCUPLUS(X)</tt> means <tt> Accu := Accu + X</tt>,
+<tt> ACCUMINUS(X)</tt> means <tt> Accu := Accu - X</tt>,
+<tt> LOADACCU(X)</tt> means <tt> Accu := X</tt>,
+<tt> STOREACCU(X)</tt> means <tt> X := Accu</tt>.
+
+Here is an incomplete specification of code generation:
+<p>
+<PRE>
+
+   'rule' Encode(assign(V,X)):
+      AccuCode(X)
+      STOREACCU(V)
+   
+   'rule' AccuCode(plus(X, var(V))):
+      AccuCode(X)
+      ACCUPLUS(V)
+   'rule' AccuCode(minus(X, var(V))):
+      AccuCode(X)
+      ACCUMINUS(V)
+   'rule' AccuCode(var(V)):
+      LOADACCU(V)
+</PRE>
+(The specification is still incomplete because we only consider the case
+where the second operand of <tt> plus</tt> and <tt> minus</tt> is a variable.
+If it were be a more complex expression, we would have to introduce
+temporary variables.)
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="combined.html"><img src="next.gif" border=0></a> <a href="unparsing.html"><img src="previous.gif" border=0></a></body>
+</html>

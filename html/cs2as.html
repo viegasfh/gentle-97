@@ -1,0 +1,81 @@
+<html>
+<head><title>Translating Concrete Syntax into Abstract Syntax</title></head>
+<body bgcolor=white>
+<a href="traversal.html"><img src="next.gif" border=0></a> <a href="abstrsyn.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="glance.html">At a Glance</a>
+ /<br><br>
+</font>
+<h1>Translating Concrete Syntax into Abstract Syntax</h1>
+
+<p>
+We now show how concrete syntax can be translated into abstract syntax.
+This can be done in exactly the same way as with the calculator.
+We use the expression grammar where each nonterminal gets an output parameter
+that specifies the corresponding abstract syntax.
+<p>
+<PRE>
+
+'root' expression(-> X) print(X)
+
+'nonterm' expression(-> Expr)
+
+   'rule' expression(-> X): expr2(-> X)
+   'rule' expression(-> plus(X,Y)): expression(-> X) "+" expr2(-> Y)
+   'rule' expression(-> minus(X,Y)): expression(-> X) "-" expr2(-> Y)
+
+'nonterm' expr2(-> Expr)
+
+   'rule' expr2(-> X): expr3(-> X)
+   'rule' expr2(-> mult(X,Y)): expr2(-> X) "*" expr3(-> Y)
+   'rule' expr2(-> div(X,Y)): expr2(-> X) "/" expr3(-> Y)
+
+'nonterm' expr3(-> Expr)
+
+   'rule' expr3(-> num(X)): Number(-> X)
+   'rule' expr3(-> neg(X)): "-" expr3(-> X)
+   'rule' expr3(-> X): "+" expr3(-> X)
+   'rule' expr3(-> X): "(" expression(-> X) ")"
+
+'token' Number(-> INT)
+</PRE>
+
+<p>
+Consider the rule
+<PRE>
+
+'rule' expression(-> plus(X, Y)): expression(-> X) "+" expr(-> Y)
+</PRE>
+
+that corresponds to the rule
+<PRE>
+
+'rule' expression(-> X + Y): expression(-> X) "+" expr(-> Y)
+</PRE>
+of the calculator.
+<p>
+If <tt> X</tt> is the abstract syntax of the <tt> expression</tt>
+appearing on the right hand side
+and <tt> Y</tt> is the abstract syntax of the <tt> expr2</tt> phrase
+then <tt> plus(X,Y)</tt> is the abstract syntax of the whole phrase.
+<p>
+For example, if <tt> X</tt> has the value <tt> num(10)</tt> and <tt> Y</tt>
+has the value <tt> mult(num(20),num(20))</tt>,
+then <tt> plus(num(10)), mult(num(20), num(30))</tt>
+is defined as the abstract syntax of the whole phrase parsed by the rule.
+<p>
+<PRE>
+
+'root' expression(-> X) print(X)
+</PRE>
+causes the abstract syntax to be printed.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="traversal.html"><img src="next.gif" border=0></a> <a href="abstrsyn.html"><img src="previous.gif" border=0></a></body>
+</html>

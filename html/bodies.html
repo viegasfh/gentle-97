@@ -1,0 +1,135 @@
+<html>
+<head><title>Rule Bodies</title></head>
+<body bgcolor=white>
+<a href="vars.html"><img src="next.gif" border=0></a> <a href="patterns.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="compuations.html">Describing Computations</a>
+ /<br><br>
+</font>
+<h1>Rule Bodies</h1>
+
+So far we have
+discussed rules without bodies.
+A <i> rule body</i> is a sequence of statements,
+in most cases predicate invocations,
+that can be used to break down the computation of the particular rule
+into subtasks or to reduce a problem to another problem for which there is
+a solution.
+<p>
+For example,
+we could add a rule to the definition of predicate <tt> favorite</tt>
+stating that <tt> jack</tt> prefers the same color as <tt> jane</tt>:
+<PRE>
+
+   'rule' favorite(jack -> X): favorite(jane -> X)
+</PRE>
+Consider the invocation
+<PRE>
+
+   favorite(jack -> C)
+</PRE>
+
+The new rule is selected (because the expression <tt> jack</tt> matches the
+pattern <tt> jack</tt>), and its body is evaluated. This means that the invocation
+<tt> favorite(jane -> X)</tt> is elaborated. This succeeds and defines <tt> X</tt>
+as <tt> red</tt>. After processing the body the expressions constituting the output
+parameters of the rule head are evaluated. Here the expression is simply a variable, <tt> X</tt>, which has just been defined as <tt> red</tt>. Hence, <tt> red</tt>
+is the output value of the original invocation. So <tt> C</tt> is defined as
+<tt> red</tt>.
+<p>
+It is very common for the rules of a predicate to directly follow
+the type definition of its argument.
+There is a rule for each alternative of the type,
+and inside this rule the members of the body process the constituents of that
+alternative. The result is given by combining the results of the members.
+<p>
+Assume that, besides lists of colors, we have also defined lists of persons:
+<PRE>
+
+   'type' PersonList
+      list(Person, PersonList)
+      nil
+</PRE>
+(We can use the same functors in both list type definitions because it is
+clear from the context which type is meant.)
+<p>
+We now want to define a predicate <tt> favorites</tt>
+that takes a list of persons and returns
+a list of colors of the same length.
+An element of the color list is the favorite color
+of the person at the corresponding
+position in the person list.
+For example,
+<PRE>
+
+   list(julia, list(jane, nil))
+</PRE>
+is mapped to
+<PRE>
+
+   list(blue, list(red, nil))
+</PRE>
+We introduce two rules, each one handling an alternative of the above type
+definition:
+<PRE>
+
+   'rule' favorites(list(Head, Tail) -> list(ColorHead, ColorTail)):
+      favorite(Head -> ColorHead)
+      favorites(Tail -> ColorTail)
+
+   'rule' favorites(nil -> nil)
+</PRE>
+
+The first rule decomposes its argument into <tt> Head</tt> and <tt> Tail</tt>
+and uses the suitable predicates to compute the favorite color
+of the <tt> Head</tt> and the favorite color list of the <tt> Tail</tt>.
+Given these values the resulting color list can be constructed.
+<p>
+The second rule simply has an empty body. For an empty person list we
+return an empty color list.
+<p>
+A rule body is evaluated by evaluating its members in the given order.
+If a member fails then the rule fails.
+If all members succeed, then the rule succeeds.
+<p>
+A rule
+<ul>
+<li>
+
+<tt>'rule'</tt> <i>A</i> : <i>B<SUB>1</SUB></i> <i>B<SUB>2</SUB></i> ... <i>B<SUB>n</SUB></i>
+</ul>
+
+can be understood as a logical statement
+<ul>
+<li>
+
+<i>A</i> <strong> if</strong> <i>B<SUB>1</SUB></i> <strong> and</strong> <i>B<SUB>2</SUB></i> <strong> and</strong> ... <strong> and</strong> <i>B<SUB>n</SUB></i>
+</ul>
+
+For example,
+the rule
+<PRE>
+
+   'rule' grandfather(X -> Z): father(X -> Y) father(Y -> Z)
+</PRE>
+can be read as
+<ul>
+<li>
+
+the grandfather of <tt> X</tt> is <tt> Z</tt> <strong> if</strong><br>
+(there is a <tt> Y</tt> such that)<br>
+the father of <tt> X</tt> is <tt> Y</tt> <strong> and</strong><br>
+the father of <tt> Y</tt> is <tt> Z</tt>.
+</ul>
+
+<p>
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="vars.html"><img src="next.gif" border=0></a> <a href="patterns.html"><img src="previous.gif" border=0></a></body>
+</html>

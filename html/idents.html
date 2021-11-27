@@ -1,0 +1,128 @@
+<html>
+<head><title>Module <tt>idents</tt></title></head>
+<body bgcolor=white>
+<a href="output.html"><img src="next.gif" border=0></a> <a href="errmsg.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="library.html">LIBRARY REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>Module <tt>idents</tt></h1>
+
+The module <tt> idents</tt> implements an abstract type <tt> IDENT</tt>.
+<p>
+<PRE>
+
+'type' IDENT
+</PRE>
+
+A value of type <tt> IDENT</tt> (an identifier)
+is a reference to an entry of the
+identifier table maintained by the module.
+<p>
+Each entry has a unique string representation which may be used
+to select the entry: the procedure <tt> string_to_id</tt>
+provides a mapping from strings to values of type <tt> IDENT</tt>.
+Such an identifier may have a meaning: procedure <tt> HasMeaning</tt>
+defines a mapping from identifiers to meanings.
+
+
+<PRE>
+
+'action' string_to_id (STRING -> IDENT)
+</PRE>
+<PRE>
+
+void string_to_id (string, ref_id)
+   char *string;
+   IDENT *ref_id;
+</PRE>
+If an identifier with the string representation given by the first parameter
+exists in the identifier table it is a assigned to the variable referred
+by the second parameter. Otherwise such an identifier is created and assigned
+to that variable.
+
+<p>
+<PRE>
+
+'action' id_to_string (IDENT -> STRING)
+</PRE>
+<PRE>
+
+void id_to_string (id, ref_string)
+   IDENT id;
+   char **ref_string;
+</PRE>
+The procedure assigns the string representation of the identifier given as
+first parameter to the variable referred by the second parameter.
+
+<PRE>
+
+'action' DefMeaning (IDENT, MEANING)
+</PRE>
+<PRE>
+
+void DefMeaning (id, m)
+   IDENT id;
+   long m;
+</PRE>
+
+The procedure <tt> DefMeaning</tt> defines the value of its second parameter
+as the meaning of the identifier given as the first parameter
+(a previous value is overridden).
+<p>
+<tt> MEANING</tt> may be any <i> Gentle</i> type.
+
+<PRE>
+
+'action' UndefMeaning (IDENT)
+</PRE>
+<PRE>
+
+void UndefMeaning (id)
+   IDENT id;
+</PRE>
+The procedure <tt> UndefMeaning</tt> indicates that the identifier
+given as parameter has no associated meaning (a previous value
+is overridden).
+
+<PRE>
+
+'condition' HasMeaning (IDENT -> MEANING)
+</PRE>
+<PRE>
+
+int HasMeaning (id, ref_meaning)
+   IDENT id;
+   long *ref_meaning;
+</PRE>
+If the identifier given as first parameter has an associated
+meaning it is assigned to the variable referred by the second
+parameter, the procedure succeeds (returns 1). Otherwise the procedure
+fails (returns 0).
+<p>
+
+<PRE>
+
+'action' ErrorI (STRING, IDENT, STRING, POS)
+</PRE>
+<PRE>
+
+ErrorI (str1, id, str2, pos)
+   char *str1;
+   IDENT id;
+   char *str2;
+   long pos;
+</PRE>
+Procedure <tt> ErrorI</tt> is equivalent to procedure <tt> Error</tt> of module
+<tt> errmsg</tt> except that the text of the error message is given
+as the concatenation of the first parameter, the string representation of the
+identifier given as second parameter, and the third parameter.
+
+
+
+<br><br>
+</ul>
+</ul>
+<a href="output.html"><img src="next.gif" border=0></a> <a href="errmsg.html"><img src="previous.gif" border=0></a></body>
+</html>

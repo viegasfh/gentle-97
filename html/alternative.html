@@ -1,0 +1,81 @@
+<html>
+<head><title>The Alternative Statement</title></head>
+<body bgcolor=white>
+<a href="dataflow.html"><img src="next.gif" border=0></a> <a href="control.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="control.html">Control Structures</a>
+ /<br><br>
+</font>
+<h1>The Alternative Statement</h1>
+
+Assume that we wish to process the maximum of two values by applying
+a predicate <tt> process</tt> to one of the values.
+Defining a predicate <tt> processmax</tt>, we can write
+<PRE>
+
+   'action' processmax(INT, INT -> INT)
+      'rule' processmax(X, Y -> Z): ge(X, Y) process(X -> Z)
+      'rule' processmax(X, Y -> Z): lt(X, Y) process(Y -> Z)
+</PRE>
+and invoke it as in
+<PRE>
+
+   get(-> A, B)
+   processmax(A, B -> C)
+   print(C)
+</PRE>
+The <i> alternative statement</i> discussed in this section
+allows us to insert the two rule bodies inline and get rid
+of the predicate <tt> processmax</tt>:
+<PRE>
+
+   get(-> A, B)
+   (|
+      ge(A, B) process(A -> C)
+   ||
+      lt(A, B) process(B -> C)
+   |)
+   print(C)
+</PRE>
+An alternative statement has the form
+<ul>
+<li>
+
+   <tt> (|</tt>  <i>A<SUB>1</SUB></i>  <tt> ||</tt> <i>A<SUB>2</SUB></i> <tt> ||</tt> ... <tt> ||</tt> <i>A<SUB>n</SUB></i> <tt> |)</tt>
+</ul>
+
+where the <i>A<SUB>i</SUB></i> are called alternatives and have the same form
+as a rule body (i.e. an alternative is a sequence of statements).
+<p>
+The alternative statement is elaborated as follows.
+The alternatives are elaborated in the given order.
+If an alternative succeeds, then the alternative statement succeeds.
+If an alternative fails then the next alternative is elaborated.
+If all alternatives fail, then the whole alternative statement fails.
+<p>
+An alternative is elaborated by elaborating its statements.
+If one statement fails, then the alternative fails. 
+If all statements succeed, then the alternative succeeds.
+<p>
+Roughly speaking, members of an alternative are connected by <strong> and</strong>,
+and alternatives are connected by <strong> or</strong>,
+but since we use shallow backtracking, inside an alternative one can
+assume that the preceding alternatives failed.
+<p>
+Thus the above could have been written as
+<PRE>
+
+   get(-> A, B)
+   (| ge(A, B) process(A -> C) || process(B -> C) |)
+   print(C)
+</PRE>
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="dataflow.html"><img src="next.gif" border=0></a> <a href="control.html"><img src="previous.gif" border=0></a></body>
+</html>

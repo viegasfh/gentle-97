@@ -1,0 +1,176 @@
+<html>
+<head><title>Predefined Predicates</title></head>
+<body bgcolor=white>
+<a href="lrmsyntax.html"><img src="next.gif" border=0></a> <a href="lrmcateg.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="lrm.html">LANGUAGE REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>Predefined Predicates</h1>
+
+The following predicates can be used without being declared:
+<ul>
+<li>
+
+<tt> eq</tt>,
+<tt> ne</tt>,
+<tt> gt</tt>,
+<tt> ge</tt>,
+<tt> lt</tt>,
+<tt> le</tt>,<br>
+<tt> print</tt>,
+<tt> where</tt>,
+<tt> @</tt> .
+</ul>
+
+<p>
+<h3>Relations</h3>
+
+The predicates
+<tt> eq</tt> and
+<tt> ne</tt>
+are declared for each type <tt> T</tt>
+<PRE>
+
+   'condition' eq(T, T)
+   'condition' ne(T, T)
+</PRE>
+The invocations
+<PRE>
+
+   eq(X, Y)
+   ne(X, Y)
+</PRE>
+succeed if <tt> X</tt> is equal (not equal) to <tt> Y</tt>.
+<p>
+The predicates
+<tt> gt</tt>,
+<tt> ge</tt>,
+<tt> lt</tt>,
+<tt> le</tt>,<br>
+are declared
+<PRE>
+
+   'condition' gt(T, T)
+   'condition' ge(T, T)
+   'condition' lt(T, T)
+   'condition' le(T, T)
+</PRE>
+where <tt> T</tt> is <tt> INT</tt> or <tt> STRING</tt>.
+<p>
+The invocations
+<PRE>
+
+   lt(X, Y)
+   le(X, Y)
+   gt(X, Y)
+   ge(X, Y)
+</PRE>
+
+succeed if <tt> X</tt> is less than (less or equal to,
+greater than, greater or equal to) <tt> Y</tt>.
+<p>
+<h3>Printing Values</h3>
+
+The predicate <tt> print</tt> is defined for each type <tt> T</tt>.
+<PRE>
+
+   'action' print(T)
+</PRE>
+An invocation
+<PRE>
+
+   print(X)
+</PRE>
+prints the value of <tt> X</tt>.
+   
+<h3>Inspecting and Defining Variables</h3>
+
+The predicate <tt> where</tt> is defined for each type <tt> T</tt>.
+<PRE>
+
+   'action' where(T -> T)
+   'rule' where(X -> X)
+</PRE>
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+
+<strong> Examples</strong>
+<PRE>
+
+where (List -> list(Head, Tail))
+</PRE>
+
+inspects the value of <tt> List</tt> and succeeds if it matches the pattern
+<tt> list(Head,Tail)</tt>, thereby defining the variables <tt> Head</tt> and <tt> Tail</tt>.
+<p>
+<PRE>
+
+where (list(Head, Tail) -> List)
+</PRE>
+constructs the value <tt> list(Head,Tail)</tt> and defines the variable <tt> List</tt>.
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+   
+<h3>Source Coordinates</h3>
+
+The predicate <tt> @</tt> is defined
+<PRE>
+
+   'action' @(-> POS)
+</PRE>
+It may appear after a <tt> nonterm</tt> or <tt> token</tt> predicate
+and it defines its output variable as the coordinate
+of the source text recognized by the preceding symbol.
+It may also appear at the beginning of a rule for a grammar rule,
+in which case it defines its output variable as the coordinate
+of the source text recognized by the body of the rule.
+<p>
+The coordinate of the text recognized by a rule body is the
+coordinate of the leftmost <tt> token</tt>, if there is one,
+or else the coordinate of the leftmost <tt> nonterm</tt>. If the body is
+empty, the current coordinate is used.
+<p>
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+
+<strong> Examples</strong>
+<PRE>
+
+'rule' Statement: "IF" @(->P) Expression "THEN" Statement
+</PRE>
+Here, <tt> P</tt> is defined as the coordinate of <tt> "IF"</tt>.
+<PRE>
+
+'rule' Statement: "IF" Expression @(->P) "THEN" Statement
+</PRE>
+Here, <tt> P</tt> is defined as the coordinate of <tt> Expression</tt>.
+<p>
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+
+<p>
+
+
+<br><br>
+</ul>
+</ul>
+<a href="lrmsyntax.html"><img src="next.gif" border=0></a> <a href="lrmcateg.html"><img src="previous.gif" border=0></a></body>
+</html>

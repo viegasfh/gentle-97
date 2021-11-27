@@ -1,0 +1,89 @@
+<html>
+<head><title>Expressions and Patterns</title></head>
+<body bgcolor=white>
+<a href="bodies.html"><img src="next.gif" border=0></a> <a href="failure.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="compuations.html">Describing Computations</a>
+ /<br><br>
+</font>
+<h1>Expressions and Patterns</h1>
+
+We have made
+a distinction between expressions and patterns, and have
+said that the role of a term depends on its context.
+<p>
+The input parameters of a predicate invocation and the output parameters
+of rule headings are expressions.
+Here, terms are constructed from given components.
+Variables inside the expressions
+must hold these components.
+<p>
+The output parameters of a predicate invocation and the input parameters
+of rule headings are patterns.
+Here, a given value is matched against the pattern. Variables inside the
+pattern are defined.
+<p>
+To illustrate this, we discuss a predicate <tt> swap</tt> that, given a
+term <tt> signal(X, Y)</tt>, delivers the term <tt> signal(Y, X)</tt>.
+It is defined by the rule
+<PRE>
+
+   'rule' swap (signal(X, Y) -> signal(Y, X))
+</PRE>
+Assume that the variable <tt> A</tt> holds the value <tt> red</tt> and consider the
+invocation
+<PRE>
+
+   swap (signal(A, yellow) -> signal(B, red))
+</PRE>
+First, the expression <tt> signal(A, yellow)</tt>
+(the input parameter of the invocation)
+is evaluated. Since <tt> A</tt> holds <tt> red</tt>, substitution yields the value
+<tt> signal(red, yellow)</tt>.
+<p>
+Then, rules defining the predicate are inspected; here there is only one.
+The input value <tt> signal(red, yellow)</tt> is matched against the
+pattern <tt> signal(X, Y)</tt> (the input parameter of the rule head).
+The matching succeeds, thereby defining the variable <tt> X</tt> as <tt> red</tt>
+and <tt> Y</tt> as <tt> yellow</tt>.
+<p>
+Now the expression <tt> signal(Y, X)</tt> (the output parameter
+of the rule head) is evaluated. Since <tt> Y</tt> is <tt> yellow</tt>
+and <tt> X</tt> is <tt> red</tt>, this yields <tt> signal(yellow, red)</tt>,
+which is returned by the predicate.
+<p>
+Finally, the returned value <tt> signal(yellow, red)</tt> is matched against
+the pattern <tt> signal(B, red)</tt> (the output parameter of the invocation).
+This succeeds and defines the variable <tt> B</tt> as <tt> yellow</tt>
+(see <i> Fig. 1.1</i>).
+
+<pre>
+INVOCATION:       swap(signal(A  , yellow) -> signal(B     , red))
+                                 |                         A
+                                 |(1)                      |(4)
+                                 V                         |
+                       signal(red, yellow)    signal(yellow, red)
+                                 |                         A
+                                 |(2)                      |(3)
+                                 V                         |
+RULE HEADING:     swap(signal(X  , Y     ) -> signal(Y     , X  ))
+
+   (1) construction of term from input expression
+   (2) matching against input pattern
+   (3) construction of term from output expression
+   (4) matching against output pattern
+</pre>
+
+<center>
+<i> Fig. 1.1 Construction of Terms and Pattern Matching</i>
+</center>
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="bodies.html"><img src="next.gif" border=0></a> <a href="failure.html"><img src="previous.gif" border=0></a></body>
+</html>

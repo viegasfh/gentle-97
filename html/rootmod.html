@@ -1,0 +1,47 @@
+<html>
+<head><title>The Root Module</title></head>
+<body bgcolor=white>
+<a href="start.html"><img src="next.gif" border=0></a> <a href="export.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="projects.html">Organizing Larger Projects</a>
+ /<br><br>
+</font>
+<h1>The Root Module</h1>
+
+Exactly one module must contain a root definition that triggers
+the computation.
+<p>
+For example,
+a specification could be given by three modules:
+<tt> Compiler</tt>, <tt> IR</tt>, and <tt> CodeGen</tt>,
+where the module heading of <tt> Compiler</tt> is
+<PRE>
+
+   'module' Compiler
+
+   'use'
+      IR, CodeGen
+</PRE>
+
+The module <tt> Compiler</tt> can contain a definition
+<PRE>
+
+   'root'
+      Program(-> P)
+      Encode(P)
+</PRE>
+This specification is elaborated by first invoking <tt> Program</tt>
+declared in <tt> Compiler</tt>, and then <tt> Encode</tt> declared
+in <tt> CodeGen</tt>.
+
+
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="start.html"><img src="next.gif" border=0></a> <a href="export.html"><img src="previous.gif" border=0></a></body>
+</html>

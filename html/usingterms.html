@@ -1,0 +1,63 @@
+<html>
+<head><title>Using Terms in Expressions and Patterns</title></head>
+<body bgcolor=white>
+<a href="basictp.html"><img src="next.gif" border=0></a> <a href="typedefs.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="data.html">Describing Data</a>
+ /<br><br>
+</font>
+<h1>Using Terms in Expressions and Patterns</h1>
+
+When a <i> Gentle</i> program  is executed, the actual values of term types
+are always ground terms.
+But in the text of a program we also use terms that contain variables as
+subterms (i.e. as arguments of a functor).
+In the extreme case the whole term may be just one variable name.
+A variable serves as a placeholder.
+<p>
+To avoid confusion, variables start with an upper-case letter,
+and functors start with a lower case letter.
+<p>
+Variables need not be declared. Nevertheless, they are strongly
+typed. The type is derived by the <i> Gentle</i> compiler,
+and the use of the variables is checked for consistency.
+<p>
+Depending on the context in which they are used, terms appear in two roles:
+as <i> expressions</i> and as <i> patterns</i>.
+<p>
+An expression is used to construct a term from given components.
+<p>
+If the variable <tt> Hd</tt> is of type <tt> Color</tt> and holds the value
+<tt> red</tt>, and if the variable <tt> Tl</tt> is of type <tt> ColorList</tt>
+and holds the value <tt> nil</tt>, the expression
+<tt> list(Hd, Tl)</tt> yields the value <tt> list(red, nil)</tt>.
+<p>
+A value may be decomposed into constituents
+by matching the value against a pattern.
+<p>
+If the value <tt> list(red, nil)</tt> is matched against the pattern
+<tt> list(Hd, Tl)</tt>
+the variable <tt> Hd</tt> is defined as <tt> red</tt>,
+and the variable <tt> Tl</tt> as <tt> nil</tt>.
+The matching succeeds.
+<p>
+If the value <tt> nil</tt> is matched against the pattern
+<tt> list(Hd, Tl)</tt>,
+the matching is said to fail.
+<p>
+Matching a pattern against a term means trying to find values for
+the variables inside the pattern: replacing the variables by these
+values makes the pattern equal to the term. 
+For example,
+replacing <tt> Hd</tt> by <tt> red</tt> and <tt> Tl</tt> by <tt> nil</tt>
+turns the pattern <tt> list(Hd, Tl)</tt> into the term <tt> list(red, nil)</tt>.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="basictp.html"><img src="next.gif" border=0></a> <a href="typedefs.html"><img src="previous.gif" border=0></a></body>
+</html>

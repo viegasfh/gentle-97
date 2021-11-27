@@ -1,0 +1,59 @@
+<html>
+<head><title>A Combined Stack and Accumulator Computer</title></head>
+<body bgcolor=white>
+<a href="nondeterministic.html"><img src="next.gif" border=0></a> <a href="accu.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="optimal.html">Optimal Rule Selection</a>
+ /<br><br>
+</font>
+<h1>A Combined Stack and Accumulator Computer</h1>
+
+We show cost driven-rule selection by a computer combining
+stack and accumulator processing (following Professor Ulrich Grude,
+who coined this example for his lectures on <i> Gentle</i>).
+<p>
+The combined computer provides both sets of instructions, i.e. one
+can switch between stack- and accumulator-based computation.
+In addition, it offers two further instructions
+that move data from stack to accumulator and vice versa:
+<PRE>
+
+   'action' STACKTOACCU
+   'action' ACCUTOSTACK
+</PRE>
+<tt> STACKTOACCU</tt> pops the top element from the stack and stores
+it in the accumulator.
+<tt> ACCUTOSTACK</tt> pushes the current value of the accumulator
+onto the stack.
+<p>
+Since the specification for the stack computer covers all cases,
+we can simply copy these rules.
+Hence, we already have a correct code generator for the combined computer.
+<p>
+Because the rules for the accumulator-based computer are also correct,
+we copy them as well.
+<p>
+We add a rule that computes stack values in the accumulator:
+<PRE>
+
+   'rule' StackCode(X):
+      AccuCode(X)
+      ACCUTOSTACK
+</PRE>
+and a rule that computes accumulator values using the stack:
+<PRE>
+
+   'rule' AccuCode(X):
+      StackCode(X)
+      STACKTOACCU
+</PRE>
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="nondeterministic.html"><img src="next.gif" border=0></a> <a href="accu.html"><img src="previous.gif" border=0></a></body>
+</html>

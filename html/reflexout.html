@@ -1,0 +1,83 @@
+<html>
+<head><title>Output</title></head>
+<body bgcolor=white>
+<a href="library.html"><img src="next.gif" border=0></a> <a href="reflexuse.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="reflex.html">REFLEX REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>Output</h1>
+
+<p>
+A specification constructed by <i> Reflex</i> has the following structure:
+<p>
+<PRE>
+
+   %{
+   YYSTYPE Block
+   SETPOS Block
+   LITBLOCK Block
+   %}
+   LEXDEF Block
+   %%
+   Token Section
+   COMMENTS Block
+   LAYOUT Block
+   ILLEGAL Block
+   %%
+   LEXFUNC Block
+   YYWRAP Block
+</PRE>
+
+The block <tt> YYSTYPE</tt> has the form
+<PRE>
+
+   #include "gen.h"
+   extern YYSTYPE yylval;
+</PRE>
+
+The block <tt> SETPOS</tt> has the form
+<PRE>
+
+   extern long yypos;
+   #define yysetpos() { yylval.attr[0] = yypos; yypos += yyleng; }
+</PRE>
+
+The blocks <tt> LITBLOCK</tt> and <tt> LEXDEF</tt> are empty.
+<p>
+The Token Section
+contains, for each token <tt> "alpha"</tt> appearing literally in the
+<i> Gentle</i> specification a <i> Lex</i> rule of the form
+<PRE>
+
+   "alpha" { yysetpos(); return token_code; }
+</PRE>
+
+These rules are followed by the rules appearing in the token description files.
+<p>
+The block <tt> COMMENTS</tt> and <tt> LAYOUT</tt> are described above.
+<p>
+The block <tt> ILLEGAL</tt> has the form
+<PRE>
+
+   . { yysetpos(); yyerror("illegal token"); }
+</PRE>
+
+The block <tt> LEXFUNC</tt> is empty.
+<p>
+The block <tt> YYWRAP</tt> has the form.
+<PRE>
+
+   #ifndef yywrap
+   yywrap() { return 1; }
+   #endif
+</PRE>
+
+
+
+<br><br>
+</ul>
+</ul>
+<a href="library.html"><img src="next.gif" border=0></a> <a href="reflexuse.html"><img src="previous.gif" border=0></a></body>
+</html>

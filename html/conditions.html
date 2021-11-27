@@ -1,0 +1,76 @@
+<html>
+<head><title>Conditions and Actions</title></head>
+<body bgcolor=white>
+<a href="syntaxdescr.html"><img src="next.gif" border=0></a> <a href="preddcl.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="compuations.html">Describing Computations</a>
+ /<br><br>
+</font>
+<h1>Conditions and Actions</h1>
+
+Predicates of the category <tt> 'condition'</tt> and <tt> 'action'</tt>
+are evaluated by shallow backtracking, i.e. the rules are evaluated
+until one succeeds, in which case the predicate succeeds.
+<p>
+Should all rules fail, the behavior is different for conditions and actions.
+<p>
+In the case of conditions, the predicate fails.
+Predicates that are supposed to fail for certain arguments
+are used as guards in rules: if they fail,
+then at the place of invocation the next
+rule will be considered.
+By way of an example, consider
+<PRE>
+
+'condition' IsJimsColor(Color)
+   'rule' IsJimsColor(red)
+</PRE>
+This predicate is intended to succeed for <tt> red</tt>
+and to fail for all other colors.
+<p>
+In contrast, consider the predicate <tt> length</tt> declared above.
+The predicate is intended to work for all
+arguments. It is not used to signal failure.
+Such predicates are declared with the keyword <tt> 'action'</tt>.
+If for an action no rule is applicable, this does not indicate
+failure but an error in the specification.
+Hence, in this case an error message
+is issued that
+indicates the incomplete predicate, and the program
+is terminated.
+<p>
+For example,
+if we had omitted the rule dealing with the case <tt> nil</tt>,
+the specification of <tt> length</tt> would have be incomplete.
+If <tt> length</tt> had been declared as a condition, this
+error would not have been detected at the earliest possible point,
+but would simply result in failure of the rule that invoked
+<tt> length</tt> with an empty list. This again could propagate the
+failure to even wider contexts, making it hard to locate
+the error.
+<p>
+If a program is correct, all actions could be declared as conditions
+without changing the behavior. But if the program
+contains incompletely specified predicates, these can be detected
+much easier when using actions.
+<p>
+In addition, declaring a predicate as an action indicates to the human reader
+that this predicate is not intended to test its arguments
+for a certain condition, but to compute ouput values for all input values.
+<p>
+It turns out that the majority of predicates are actions.
+The reason is that, in <i> Gentle</i>,
+the program flow is controlled by pattern matching, i.e. the structure
+of the data being processed.
+<p>
+Other predicate categories are discussed in following sections.
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="syntaxdescr.html"><img src="next.gif" border=0></a> <a href="preddcl.html"><img src="previous.gif" border=0></a></body>
+</html>

@@ -1,0 +1,93 @@
+<html>
+<head><title>The ICode Machine</title></head>
+<body bgcolor=white>
+<a href="instr.html"><img src="next.gif" border=0></a> <a href="target.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="casestudy.html">CASE STUDY</a>
+ / <a href="target.html">The Target Machine</a>
+ /<br><br>
+</font>
+<h1>The ICode Machine</h1>
+
+<p>
+The <i> ICode</i> Machine consists of three registers and memory.  The  registers
+are
+<p>
+<UL>
+    <LI> PC the program counter
+    <LI> SP the stack pointer
+    <LI> AP the activation record pointer
+</UL>
+<p>
+The program counter points to the current instruction in the memory.  The
+stack  pointer  points  to  the  highest  occupied stack cell.  The activation
+record pointer points to the `static link' field  of  the  current  activation
+record.
+<p>
+The memory is divided in two parts, one containing the program (Code) and
+the  other  containing  data  (Store). Code is an array of <i> ICode</i> instructions.
+Store is organized as stack (growing upwards) which contains the data  of  the
+program  executed.   Each  activation  of  a  procedure  results in pushing an
+activation record on the stack, which  contains  storage  for  parameters  and
+local data.
+<p>
+An activation record has the following layout:
+<p>
+<PRE>
+
+          |------------------------|
+          |                        | store for
+          |                        | local data
+          |------------------------|
+          | - values of            |
+          |   value parameters     | store for
+          | - addresses of         | parameters
+          |   reference parameters |
+          |------------------------|
+          | return address         |
+          |------------------------| procedure call
+          | dynamic link           |
+          |------------------------| information
+   AP --> | static link            |
+          |------------------------|
+</PRE>
+
+At initialization time, the static  and  dynamic  links  and  the  return
+address of the main program are all set to 0. The registers are initialized as
+follows: PC := 0, SP := 3, and AP := 1.  The start address is 0, i.e. Code [0]
+contains  the first <i> ICode</i> instruction to be executed. PC is incremented before
+the according instruction is executed. The interpreter stops  at  return  from
+the main program. The stop condition is: (PC = 0).
+<p>
+     A procedure call enforces
+<UL>
+<LI>
+the creation of static and dynamic links of  the  new  activation  record
+(<i> ICode</i> instruction: MST)
+<LI>
+parameter passing: The values of value parameters and  the  addresses  of
+reference parameters are evaluated and pushed on the stack.
+<p>
+<LI>
+storing the return address and a jump to the  procedure
+(<i> ICode</i>  instruction: JSR)
+<LI>
+reservation of store for local data of the new activation  record  (<i> ICode</i>
+instruction: ENT)
+</UL>
+<p>
+A return from a procedure enforces
+<UL>
+<p>
+<LI>
+discarding the current activation record by updating the registers
+</UL>
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="instr.html"><img src="next.gif" border=0></a> <a href="target.html"><img src="previous.gif" border=0></a></body>
+</html>

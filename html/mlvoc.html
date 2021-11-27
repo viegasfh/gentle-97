@@ -1,0 +1,98 @@
+<html>
+<head><title>Notation, Terminology, and Vocabulary</title></head>
+<body bgcolor=white>
+<a href="mltypes.html"><img src="next.gif" border=0></a> <a href="mlsummary.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="casestudy.html">CASE STUDY</a>
+ / <a href="sourcelang.html">The Source Language</a>
+ /<br><br>
+</font>
+<h1>Notation, Terminology, and Vocabulary</h1>
+
+<p>
+The syntax is described in Extended  Backus Naur Form.   Syntactic constructs
+are  denoted  by  (abbreviated) English words consisting of upper- and
+lower-case letters, and containing at least one lower-case letter.
+The  angular  brackets  <  and  > are omitted.
+Strings of letters consisting solely of
+upper-case letters stand for themselves, i.e. for reserved identifiers of  the
+language.   Strings of characters enclosed in single quotes ' '
+are also to be
+taken literally.  Square  brackets  [ ]
+denote  optional  constructs.   Curly
+brackets  { }  stand
+for  zero or more repetitions of the enclosed construct.
+Alternative constructs are separated by a vertical bar |.  Parentheses
+( ) are
+used for grouping.
+<p>
+     The basic vocabulary of <i> MiniLAX</i> consists of basic symbols classified into
+delimiters, identifiers, and constants.
+<p>
+     Spaces, line ends, and comments may occur anywhere in  a  program  except
+within  a  basic  symbol.   At least one space, line end or comment must occur
+between any two adjacent identifiers or constants.   Otherwise,  spaces,  line
+ends, and comments do not influence the meaning of a program.
+<p>
+     A comment has the form
+<PRE>
+
+   '(*' any sequence of characters not containing *) '*)'
+</PRE>
+
+<h3>Delimiters</h3>
+
+Delimiters are reserved identifiers or (strings of)  special characters.
+<PRE>
+
+Delim ::= ':' | ';' | ':=' | '(' | ')' | '.' | ','
+      | '..' | '[' | ']' | '+' | '*' | '<'
+      | 'ARRAY' | 'BEGIN' | 'BOOLEAN' | 'DECLARE' | 'DO'
+      | 'ELSE' | 'END' | 'FALSE' | 'IF' | 'INTEGER'
+      | 'NOT' |'OF' | 'PROCEDURE' | 'PROGRAM' | 'READ'
+      | 'REAL' |'THEN' | 'TRUE' | 'VAR' | 'WHILE'
+      | 'WRITE'
+</PRE>
+
+<h3>Identifiers</h3>
+
+Identifiers serve to denote  variables  and  procedures.
+Their  association  must be unique within their scope of validity, i.e. within
+the procedure or function in which they are declared.
+<PRE>
+
+Id ::= Letter { Letter | Digit }
+</PRE>
+
+All letters and digits of an identifier are significant.  Upper and lower case
+letters  are  distinguished.  Delimiters are reserved identifiers that cannot
+be used otherwise.
+<p>
+<h3>Numbers</h3>
+
+The usual decimal notation is used for  numbers,  which  are
+the  constants  of  the data types integer and real.  The letter 'E' preceding
+the scale factor is pronounced as "'times"10
+<PRE>
+
+IntConst    ::= Digit { Digit }
+RealConst   ::= [ IntConst ] '.' IntConst [ ScaleFactor ]
+ScaleFactor ::= 'E' [ '+' | '-' ] IntConst
+</PRE>
+
+Examples:
+<PRE>
+
+
+1   100   .1   87.35E-8
+</PRE>
+
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="mltypes.html"><img src="next.gif" border=0></a> <a href="mlsummary.html"><img src="previous.gif" border=0></a></body>
+</html>

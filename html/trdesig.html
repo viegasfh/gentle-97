@@ -1,0 +1,108 @@
+<html>
+<head><title>Translating Designators</title></head>
+<body bgcolor=white>
+<a href="scopes.html"><img src="next.gif" border=0></a> <a href="trexpr.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="casestudy.html">CASE STUDY</a>
+ / <a href="compiler.html">The Compiler</a>
+ /<br><br>
+</font>
+<h1>Translating Designators</h1>
+
+<p>
+Here is  the specification for translating designators:
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+<font size="-1">
+<pre>
+
+282  'action' Designator(Desig: DESIG -> Type: TYPE) 
+283     'rule' Designator(id(Ident, Pos) -> T) : 
+284        Apply(Ident, Pos -> Obj) 
+285        Access(Obj, Pos -> T) 
+286     'rule' Designator(subscr(Array, Index, Pos) -> T) : 
+287        Designator(Array -> TArray) 
+288        Expression(Index -> TIndex) 
+289        CheckArrayType(TArray, Pos -> Lwb, Upb, T) 
+290        TypeSize(T -> Size) 
+291        CheckInt(TIndex, Pos) 
+292        CHK(Lwb, Upb) 
+293        LDC(1, Lwb) 
+294        SUB 
+295        IXA(Size) 
+  
+296  'action' Access(Obj: OBJ, Pos: POS -> Type: TYPE) 
+297     'rule' Access(object(varobj(Offset, Type), Level, Hidden), Pos  
+298            -> Type) : 
+299        GetCurrentNesting(-> CurLev) 
+300        LDA(CurLev-Level, Offset) 
+301     'rule' Access(object(varparamobj(Offset,Type), Level, Hidden), 
+302            Pos -> Type) : 
+303        GetCurrentNesting(-> CurLev) 
+304        LDA(CurLev-Level, Offset) 
+305        LDI 
+306     'rule' Access(object(valueparamobj(Offset,Type),Level,Hidden), 
+307            Pos -> Type) : 
+308        GetCurrentNesting(-> CurLev) 
+309        LDA(CurLev-Level, Offset) 
+310     'rule' Access(object(procobj(_,_),_,_), Pos -> none) : 
+311        Error("procedure not allowed here", Pos) 
+
+</pre>
+</font>
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+
+<p>
+<tt> Designator</tt>
+<p>
+<tt> Designator(Desig -> Type)</tt>
+generates code for the designator <tt> Desig</tt>
+(a construct yielding an address) and computes its type <tt> Type</tt>.
+<p>
+If the designator is a simple identifier,
+we look up its definition and use <tt> Access</tt> to
+determine the code and type.
+<p>
+ <br>
+<tt> Access</tt>
+<p>
+<tt> Access(Obj, Pos -> Type)</tt>
+generates the code to access the object <tt> Obj</tt>
+and return its type.
+By way of an example, consider the rule that handles variables:
+<PRE>
+
+   'rule' Access(object(varobj(Offset, Type), Level, Hidden), Pos
+                 -> Type) :
+      GetCurrentNesting(-> CurLev)
+      LDA(CurLev-Level, Offset)
+</PRE>
+The object has the offset <tt> Offset</tt> and the type <tt> Type</tt> ;
+it was declared on nesting level <tt> Level</tt>.
+This results in an instruction
+<PRE>
+
+      LDA CurLev-Level, Offset
+</PRE>
+where <tt> CurLevel</tt> is the nesting level of the location
+where the object is used.
+<p>
+The representation of objects is discussed next.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="scopes.html"><img src="next.gif" border=0></a> <a href="trexpr.html"><img src="previous.gif" border=0></a></body>
+</html>

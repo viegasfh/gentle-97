@@ -1,0 +1,275 @@
+<html>
+<head>
+<title>Online Book: The GENTLE Compiler Construction System
+</title>
+<meta name="description"
+content="An introduction to tools for compiler writers 
+and implementors of domain specific languages">
+<meta name="keywords"
+content="compiler construction, tool, kit, generator,
+programming languages">
+</head>
+<body bgcolor=white>
+<a href="preface.html"><img src="next.gif" border=0></a> <table>
+<tr><td align=center bgcolor="#e9e9d2">
+&nbsp;
+</td></tr>
+<tr><td>
+<br>
+<br>
+<tr><td>
+<center>
+<h1>
+The GENTLE Compiler Construction System
+</h1>
+Friedrich Wilhelm Schr&ouml;er<br>
+German National Research Center for Information Technology
+<p>
+<a href="http://www.first.gmd.de/gentle/">http://www.first.gmd.de/gentle/
+</a>
+</center>
+<br>
+<br>
+</td></tr>
+<tr><td align=center bgcolor="#e9e9d2">
+<b>CONTENTS AT A GLANCE<b>
+</td></tr>
+<tr><td>
+<br>
+<br>
+<ul>
+<li><a href="preface.html">Preface</a><br>
+<li><a href="primer.html">GENTLE PRIMER</a><br>
+<li><a href="start.html">GETTING STARTED</a><br>
+<li><a href="lrm.html">LANGUAGE REFERENCE MANUAL</a><br>
+<li><a href="reflex.html">REFLEX REFERENCE MANUAL</a><br>
+<li><a href="library.html">LIBRARY REFERENCE MANUAL</a><br>
+<li><a href="casestudy.html">CASE STUDY</a><br>
+<li><a href="references.html">References</a><br>
+</ul>
+<br>
+<br>
+</td></tr>
+<tr><td align=center bgcolor="#e9e9d2">
+<b>TABLE OF CONTENTS</b>
+</td></tr>
+<tr><td>
+<br>
+<br>
+<ul>
+<li><a href="preface.html">Preface</a><br>
+<li><a href="primer.html">GENTLE PRIMER</a><br>
+<ul>
+<li><a href="glance.html">At a Glance</a><br>
+<ul>
+<li><a href="parser.html">A Parser for Expressions</a><br>
+<li><a href="calculator.html">A Calculator</a><br>
+<li><a href="abstrsyn.html">Abstract Syntax</a><br>
+<li><a href="cs2as.html">Translating Concrete Syntax into Abstract Syntax</a><br>
+<li><a href="traversal.html">Traversal</a><br>
+<li><a href="transf.html">Transformation</a><br>
+<li><a href="codegen.html">Code Generation</a><br>
+</ul>
+<li><a href="elements.html">Elements of Specifications</a><br>
+<li><a href="data.html">Describing Data</a><br>
+<ul>
+<li><a href="terms.html">Terms</a><br>
+<li><a href="typedefs.html">Type Definitions</a><br>
+<li><a href="usingterms.html">Using Terms in Expressions and Patterns</a><br>
+<li><a href="basictp.html">Numbers and Strings</a><br>
+</ul>
+<li><a href="compuations.html">Describing Computations</a><br>
+<ul>
+<li><a href="rules.html">Invocations and Rules</a><br>
+<li><a href="failure.html">Failure</a><br>
+<li><a href="patterns.html">Expressions and Patterns</a><br>
+<li><a href="bodies.html">Rule Bodies</a><br>
+<li><a href="vars.html">Variables</a><br>
+<li><a href="srategy.html">Evaluation Strategy</a><br>
+<li><a href="shallow.html">Shallow Backtracking</a><br>
+<li><a href="preddcl.html">Predicate Declarations</a><br>
+<li><a href="conditions.html">Conditions and Actions</a><br>
+</ul>
+<li><a href="syntaxdescr.html">Describing Syntax</a><br>
+<ul>
+<li><a href="syndef.html">Syntax Definitions</a><br>
+<li><a href="nonterms.html">Nonterm Predicates</a><br>
+<li><a href="tokens.html">Token Predicates</a><br>
+<li><a href="attr.html">Attributes</a><br>
+<li><a href="actgram.html">Actions in Grammar Rules</a><br>
+<li><a href="rulesel.html">Rule Selection</a><br>
+<li><a href="abstract.html">Abstract Syntax</a><br>
+<li><a href="coord.html">Source Coordinates</a><br>
+</ul>
+<li><a href="external.html">Using Types and Predicates Written in C</a><br>
+<ul>
+<li><a href="exttypes.html">External Types</a><br>
+<li><a href="extpred.html">External Predicates</a><br>
+</ul>
+<li><a href="global.html">Handling Global Information</a><br>
+<li><a href="mutable.html">Handling Mutable Information</a><br>
+<li><a href="control.html">Control Structures</a><br>
+<ul>
+<li><a href="alternative.html">The Alternative Statement</a><br>
+<li><a href="dataflow.html">Dataflow</a><br>
+<li><a href="where.html">The Predicate <tt>where</tt></a><br>
+<li><a href="disjunct.html">Disjunctions</a><br>
+<li><a href="conditional.html">The Conditional Statement</a><br>
+<li><a href="usingalt.html">Using Alternative and Conditional Statements</a><br>
+</ul>
+<li><a href="smart.html">Smart Traversal</a><br>
+<ul>
+<li><a href="defaultrule.html">Default Rule</a><br>
+<li><a href="braodcast.html">Broadcasted Parameter</a><br>
+<li><a href="thread.html">Threaded Parameter</a><br>
+</ul>
+<li><a href="optimal.html">Optimal Rule Selection</a><br>
+<ul>
+<li><a href="codegenexpr.html">Code Generation for Expressions</a><br>
+<li><a href="stackcomp.html">A Stack Computer</a><br>
+<li><a href="unparsing.html">Unparsing</a><br>
+<li><a href="accu.html">A Computer with an Accumulator</a><br>
+<li><a href="combined.html">A Combined Stack and Accumulator Computer</a><br>
+<li><a href="nondeterministic.html">Nondeterministic Unparsing</a><br>
+<li><a href="codegenspec.html">A Code-Generator Specification</a><br>
+<li><a href="costdriven.html">Cost-Driven Rule Selection</a><br>
+<li><a href="usingoutput.html">Using Output Parameters</a><br>
+<li><a href="twophases.html">The Two Processing Phases</a><br>
+<li><a href="wellformed.html">Well-formed Rules</a><br>
+</ul>
+<li><a href="special.html">Special Patterns and Expressions</a><br>
+<ul>
+<li><a href="joker.html">Joker</a><br>
+<li><a href="named.html">Named Patterns</a><br>
+<li><a href="prefix.html">Type Prefixes</a><br>
+</ul>
+<li><a href="predefined.html">A Summary of Predefined Predicates</a><br>
+<ul>
+<li><a href="relations.html">The Predicates <tt>eq</tt>, <tt>ne</tt>, <tt>lt</tt>, <tt>le</tt>, <tt>ge</tt>, <tt>gt</tt></a><br>
+<li><a href="print.html">The Predicate <tt>print</tt></a><br>
+<li><a href="prediwhere.html">The Predicate <tt>where</tt></a><br>
+<li><a href="at.html">The Predicate <tt>@</tt></a><br>
+</ul>
+<li><a href="projects.html">Organizing Larger Projects</a><br>
+<ul>
+<li><a href="modulename.html">The Module Name</a><br>
+<li><a href="useclause.html">The Use Clause</a><br>
+<li><a href="export.html">The Export Clause</a><br>
+<li><a href="rootmod.html">The Root Module</a><br>
+</ul>
+</ul>
+<li><a href="start.html">GETTING STARTED</a><br>
+<ul>
+<li><a href="installation.html">Installation</a><br>
+<li><a href="firstex.html">A First Example</a><br>
+<li><a href="generating.html">Generating a Compiler</a><br>
+</ul>
+<li><a href="lrm.html">LANGUAGE REFERENCE MANUAL</a><br>
+<ul>
+<li><a href="lrmintro.html">Introduction</a><br>
+<li><a href="lrmvoc.html">Syntax and Vocabulary</a><br>
+<li><a href="lrmspec.html">Specifications</a><br>
+<li><a href="lrmtypes.html">Types</a><br>
+<li><a href="lrmexpr.html">Expressions</a><br>
+<li><a href="lrmpatterns.html">Patterns</a><br>
+<li><a href="lrmpredicates.html">Predicates</a><br>
+<li><a href="lrmvars.html">Context Variables</a><br>
+<li><a href="lrmtables.html">Context Tables</a><br>
+<li><a href="lrmmemebers.html">Members</a><br>
+<li><a href="lrmroot.html">Root Definition</a><br>
+<li><a href="lrmmodules.html">Modules</a><br>
+<li><a href="lrmcateg.html">Predicate Categories</a><br>
+<li><a href="lrmpredef.html">Predefined Predicates</a><br>
+<li><a href="lrmsyntax.html">Syntax Summary</a><br>
+</ul>
+<li><a href="reflex.html">REFLEX REFERENCE MANUAL</a><br>
+<ul>
+<li><a href="reflexintro.html">Introduction</a><br>
+<li><a href="descrtok.html">How To Describe a Token</a><br>
+<li><a href="descrwhite.html">How To Describe Layout and Comments</a><br>
+<li><a href="reflexuse.html">Usage</a><br>
+<li><a href="reflexout.html">Output</a><br>
+</ul>
+<li><a href="library.html">LIBRARY REFERENCE MANUAL</a><br>
+<ul>
+<li><a href="libintro.html">Introduction</a><br>
+<li><a href="main.html">Module <tt>main</tt></a><br>
+<li><a href="errmsg.html">Module <tt>errmsg</tt></a><br>
+<li><a href="idents.html">Module <tt>idents</tt></a><br>
+<li><a href="output.html">Module <tt>output</tt></a><br>
+<li><a href="strings.html">Module <tt>strings</tt></a><br>
+<li><a href="implc.html">Implementing Types and Predicates in C</a><br>
+</ul>
+<li><a href="casestudy.html">CASE STUDY</a><br>
+<ul>
+<li><a href="sourcelang.html">The Source Language</a><br>
+<ul>
+<li><a href="mlsummary.html">Summary of the Language</a><br>
+<li><a href="mlvoc.html">Notation, Terminology, and Vocabulary</a><br>
+<li><a href="mltypes.html">Data Types</a><br>
+<li><a href="mlvars.html">Declarations and Denotations of Variables</a><br>
+<li><a href="mlexpr.html">Expressions</a><br>
+<li><a href="mlstmts.html">Statements</a><br>
+<li><a href="mlio.html">Input and Output</a><br>
+<li><a href="mlprogs.html">Programs</a><br>
+</ul>
+<li><a href="target.html">The Target Machine</a><br>
+<ul>
+<li><a href="machine.html">The ICode Machine</a><br>
+<li><a href="instr.html">ICode Instructions</a><br>
+</ul>
+<li><a href="compiler.html">The Compiler</a><br>
+<ul>
+<li><a href="overall.html">Overall Structure</a><br>
+<li><a href="cabstrsyn.html">Abstract Syntax</a><br>
+<li><a href="concrsyn.html">Concrete Syntax</a><br>
+<li><a href="trprocs.html">Translating Procedures</a><br>
+<li><a href="trstats.html">Translating Statements</a><br>
+<li><a href="trexpr.html">Translating Expressions</a><br>
+<li><a href="trdesig.html">Translating Designators</a><br>
+<li><a href="scopes.html">Scope Handling</a><br>
+<li><a href="aux.html">Auxiliary Predicates</a><br>
+<li><a href="targetif.html">Target Interface</a><br>
+</ul>
+</ul>
+<li><a href="references.html">References</a><br>
+</ul>
+<br>
+<br>
+</td></tr>
+</td></tr>
+<tr><td align=center bgcolor="#e9e9d2">
+<b>ABOUT THIS BOOK</b>
+</td></tr>
+<tr><td>
+<br>
+<br>
+This is an online edition of the paperback
+<font size="-1">
+<pre>
+   Friedrich Wilhelm Schr&ouml;er
+   The GENTLE Compiler Construction System
+   R. Oldenbourg, Munich and Vienna, 1997
+   142 pages, DM 44.00
+   ISBN 3-486-247034-4
+</pre>
+</font>
+You may download a PostScript or HTML version
+as well as the software from
+<p>
+<center>
+<a href="http://www.first.gmd.de/gentle/">http://www.first.gmd.de/gentle/
+</a>
+</center>
+<p>
+You may mirror this handbook at your site.
+<br>
+<br>
+</td></tr>
+<tr><td align=center bgcolor="#e9e9d2">
+&nbsp;
+</td></tr>
+</table>
+<a href="preface.html"><img src="next.gif" border=0></a> </body>
+</html>
+<br>

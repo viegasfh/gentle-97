@@ -1,0 +1,45 @@
+<html>
+<head><title>Threaded Parameter</title></head>
+<body bgcolor=white>
+<a href="optimal.html"><img src="next.gif" border=0></a> <a href="braodcast.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="smart.html">Smart Traversal</a>
+ /<br><br>
+</font>
+<h1>Threaded Parameter</h1>
+
+<p>
+A sweep predicate may also have an additional input and an output
+parameter, which must then both be of the same type:
+<ul>
+<li>
+
+   <tt> 'sweep'</tt> <i>P</i> ( <tt> ANY</tt>, <i>T</i> <tt> -></tt> <i>T</i> )
+</ul>
+
+In the default rule, the parameter is threaded through the arguments
+(the input of a member is the output of its predecessor):
+<ul>
+<li>
+
+</ul>
+
+For example,
+to count all identifier applications, we can write
+<PRE>
+
+   'root' Program(-> Pgm) Count(Pgm, 0 -> N) print(N)
+
+   'sweep' Count(ANY, INT -> INT)
+      'rule' Count(id(Id, Pos), N -> N+1)
+</PRE>
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="optimal.html"><img src="next.gif" border=0></a> <a href="braodcast.html"><img src="previous.gif" border=0></a></body>
+</html>

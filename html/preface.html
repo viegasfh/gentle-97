@@ -1,0 +1,187 @@
+<html>
+<head><title>Preface</title></head>
+<body bgcolor=white>
+<a href="primer.html"><img src="next.gif" border=0></a> <a href="index.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ /<br><br>
+</font>
+<h1>Preface</h1>
+
+This book presents <i> Gentle</i>,
+an integrated system for compiler writers.
+<p>
+<i> Gentle</i> supports the description of compilers at a very high level
+and relieves users from the need to deal with implementation details.
+It has been used in large industrial projects and for constructing
+various commercial products.
+Users report that <i> Gentle</i> significantly increases productivity.
+<p>
+<h3>Uniform Framework and Strong Methodology</h3>
+
+<i> Gentle</i> provides a uniform framework
+for specififying the components of a compiler.
+<p>
+The <i> Gentle</i> language was designed around a specific paradigm:
+<i> recursive definition and structural induction</i>.
+Input and internal data structures are defined by listing alternative ways
+to construct items from given constituents.
+Then the properties of these items are described by giving
+rules for the possible alternatives.
+These rules recursively follow the structure of items
+by processing their constituents.
+Experience has shown that this is the underlying paradigm of virtually
+all translation tasks.
+<p>
+
+The same concepts apply to analysis, transformation, and synthesis.
+They can be used to describe the backend of a compiler as
+a simple unparsing scheme such as sufficies for most source-to-source
+translations.
+They can also be used to specify a cost-augmented mapping to a low-level
+language which is used for optimal rule selection.
+<p>
+The rule-based approach follows the <i> principle of locality</i>:
+complex interactions are avoided
+and a system can be understood by understanding small pieces in isolation.
+Individual constructs are described independently.
+<p>
+The paradigm leads to a <i> data-oriented methodology</i>:
+the structure of data is mirrored by
+the structure of algorithms.  
+This methodology proves to be a useful guideline in compiler
+projects.
+<p>
+<h3>Safety, Portability, Efficiency, and Openness</h3>
+
+<p>
+<i> Gentle</i> has been designed to enabale errors to be detected
+as early as possible.
+Although variables need not be declared, <i> Gentle</i> is a strongly typed
+language that allows the compiler to check their consistent use.
+Moreover, it can be ensured statically that each variable has a value when
+it is accessed.
+In cases
+where static rule analysis
+cannot prove that a program is well-behaved,
+this is done at run time.
+The violation of a language constraint is reported when it occurs,
+not when it has disastrous consequences.
+This drastically reduces debugging effort.
+<p>
+A specification written in <i> Gentle</i> can be translated automatically
+into highly portable <i> C</i> code.
+In many cases, the generated code is faster than hand written code.
+<p>
+Moreover, <i> Gentle</i> is an open language:
+compilers can be written partly in <i> Gentle</i> and partly in <i> C</i>.
+<p>
+<h3>Organisation of this Book</h3>
+
+This book provides a tutorial, reference manuals, and a case study:
+<p>
+The <i> Gentle Primer</i> gives an introduction to the <i> Gentle</i>
+compiler description language.
+After presenting the basic concepts using simple examples
+
+(<a href="glance.html"><i>1.1 At a Glance</i></a>),
+
+,
+these concepts
+are discussed in more detail in the following sections
+
+(<a href="elements.html"><i>1.2 Elements of Specifications</i></a> -
+<a href="syntaxdescr.html"><i>1.5 Describing Syntax</i></a>).
+
+Then more advanced features
+of <i> Gentle</i> are introduced
+
+(<a href="external.html"><i>1.6 Using Types and Predicates Witten in C</i></a> -
+<a href="projects.html"><i>1.14 Organizing Larger Projects</i></a>).
+
+<p>
+<i> Getting Started</i> explains how to install and use <i> Gentle</i>.
+It describes the steps required to generate a compiler
+from a given specification.
+The <i> Language Reference Manual</i> gives a concise specification of the
+<i> Gentle</i> compiler description language.
+The <i> Reflex Reference Manual</i> describes a simple tool that facilitates
+the construction of lexer specifications.
+The <i> Library Reference Manual</i> describes some utility modules
+that come with the <i> Gentle</i> system.
+<p>
+The <i> Case Study</i> discusses a compiler for a small
+programming language.
+<p>
+To get an initial impression, read Section
+
+<a href="glance.html"><i>1.1 At a Glance</i></a>
+
+and take a look at the
+
+<a href="casestudy.html"><i>Case Study</i></a>.
+
+To start with your own first compiler, read Sections
+
+<a href="elements.html"><i>1.2 Elements of Specifications</i></a> -
+<a href="syntaxdescr.html"><i>1.5 Describing Syntax</i></a>
+
+and
+refer to
+
+<a href="start.html"><i>Getting Started</i></a>.
+
+<p>
+<h3>Acknowledgments</h3>
+
+<p>
+<i> Gentle</i> is a descendant of Kees Koster's <i> CDL</i> compiler description
+language <a href="references.html">[7]</a>. <i> CDL</i> was designed in 1969 and
+used in a portable <i> COBOL-74</i> compiler of MPB,
+in the <i> mprolog</i> system of SzKI, and to program
+the <i> Mephisto</i> chess computer. 
+<p>
+<i> Gentle</i> <a href="references.html">[10]</a> was designed in 1989 at the GMD Karlsruhe Lab,
+the group that also created the Karlsruhe <i> Ada</i> and <i> Modula</i>
+compilers <a href="references.html">[12, 11]</a>,
+the <i> BEG</i> backend generator <a href="references.html">[3]</a>,
+and the <i> Cocktail</i> toolbox <a href="references.html">[4]</a>.
+<p>
+I wish to thank the following people for fruitful discussions
+and valuable comments:
+<i> Phil Bacon</i>,
+<i> Helmut Emmelmann</i>,
+<i> Thomas Fries</i>,
+<i> Gerhard Goos</i>,
+<i> Joseph Grosch</i>,
+<i> Ulrich Grude</i>,
+<i> Stefan J&auml;hnichen</i>,
+<i> Kees Koster</i>,
+<i> Rudolf Landwehr</i>,
+<i> Birgit Schwarz</i>,
+<i> William M. Waite</i>, and
+<i> Dwight VandenBerghe</i>.
+<p>
+<h3>Further Information</h3>
+
+<i> Gentle</i> is being actively maintained and supported.
+For up-to-date information visit
+
+<a href="http://www.first.gmd.de/gentle/">www.first.gmd.de/gentle/</a> .
+
+Please feel free to send your questions and comments to the author
+
+<a href="mailto:friwi@first.gmd.de">friwi@first.gmd.de</a>.
+
+<p>
+
+<a href="http://www.first.gmd.de/~friwi">Friedrich Wilhelm Schr&ouml;er</a>
+<p>
+November 1997
+
+
+
+<br><br>
+</ul>
+<a href="primer.html"><img src="next.gif" border=0></a> <a href="index.html"><img src="previous.gif" border=0></a></body>
+</html>

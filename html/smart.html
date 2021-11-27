@@ -1,0 +1,97 @@
+<html>
+<head><title>Smart Traversal</title></head>
+<body bgcolor=white>
+<a href="defaultrule.html"><img src="next.gif" border=0></a> <a href="usingalt.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ /<br><br>
+</font>
+<h1>Smart Traversal</h1>
+
+<p>
+Some computations involve only a few functors, but to access
+them a traversal of a complex data structure must be specified.
+<p>
+Assume that in an abstract syntax a type <tt> Expr</tt> is defined with a functor
+<PRE>
+
+   id(IDENT, POS)
+</PRE>
+which is used to represent an application of an identifier at a given position.
+We wish to describe the task of printing all identifier applications
+together with their coordinates. For this purpose we use 
+a predicate
+<PRE>
+
+   ListApplication(Id, Pos)
+</PRE>
+each time we encounter a term <tt> id(Id, Pos)</tt>.
+<p>
+For example,
+<PRE>
+
+   'rule' VisitExpr(id(Id, Pos)): ListApplication(Id, Pos)
+</PRE>
+
+In order to list all identifier applications, we have to inspect
+the whole abstract syntax by a recursive traversal. For example, when we
+process a term <tt> if(Cond, Then, Else))</tt>, all three constituents
+can contain identifier applications. We have to write
+<PRE>
+
+   'rule' VisitStmt(if(Cond,Then,Else)):
+      VisitExpr(Cond) VisitStmt(Then) VisitStmt(Else)
+</PRE>
+and similar rules for all other functors.
+<p>
+This can be abbreviated using <i> sweep predicates</i>.
+<p>
+A sweep predicate traverses the data structure given as its argument.
+When an explicitly written rule is applicable this rule is taken.
+Otherwise a default rule is used that visits recursively
+the constituents of the argument.
+Hence rules such as
+<PRE>
+
+   'rule' VisitExpr(id(Id, Pos)): ListApplication(Id, Pos)
+</PRE>
+must be specified, but rules such as
+<PRE>
+
+   'rule' VisitStmt(if(Cond,Then,Else)):
+      VisitExpr(Cond) VisitStmt(Then) VisitStmt(Else)
+</PRE>
+need not be written.
+<p>
+A sweep predicate is declared as being of of category <tt> 'sweep'</tt>.
+It is a <i> generic predicate</i> in the sense that it works
+on all term types, the parameter is specified as being of type <tt> ANY</tt>
+(which is used as a generic type name).
+<p>
+The cross-reference application discussed above is completely specified
+by the following declaration
+<PRE>
+
+   'sweep' Visit(ANY)
+      'rule' Visit(id(Id, Pos)): ListApplication(Id, Pos)
+</PRE>
+
+Assuming that we specified the grammar by a predicate <tt> Program</tt>,
+we can list all applications of identifiers by writing
+<PRE>
+
+   'root' Program(-> Pgm) Visit(Pgm)
+</PRE>
+
+
+<br><br>
+<ul>
+<li><a href="defaultrule.html">Default Rule</a><br>
+<li><a href="braodcast.html">Broadcasted Parameter</a><br>
+<li><a href="thread.html">Threaded Parameter</a><br>
+</ul>
+</ul>
+</ul>
+<a href="defaultrule.html"><img src="next.gif" border=0></a> <a href="usingalt.html"><img src="previous.gif" border=0></a></body>
+</html>

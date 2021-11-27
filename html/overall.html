@@ -1,0 +1,269 @@
+<html>
+<head><title>Overall Structure</title></head>
+<body bgcolor=white>
+<a href="cabstrsyn.html"><img src="next.gif" border=0></a> <a href="compiler.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="casestudy.html">CASE STUDY</a>
+ / <a href="compiler.html">The Compiler</a>
+ /<br><br>
+</font>
+<h1>Overall Structure</h1>
+
+<p>
+The task of a compiler is to translate a program written in a source language
+into a semantically equivalent program in a target language.
+<p>
+This task can be decomposed into subtasks
+<UL>
+<LI>
+Discover the structure of the source program.
+<LI>
+Process this structure to generate the target program.
+</UL>
+
+In <i> Gentle</i> this can be written as
+<PRE>
+
+   Program(-> P) Translate(P)
+</PRE>
+Here, <tt> Program</tt>
+reads the source program and returns a structured representation
+(the ``abstract syntax'') in its
+output parameter <tt> P</tt>.
+This representation is then processed by <tt> Translate</tt>,
+which is invoked with <tt> P</tt> as an input parameter.
+<p>
+Consider the example <i> MiniLAX</i> program in <i> Fig. 6.1</i>.
+ <br>
+
+<FONT SIZE=-2>
+<PRE>
+
+   PROGRAM test;
+    
+   DECLARE
+     i: INTEGER
+   BEGIN
+     i := 0
+   END.
+</PRE>
+</FONT SIZE=-2>
+
+<center>
+<i> Fig. 6.1 Example Program in MiniLAX</i>
+</center>
+ <br>
+<p>
+For this program the predicate <tt> Program</tt>
+will deliver a value of <tt> P</tt> as shown
+in <i> Fig. 6.2</i>.
+ <br>
+
+<FONT SIZE=-2>
+<PRE>
+
+   dcl(
+      <identifier "test">,
+      proc(
+         nil,
+         decllist(
+            dcl( <identifier "i">, variable( integer), <line 4, col 3> ),
+            nil
+         ),
+         assign(
+            id( <identifier "i">, <line 6, col 3> ),
+            int( 0 ),
+            <line 6, col 5>
+         )
+      ),
+      <line 1, col 9>
+   )
+</PRE>
+</FONT SIZE=-2>
+
+<center>
+<i> Fig. 6.2 Example Program in Abstract Syntax</i>
+</center>
+ <br>
+<p>
+This will be translated by <tt> Translate</tt> into the 
+<i> ICode</i> program shown in <i> Fig. 6.3</i>.
+<p>
+ <br>
+
+<FONT SIZE=-2>
+<PRE>
+
+    0:   ENT    1
+    1:   LDA    0    3
+    2:   LDC    1    0
+    3:   STI
+    4:   RET
+</PRE>
+</FONT SIZE=-2>
+
+<center>
+<i> Fig. 6.3 Example Program in ICode</i>
+</center>
+ <br>
+<p>
+The <i> abstract syntax</i> representation of a prgram
+is a structured value (a ``term'') that expresses the hierarchical composition
+of the program.
+Abstract syntax ignores syntactic sugar and concrete tokens, that only
+serve to make the input unambiguous. It merely specifies which alternative
+was used for a construct and what its constituents were.
+<p>
+A term type is introduced by a type declaration.
+For example, the following declaration
+introduces the abstract syntax of statements:
+<PRE>
+
+   'type' STMT
+      assign(DESIG, EXPR, POS)
+      read(DESIG, POS)
+      write(EXPR, POS)
+      call(IDENT, EXPRLIST, POS)
+      if(EXPR, STMT, STMT, POS)
+      while(EXPR, STMT, POS)
+      seq(STMT, STMT)
+</PRE>
+These alternatives serve as templates for values:
+If <tt> E</tt> is an <tt> EXPR</tt>, <tt> S</tt> an <tt> STMT</tt>,
+and <tt> Pos</tt> the source coordinate of the phrase,
+then
+<PRE>
+
+   while (E, S, Pos)
+</PRE>
+is a value of type <tt> STMT</tt>.
+<p>
+Concrete syntax is described by grammar rules, e.g.
+<PRE>
+
+ 'rule' Stat(-> while(E, S, Pos)) :
+    "WHILE" Expr(-> E) @(-> Pos) "DO" StatSeq(-> S) "END"
+</PRE>
+This rule parses a phrase
+<PRE>
+
+    WHILE Expr DO StatSeq END
+</PRE>
+<tt> E</tt> is the abstract syntax of <tt> Expr</tt>,
+<tt> S</tt> the abstract syntax of <tt> StatSeq</tt>,
+and <tt> Pos</tt> the source coordinate of <tt> Expr</tt>.
+From these values, the abstract syntax of the phrase is constructed:
+<PRE>
+
+   while (E, S, Pos)
+</PRE>
+
+Translation is described by action rules, e.g.
+<PRE>
+
+   'rule' Statement(while(E, S, Pos)) :
+       NewLabel(-> L1)
+       NewLabel(-> L2)
+       JMP(L2)
+       LAB(L1)
+       Statement(S)
+       LAB(L2)
+       Expression(E -> T)
+       CheckBool(T, Pos)
+       INV
+       FJP(L1)
+</PRE>
+
+This rule unparses the term
+<PRE>
+
+   while (E, S, Pos)
+</PRE>
+thereby emitting the target code
+<PRE>
+
+       JMP L2
+   L1: Statement
+   L2: Expression
+       INV
+       FJP L1
+</PRE>
+where <tt> Statement</tt> is the code for <tt> S</tt>, and
+<tt> Expression</tt> is the code for <tt> E</tt>.
+<p>
+When the source program is translated into an internal representation,
+rules are selected by the parser according to the given source.
+Consider the rules
+<PRE>
+
+   'rule' Stat(-> read(V, Pos)) :
+      "READ" "(" Desig(-> V) @(-> Pos) ")"
+   'rule' Stat(-> write(E, Pos)) :
+      "WRITE" "(" Expr(-> E) @(-> Pos) ")"
+</PRE>
+If a statement has the form <tt> READ(Desig)</tt>, the first rule is selected
+and the internal form is <tt> read(V,Pos)</tt>.
+If a statement has the form <tt> WRITE(Expr)</tt>, the second rule is selected
+and the internal form is <tt> write(E,Pos)</tt>.
+<p>
+When the internal representation is processed,
+rules are selected according to the given term.
+Consider the rules
+<PRE>
+
+   'rule' Statement(read(V, Pos)) :
+      Designator(V -> T)
+      CheckSimple(T, Pos)
+      TypeCode(T -> N)
+      REA(N)
+      STI
+   'rule' Statement(write(E, Pos)) :
+      Expression(E -> T)
+      CheckSimple(T, Pos)
+      TypeCode(T -> N)
+      WRI(N)
+</PRE>
+If the predicate <tt> Statement</tt> is called with the term
+<tt> read(V, Pos)</tt>, the first rule is selected and corresponding target code
+for reading an item is emitted.
+If the predicate is called with <tt> write(E, Pos)</tt>,
+the the second rule is selected and emits code to write an item.
+<p>
+The overall organization of the compiler is expressed by the <i> root clause</i>,
+which is elaborated by executing its statements.
+Our specification starts with the root clause:
+
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+<font size="-1">
+<pre>
+
+001  'root' 
+002     Program(-> P) Translate(P) 
+
+</pre>
+</font>
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+
+Now we have to define the abstract syntax and have to specify how
+a concrete source program is mapped to the abstract representation
+(<tt> Program</tt>) and how this representation is processed to produce the
+target program (<tt> Translate</tt>).
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="cabstrsyn.html"><img src="next.gif" border=0></a> <a href="compiler.html"><img src="previous.gif" border=0></a></body>
+</html>

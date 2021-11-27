@@ -1,0 +1,58 @@
+<html>
+<head><title>Declarations and Denotations of Variables</title></head>
+<body bgcolor=white>
+<a href="mlexpr.html"><img src="next.gif" border=0></a> <a href="mltypes.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="casestudy.html">CASE STUDY</a>
+ / <a href="sourcelang.html">The Source Language</a>
+ /<br><br>
+</font>
+<h1>Declarations and Denotations of Variables</h1>
+
+<p>
+     Variable declarations consist of an identifier denoting the new variable,
+followed by its type.
+<PRE>
+
+VarDecl ::= Id ':' Type
+</PRE>
+
+Examples:
+<p>
+<PRE>
+
+i: INTEGER
+r: REAL
+b: BOOLEAN
+a: ARRAY [4..7] OF ARRAY [2..2] OF INTEGER
+</PRE>
+
+Denotations of variables either designate an entire variable or a component of
+an array variable.  Variables occurring in examples in subsequent chapters are
+assumed to be declared as indicated above.
+<p>
+<PRE>
+
+Var ::= Id | Var '[' Expr ']'
+</PRE>
+
+Examples:
+<p>
+<PRE>
+
+i   a[4][2]
+</PRE>
+
+An entire variable is denoted by its identifier.   A  component  of  an  array
+variable  is  denoted  by  the  variable followed by an index expression.  The
+value of the index expression must lie in the range  of  the  indices  of  the
+corresponding array type.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="mlexpr.html"><img src="next.gif" border=0></a> <a href="mltypes.html"><img src="previous.gif" border=0></a></body>
+</html>

@@ -1,0 +1,65 @@
+<html>
+<head><title>Predicate Declarations</title></head>
+<body bgcolor=white>
+<a href="conditions.html"><img src="next.gif" border=0></a> <a href="shallow.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="compuations.html">Describing Computations</a>
+ /<br><br>
+</font>
+<h1>Predicate Declarations</h1>
+
+A predicate is declared by giving its signature and its rules.
+For example,
+<PRE>
+
+   'action' length (ColorList -> INT)
+
+      'rule' length (list(Head, Tail) -> N+1) : length(Tail -> N)
+      'rule' length (nil -> 0)
+</PRE>
+
+The signature of a predicate specifies its interface to the caller.
+It gives the name of the predicate and lists its parameter types.
+For example,
+<PRE>
+
+   'action' length (ColorList -> INT)
+</PRE>
+introduces a predicate <tt> length</tt> that has one input parameter
+of type <tt> ColorList</tt> and one output parameter of type <tt> INT</tt>.
+<p>
+Expressions and patterns in rule headings and invocations must be
+valid for the corresponding type.
+<p>
+In addition, a signature specifies the <i> category</i> of
+the predicate, which is <tt> action</tt> in the above example.
+The category of a predicate indicates how it is used and what its
+evaluation strategy is.
+<p>
+The general form is
+<ul>
+<li>
+
+<i>Category</i> <i>Name</i> <tt> (</tt> <i>InputTypes</i> <tt> -></tt> <i>OutputTypes</i> <tt> )</tt>
+</ul>
+
+<p>
+Type names are separated by commas. If there are no output parameters,
+the arrow is omitted.
+<p>
+Parameter specifications may include identifiers for documentation:
+<PRE>
+
+   'action' length (L: ColorList -> N: INT)
+   -- on exit N is the number of elements of L
+</PRE>
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="conditions.html"><img src="next.gif" border=0></a> <a href="shallow.html"><img src="previous.gif" border=0></a></body>
+</html>

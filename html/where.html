@@ -1,0 +1,99 @@
+<html>
+<head><title>The Predicate <tt>where</tt></title></head>
+<body bgcolor=white>
+<a href="disjunct.html"><img src="next.gif" border=0></a> <a href="dataflow.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="control.html">Control Structures</a>
+ /<br><br>
+</font>
+<h1>The Predicate <tt>where</tt></h1>
+
+In the previous example, each alternative invoked a procedure <tt> process</tt>
+that defined the common result variable <tt> C</tt>.
+If no such action is adequate, we have to use something similar
+to specify the result.
+<p>
+<i> Gentle</i> has a predefined predicate <tt> where</tt> that merely copies
+its input to its output. It is defined for each type <tt> T</tt>
+<PRE>
+
+   'action' where(T -> T)
+   'rule' where(X -> X)
+</PRE>
+This can be used to define variables.
+For example,
+<PRE>
+
+   where(red -> Col)
+</PRE>
+defines <tt> Col</tt> as <tt> red</tt>
+<p>
+Consider the predicate <tt> max</tt> with rules
+<PRE>
+
+   'rule' max(X, Y -> X): ge(X, Y)
+   'rule' max(X, Y -> Y): lt(X, Y)
+</PRE>
+If we want to replace an invocation
+<PRE>
+
+   max(A, B -> C)
+</PRE>
+we can write
+<PRE>
+
+   (| ge(A, B) where(A -> C) || lt(A, B) where(B -> C) |)
+</PRE>
+Here, <tt> C</tt> is defined as the maximum of <tt> A</tt> and <tt> B</tt>.
+<p>
+In the example, an alternative was selected by giving
+a condition such as <tt> ge</tt> as a guard.
+If we wish to replace a predicate inline, the rules of which
+are selected by pattern matching, we have to use a different device.
+<p>
+Again, we can use the predefined predicate <tt> where</tt>.
+If we supply a pattern as the output value the input value is
+matched against this pattern.
+The pattern may contain variables, which are defined if matching succeeds.
+For examples,
+<PRE>
+
+   where(Col -> red)
+</PRE>
+succeeds if <tt> Col</tt> is <tt> red</tt>.
+<p>
+Consider the predicate <tt> MapType(Type -> Rep)</tt> with rules
+<PRE>
+
+   'rule' MapType(array(N,Type) -> Rep): ArrayType(N,Type -> Rep)
+   'rule' MapType(int -> Rep): IntType(-> Rep)
+</PRE>
+An invocation
+<PRE>
+
+   MapType(Type -> Rep)
+</PRE>
+can be replaced by
+<PRE>
+
+   (|
+      where(Type -> array(N, Type))
+      ArrayType(N, Type -> Rep)
+   ||
+      where(Type -> int)
+      IntType(-> Rep)
+   |)
+</PRE>
+Here, <tt> Rep</tt> is defined in both alternatives, and therefore by the whole
+alternative statement.
+<tt> N</tt> and <tt> Type</tt> are variables that are local to the first alternative.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="disjunct.html"><img src="next.gif" border=0></a> <a href="dataflow.html"><img src="previous.gif" border=0></a></body>
+</html>

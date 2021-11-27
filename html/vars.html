@@ -1,0 +1,67 @@
+<html>
+<head><title>Variables</title></head>
+<body bgcolor=white>
+<a href="srategy.html"><img src="next.gif" border=0></a> <a href="bodies.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="compuations.html">Describing Computations</a>
+ /<br><br>
+</font>
+<h1>Variables</h1>
+
+Variables
+defined in a rule are local to that rule.
+Here are the constraints that must hold for the data flow inside a rule:
+<p>
+Each variable appearing inside a rule must be defined exactly once
+(i.e. occur in a pattern).
+A variable that appears in an expression of a member of the rule body
+(i.e. that is used as part of an input parameter of that member)
+must be defined in the rule heading (i.e. inside an input parameter)
+or in a preceding member of the rule body (i.e. inside an output parameter
+of a preceding member).
+<p>
+These laws make it possible for the disastrous error of uninitialized
+variables to be totally excluded by compile-time analysis.
+<p>
+Assume that we want to express that two persons like each other if they
+prefer the same color. Then we can write
+<PRE>
+
+   'rule' likes(A, B):
+      favorite(A -> AsFavorite)
+      favorite(B -> BsFavorite)
+      eq(AsFavorite, BsFavorite)
+</PRE>
+using a predefined predicate <tt> eq</tt> that succeeds
+if invoked with equal arguments
+and fails if invoked with unequal arguments.
+<p>
+The first and second members compute the favorite color for <tt> A</tt>
+and <tt> B</tt>. Now as the values of <tt> AsFavorite</tt> and <tt> BsFavorite</tt>
+are known, they can be used as input to <tt> eq</tt>.
+<p>
+The first two members always succeed. The third member succeeds if
+<tt> AsFavorite</tt> and <tt> BsFavorite</tt> are equal, and fails otherwise.
+If the third member succeeds, then the rule succeeds,
+otherwise the rule fails.
+Since this is the only rule, an invocation <tt> likes(X, Y)</tt>
+succeeds if <tt> X</tt> and <tt> Y</tt> prefer the same color.
+<p>
+The example also shows that a variable cannot be defined twice.
+Using a common variable (say <tt> X</tt>) instead of
+<tt> AsFavorite</tt> and <tt> BsFavorite</tt> to express that these
+values must be equal, would violate the constraint because
+<tt> X</tt> would occur in two patterns.
+Instead, the equality must be expressed explicitly using <tt> eq</tt>.
+(This is to catch typing errors and to rule out the misunderstanding
+that the second definition overwrites the old value.)
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="srategy.html"><img src="next.gif" border=0></a> <a href="bodies.html"><img src="previous.gif" border=0></a></body>
+</html>

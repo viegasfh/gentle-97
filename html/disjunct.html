@@ -1,0 +1,40 @@
+<html>
+<head><title>Disjunctions</title></head>
+<body bgcolor=white>
+<a href="conditional.html"><img src="next.gif" border=0></a> <a href="where.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="control.html">Control Structures</a>
+ /<br><br>
+</font>
+<h1>Disjunctions</h1>
+
+<p>
+Since an alternative statement succeeds if one of its alternatives succeeds,
+it can be used to express disjunction (<strong> or</strong> connection),
+whereas the members of a statement sequence express conjunction
+(<strong> and</strong> connection).
+Alternative statements can be nested.
+For example,
+<PRE>
+
+   'rule' HandleType (Type):
+      (|
+         (| where(Type -> array(N, T)) || where(Type -> record(List) |)
+         HandleStructuredType(Type)
+      ||
+         HandleSimpleType(Type)
+      |)
+</PRE>
+<tt> HandleStructuredType</tt> is invoked if <tt> Type</tt> matches
+<tt> array(N,T)</tt> or <tt> record(List)</tt>.
+Otherwise <tt> HandleSimpleType</tt> is invoked.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="conditional.html"><img src="next.gif" border=0></a> <a href="where.html"><img src="previous.gif" border=0></a></body>
+</html>

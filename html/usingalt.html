@@ -1,0 +1,42 @@
+<html>
+<head><title>Using Alternative and Conditional Statements</title></head>
+<body bgcolor=white>
+<a href="smart.html"><img src="next.gif" border=0></a> <a href="conditional.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="control.html">Control Structures</a>
+ /<br><br>
+</font>
+<h1>Using Alternative and Conditional Statements</h1>
+
+Alternative and conditional statements allow decisions within a rule body
+without the necessity of introducing an auxiliary predicate.
+When should predicates be used?
+<p>
+Of course predicates are necessary if the computation is recursive.
+Predicates should also be used when the same piece of code
+occurs more than once.
+<p>
+In addition, a predicate should be used to name a subcomputation if it is
+otherwise hard to understand or if the rule body gets longer than one can grasp.
+With conditional statements, there is a the danger of writing long rule bodies
+that are hard to understand.
+<p>
+On the other hand, a short conditional, given directly, is often more
+expressive than a newly invented name for an auxiliary predicate.
+<p>
+Conditional statements should also be used when correctness
+relies on the fact that earlier alternatives did not succeed
+(shallow backtracking).
+While rules are best understood if one can read them in isolation,
+conditional statements are read in an
+if-then-else style.
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="smart.html"><img src="next.gif" border=0></a> <a href="conditional.html"><img src="previous.gif" border=0></a></body>
+</html>

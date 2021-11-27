@@ -1,0 +1,75 @@
+<html>
+<head><title>Using Output Parameters</title></head>
+<body bgcolor=white>
+<a href="twophases.html"><img src="next.gif" border=0></a> <a href="costdriven.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="optimal.html">Optimal Rule Selection</a>
+ /<br><br>
+</font>
+<h1>Using Output Parameters</h1>
+
+<p>
+In the above example, we used predicates such as <tt> PLUS</tt>
+to write the generated code to the target file.
+It can also be returned as an output parameter of the predicate.
+<p>
+In many specifications, both methods are used.
+For example,
+an invocation
+<PRE>
+
+   Register(X -> R)
+</PRE>
+emits code for the term <tt> X</tt> such that the result is stored
+in a register. The output parameter <tt> R</tt> states which
+register is used.
+<p>
+Often, these output parameters are then used to construct a more
+complex result in the rule heading. This result can specify
+a computation for which no instructions have to be emitted, but which can
+be performed ``via an addressing mode''.
+<p>
+By way of an example, consider
+a rule from a code-generator specification for the MC68020:
+<PRE>
+
+   'rule' EffectiveAddress
+          (  addrplus(Array, intmult(Index, intconst(Size)))
+          -> ax(AR, 0, DR, Size) ) :
+      IsSuitableScaleFactor (Size)
+      AddressRegister (Array -> AR)
+      DataRegister (Index -> DR)
+      $ 14
+</PRE>
+Here, the <tt> choice</tt> predicates <tt> EffectiveAddress</tt>,
+<tt> AddressRegister</tt>, and <tt> DataRegister</tt>
+translate their input argument such that the result is given
+as an ``effective address'',
+an address register,
+or a data register.
+The rule states that the term
+<PRE>
+
+   addrplus(Array, intmult(Index, intconst(Size)))
+</PRE>
+(which is the translation of an array subscription)
+may be mapped to
+<PRE>
+
+   ax(AR, 0, DR, Size)
+</PRE>
+(the ``address register with index'' addressing mode)
+when the value of <tt> Array</tt> is computed in <tt> AR</tt> and the
+value of <tt> Index</tt> is computed in <tt> DR</tt>.
+To be a suitable operand for the <tt> ax</tt> mode, <tt> Size</tt> must fulfill
+the condition <tt> IsSuitableScaleFactor</tt>.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="twophases.html"><img src="next.gif" border=0></a> <a href="costdriven.html"><img src="previous.gif" border=0></a></body>
+</html>

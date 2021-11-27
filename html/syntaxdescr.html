@@ -1,0 +1,64 @@
+<html>
+<head><title>Describing Syntax</title></head>
+<body bgcolor=white>
+<a href="syndef.html"><img src="next.gif" border=0></a> <a href="conditions.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ /<br><br>
+</font>
+<h1>Describing Syntax</h1>
+
+<p>
+We have discussed rules of the form
+<ul>
+<li>
+
+<tt> 'rule'</tt> <i>A</i> : <i>B<SUB>1</SUB></i> <i>B<SUB>2</SUB></i> ... <i>B<SUB>n</SUB></i>
+</ul>
+
+that could be interpreted as a decomposition scheme describing how a task <i>A</i>
+can be solved: Select a suitable rule for <i>A</i>, and solve the subtasks
+<i>B<SUB>1</SUB></i>, <i>B<SUB>2</SUB></i>, ... , <i>B<SUB>n</SUB></i>.
+Given the interpretation
+<ul>
+<li>
+
+<i>A</i> <strong> if</strong> <i>B<SUB>1</SUB></i> <strong> and</strong> <i>B<SUB>2</SUB></i> <strong> and</strong> ... <strong> and</strong> <i>B<SUB>n</SUB></i>
+</ul>
+
+this could also be read as: A proof of <i>A</i> can be obtained from proofs
+of <i>B<SUB>1</SUB></i> , <i>B<SUB>2</SUB></i> , ... , <i>B<SUB>n</SUB></i>.
+<p>
+The same kind of rules can also be used to describe formal languages
+by recursive definitions. In the definition of <i> Algol 60</i>
+the following notation (known as <i> Backus-Naur-Formalism</i>, BNF)
+was used:
+<ul>
+<li>
+
+<i>&lt; A &gt;</i> ::=
+<i>&lt; B<SUB>1</SUB> &gt;</i> <i>&lt; B<SUB>2</SUB> &gt;</i> ...  <i>&lt; B<SUB>n</SUB> &gt;</i>
+</ul>
+
+which states that a member of a syntactic class
+<i>&lt; A &gt;</i>
+can be composed from members of syntactic classes
+<i>&lt; B<SUB>1</SUB> &gt;</i>, <i>&lt; B<SUB>2</SUB> &gt;</i>, ...,  <i>&lt; B<SUB>n</SUB> &gt;</i>.
+<p>
+
+<br><br>
+<ul>
+<li><a href="syndef.html">Syntax Definitions</a><br>
+<li><a href="nonterms.html">Nonterm Predicates</a><br>
+<li><a href="tokens.html">Token Predicates</a><br>
+<li><a href="attr.html">Attributes</a><br>
+<li><a href="actgram.html">Actions in Grammar Rules</a><br>
+<li><a href="rulesel.html">Rule Selection</a><br>
+<li><a href="abstract.html">Abstract Syntax</a><br>
+<li><a href="coord.html">Source Coordinates</a><br>
+</ul>
+</ul>
+</ul>
+<a href="syndef.html"><img src="next.gif" border=0></a> <a href="conditions.html"><img src="previous.gif" border=0></a></body>
+</html>

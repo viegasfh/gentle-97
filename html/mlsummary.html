@@ -1,0 +1,92 @@
+<html>
+<head><title>Summary of the Language</title></head>
+<body bgcolor=white>
+<a href="mlvoc.html"><img src="next.gif" border=0></a> <a href="sourcelang.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="casestudy.html">CASE STUDY</a>
+ / <a href="sourcelang.html">The Source Language</a>
+ /<br><br>
+</font>
+<h1>Summary of the Language</h1>
+
+<p>
+     A computer program consists of two  essential  parts,  a  description  of
+actions  which  are  to be performed, and a description of the data, which are
+manipulated by these actions.  Actions are described by statements,  and  data
+are described by declarations.
+<p>
+     The data are represented by constants and  values  of  variables.   Every
+variable occurring in a statement must be introduced by a variable declaration
+which associates an identifier and a data type with that variable.   The  data
+type  essentially defines the set of values which may be assumed by that
+variable.  The data type is directly described in the variable declaration.
+<p>
+     There exist three basic types: Boolean, integer, and real.  The values of
+the  type  Boolean are denoted by reserved identifiers, the numeric values are
+denoted by numbers.
+<p>
+     Array types are defined by describing the types of their  components  and
+an  integer  range.   A  component of an array value is selected by an integer
+index.  The type of the component is the component type of  the  corresponding
+array type.
+<p>
+     The most fundamental statement is the assignment statement.  It specifies
+that  a  newly  computed  value be assigned to a variable (or a component of a
+variable).  The value is obtained by evaluating  an  expression.   Expressions
+consist of variables, constants and operators operating on the denoted
+quantities and producing new values.
+<i> MiniLAX</i> defines a fixed set of operators, each
+of  which  can be regarded as describing a mapping from the operand types onto
+the result type.  The set of operators is subdivided into
+<p>
+<UL>
+    <LI> Arithmetic operators: addition and multiplication
+    <LI> Boolean operators: negation
+    <LI> Relational operators: comparison
+</UL>
+<p>
+The result of a comparison is of type Boolean.  The procedure statement causes
+the  execution  of  the designated procedure (see below).
+Assignment and procedure statements are
+the components or building blocks of  structured  statements,
+which  specify  sequential,  selective, or repeated execution of their
+components.  Sequential execution of  statements  is  specified  by  statement
+sequences,  selective execution by the if statement, and repeated execution by
+the while statement.  The if statement serves to make  the  execution  of  two
+alternative  statements  dependent  on the value of a Boolean expression.  The
+while statement serves to execute a statement while a  Boolean  expression  is
+true.
+<p>
+     A statement sequence can be given a name (identifier), and be  referenced
+through  that  identifier.  The statement sequence is then called a procedure,
+and its declaration a procedure declaration.  Such a declaration may
+additionally  contain  a  set  of variable declarations and further
+procedure declarations.
+The variables and procedures thus  declared  can  be  referenced  only
+within  the procedure itself, and are therefore called local to the procedure.
+Their identifiers have significance only within the program text which
+constitutes  the  procedure  declaration  and  which
+is  called  the scope of these
+identifiers.  Since procedures may be  declared  local  to  other  procedures,
+scopes  may  be nested.  Entities which are declared in the main program, i.e.
+not local to some procedure, are called  global.   A  procedure  has  a  fixed
+number  of  parameters,  each  of  which is denoted within the procedure by an
+identifier called the formal parameter.  Upon an activation of  the  procedure
+statement, an actual quantity has to be indicated for each parameter, which can
+be referenced from within the procedure through the  formal  parameter.   This
+quantity  is  called the actual parameter.  There are two kinds of parameters:
+value parameters and variable parameters.   In  the  first  case,  the  actual
+parameter  is  an  expression  which  is evaluated once.  The formal parameter
+represents a local variable to which the result of this evaluation is assigned
+before  the  execution of the procedure.  In the case of a variable parameter,
+the actual parameter is a variable, and the formal parameter  stands  for  this
+variable.  Possible indices are evaluated before execution of the procedure.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="mlvoc.html"><img src="next.gif" border=0></a> <a href="sourcelang.html"><img src="previous.gif" border=0></a></body>
+</html>

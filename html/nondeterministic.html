@@ -1,0 +1,53 @@
+<html>
+<head><title>Nondeterministic Unparsing</title></head>
+<body bgcolor=white>
+<a href="codegenspec.html"><img src="next.gif" border=0></a> <a href="combined.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="optimal.html">Optimal Rule Selection</a>
+ /<br><br>
+</font>
+<h1>Nondeterministic Unparsing</h1>
+
+<p>
+While the specification for stack code was functional, i.e. there
+was one unique translation for each abstract syntax term,
+the combined specification allows more than one translation.
+<p>
+The combined specification is <i> correct</i> in the sense that each
+possible rule selection results in correct target code.
+It is also <i> complete</i> in the sense that for each argument term
+there is a possible selection of rules that emits code for the term.
+Hence, it should suffice as a specification of code generation.
+<p>
+This is the case if we use <i> cost-driven</i> rule selection.
+<p>
+Cost-driven rule selection is performed for predicates
+that are declared as being  of the category <tt> choice</tt>.
+Rules of such predicates may be augmented by cost values.
+A rule is given a cost by providing a specification of the form
+<ul>
+<li>
+
+   $ <i>N</i>
+</ul>
+
+at the end of the rule. <i>N</i> is a positive integer indicating the price for
+applying the rule.
+<p>
+When evaluating invocations of <tt> choice</tt> predicates, conceptually all
+possible sequences of rule applications are considered.
+The total cost of a sequence of rule applications is the sum of the
+costs of all rules. The sequence of rule applications that
+leads to the minimal total cost is actually used for
+evaluation
+(if there are several best sequences one of them is taken).
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="codegenspec.html"><img src="next.gif" border=0></a> <a href="combined.html"><img src="previous.gif" border=0></a></body>
+</html>

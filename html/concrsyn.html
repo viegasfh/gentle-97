@@ -1,0 +1,190 @@
+<html>
+<head><title>Concrete Syntax</title></head>
+<body bgcolor=white>
+<a href="trprocs.html"><img src="next.gif" border=0></a> <a href="cabstrsyn.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="casestudy.html">CASE STUDY</a>
+ / <a href="compiler.html">The Compiler</a>
+ /<br><br>
+</font>
+<h1>Concrete Syntax</h1>
+
+<p>
+Here is the concrete grammar of <i> MiniLAX</i>
+and the mapping to abstract syntax:
+
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+<font size="-1">
+<pre>
+
+046  'nonterm' Program(-> DECL) 
+047     'rule' Program(-> dcl(I, proc(nil, Ds, S), Pos)) : 
+048        "PROGRAM" Ident(-> I) @(-> Pos) ";"  
+049        "DECLARE" DeclList(-> Ds) "BEGIN" StatSeq(-> S) "END" "." 
+  
+050  'nonterm' DeclList(-> DECLLIST) 
+051     'rule' DeclList(-> decllist(D, Ds)) : 
+052        Decl(-> D) ";" DeclList(-> Ds) 
+053     'rule' DeclList(-> decllist(D, nil)) : 
+054        Decl(-> D) 
+  
+055  'nonterm' Decl(-> DECL) 
+056     'rule' Decl(-> dcl(I, variable(T), Pos)) : 
+057        Ident(-> I) @(-> Pos) ":" Type(-> T) 
+058     'rule' Decl(-> dcl(I, proc(Fs, Ds, S), Pos)) : 
+059        "PROCEDURE" Ident(-> I) @(-> Pos) FormalPart(-> Fs) ";" 
+060        "DECLARE" DeclList(-> Ds) 
+061        "BEGIN" StatSeq(-> S) "END" 
+  
+062  'nonterm' Type(-> TYPE) 
+063     'rule' Type(-> integer) : 
+064        "INTEGER" 
+065     'rule' Type(-> real) : 
+066        "REAL" 
+067     'rule' Type(-> boolean) : 
+068        "BOOLEAN" 
+069     'rule' Type(-> array(Lwb, Upb, T)) : 
+070        "ARRAY" "[" Number(-> Lwb) ".." Number(-> Upb) "]" 
+071        "OF" Type(-> T) 
+  
+072  'nonterm' FormalPart(-> DECLLIST) 
+073     'rule' FormalPart(-> nil) : 
+074     'rule' FormalPart(-> Fs) : 
+075        "(" FormalList(-> Fs) ")" 
+  
+076  'nonterm' FormalList(-> DECLLIST) 
+077     'rule' FormalList(-> decllist(F, nil)) : 
+078        Formal(-> F) 
+079     'rule' FormalList(-> decllist(F, Fs)) : 
+080        Formal(-> F) ";" FormalList(-> Fs) 
+  
+081  'nonterm' Formal(-> DECL) 
+082     'rule' Formal(-> dcl(I, varparam(T), Pos)) : 
+083        "VAR" Ident(-> I) ":" @(-> Pos) Type(-> T) 
+084     'rule' Formal(-> dcl(I, valueparam(T), Pos)) : 
+085        Ident(-> I) ":" @(-> Pos) Type(-> T) 
+  
+086  'nonterm' StatSeq(-> STMT) 
+087     'rule' StatSeq(-> S) : 
+088        Stat(-> S) 
+089     'rule' StatSeq(-> seq(S1, S2)) : 
+090        StatSeq(-> S1) ";" Stat(-> S2) 
+  
+091  'nonterm' Stat(-> STMT) 
+092     'rule' Stat(-> assign(V, E, Pos)) : 
+093        Desig(-> V) ":=" @(-> Pos) Expr(-> E) 
+094     'rule' Stat(-> read(V, Pos)) : 
+095        "READ" "(" Desig(-> V) @(-> Pos) ")" 
+096     'rule' Stat(-> write(E, Pos)) : 
+097        "WRITE" "(" Expr(-> E) @(-> Pos) ")" 
+098     'rule' Stat(-> call(I, Es, Pos)) : 
+099        Ident(-> I) "(" ExprList(-> Es) ")" @(-> Pos) 
+100     'rule' Stat(-> call(I, nil(Pos), Pos)) : 
+101        Ident(-> I) @(-> Pos) 
+102     'rule' Stat(-> if(E, S1, S2, Pos)) : 
+103        "IF" Expr(-> E) @(-> Pos) "THEN" StatSeq(-> S1) 
+104        "ELSE" StatSeq(-> S2) "END" 
+105     'rule' Stat(-> while(E, S, Pos)) : 
+106        "WHILE" Expr(-> E) @(-> Pos) "DO" StatSeq(-> S) "END" 
+  
+107  'nonterm' Desig(-> DESIG) 
+108     'rule' Desig(-> id(I, Pos)) : 
+109        Ident(-> I) @(-> Pos) 
+110     'rule' Desig(-> subscr(V, E, Pos)) : 
+111        Desig(-> V) "[" Expr(-> E) "]" @(-> Pos) 
+  
+112  'nonterm' ExprList(-> EXPRLIST) 
+113     'rule' ExprList(-> exprlist(E, nil(Pos), Pos)) : 
+114        Expr(-> E) @(-> Pos) 
+115     'rule' ExprList(-> exprlist(E, Es, Pos)) : 
+116        Expr(-> E) @(-> Pos) "," ExprList(-> Es) 
+  
+117  'nonterm' Expr(-> EXPR) 
+118     'rule' Expr(-> binary(less, X, Y, Pos)) : 
+119        Expr(-> X) "<" @(-> Pos) Expr2(-> Y) 
+120     'rule' Expr(-> X) : 
+121        Expr2(-> X) 
+  
+122  'nonterm' Expr2(-> EXPR) 
+123     'rule' Expr2(-> binary(plus, X, Y, Pos)) : 
+124        Expr2(-> X) "+" @(-> Pos) Expr3(-> Y) 
+125     'rule' Expr2(-> X) : 
+126        Expr3(-> X) 
+  
+127  'nonterm' Expr3(-> EXPR) 
+128     'rule' Expr3(-> binary(mult, X, Y, Pos)) : 
+129        Expr3(-> X) "*" @(-> Pos) Expr4(-> Y) 
+130     'rule' Expr3(-> X) : 
+131        Expr4(-> X) 
+  
+132  'nonterm' Expr4(-> EXPR) 
+133     'rule' Expr4(-> opnot(X, Pos)) : 
+134        "NOT" @(-> Pos) Expr4(-> X) 
+135     'rule' Expr4(-> X) : 
+136        "(" Expr(-> X) ")" 
+137     'rule' Expr4(-> desig(D)) : 
+138        Desig(-> D) 
+139     'rule' Expr4(-> int(N)) : 
+140        Number(-> N) 
+141     'rule' Expr4(-> float(F)) : 
+142        Float(-> F) 
+143     'rule' Expr4(-> true) : 
+144        "TRUE" 
+145     'rule' Expr4(-> false) : 
+146        "FALSE" 
+  
+147  'token' Ident(-> IDENT) 
+148  'token' Number(-> INT) 
+149  'token' Float(-> FLOAT) 
+
+</pre>
+</font>
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+
+<p>
+The tokens <tt> Ident</tt>, <tt> Number</tt>, and <tt> REALCONST</tt>
+are specified by <i> token description files</i> outside the
+<i> Gentle</i> specification.
+(These files are processed by the tool <i> Reflex</i>
+and integrated into a specification for <i> Lex</i>.)
+<p>
+For example, here is the description for <tt> Ident</tt>:
+<p>
+<PRE>
+
+   [A-Za-z][A-Za-z0-9]* {
+      long id;
+      string_to_id (yytext, &id);
+      yylval.attr[1] = id;
+      yysetpos();
+      return Ident;
+   }
+</PRE>
+
+This rule gives a regular expression that matches identifiers
+and an action that computes its attributes.
+The type <tt> IDENT</tt>, which is used to maintain identifiers
+(see the discussion of scope handling below),
+is defined by a module of the <i> Gentle</i> library.
+The library predicate <tt> string_to_id</tt> converts the recognized
+input (<tt> yytext</tt>) into a value of type <tt> IDENT</tt>. This can later
+be used to attach a ``meaning'' to the identifier.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="trprocs.html"><img src="next.gif" border=0></a> <a href="cabstrsyn.html"><img src="previous.gif" border=0></a></body>
+</html>

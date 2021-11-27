@@ -1,0 +1,71 @@
+<html>
+<head><title>Numbers and Strings</title></head>
+<body bgcolor=white>
+<a href="compuations.html"><img src="next.gif" border=0></a> <a href="usingterms.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="data.html">Describing Data</a>
+ /<br><br>
+</font>
+<h1>Numbers and Strings</h1>
+
+<p>
+In compilers written in <i> Gentle</i> most computations are carried out
+on terms. In addition there are built-in types for numbers and strings.
+<p>
+The type <tt> INT</tt> comprises integer numbers.
+<p>
+They are denoted by sequences of decimal digits.
+Expressions of type <tt> INT</tt> may be constructed from integer constants,
+variables of type <tt> INT</tt>, or by applying an operator to subexpressions.
+These operators are
+monadic plus (<tt> +</tt>),
+monadic minus (<tt> -</tt>),
+addition (<tt> +</tt>),
+subtraction (<tt> -</tt>),
+multiplication (<tt> -</tt>),
+and division (<tt> /</tt>).
+The operators have the usual binding strength
+(multiplication and division have a higher priority than
+addition and subtraction, the monadic operators having highest priority).
+Parenthesis may be used to explicitly indicate grouping.
+<p>
+Here are some examples of <tt> INT</tt> expressions:
+<PRE>
+
+   1024
+   N+1
+   A-(B-C)
+   -K
+</PRE>
+
+The type <tt> STRING</tt> comprises sequences of characters.
+<p>
+Expressions of type <tt> STRING</tt> are string constants or
+variables of type <tt> STRING</tt>.
+A string constant is a character sequence enclosed in apostrophes
+``<tt> "</tt>''.
+Inside string constants certain characters must be
+represented by an escape sequence:
+``\"'' represents ``<tt> "</tt>'',
+``\\'' represents ``\'',
+``\n'' represents a newline character, and
+``\t'' represents a tabulator.
+<p>
+Here are some examples of <tt> STRING</tt> expressions:
+<PRE>
+
+   "Hello World!"
+   "The magic word is \"needed\"."
+</PRE>
+
+
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="compuations.html"><img src="next.gif" border=0></a> <a href="usingterms.html"><img src="previous.gif" border=0></a></body>
+</html>

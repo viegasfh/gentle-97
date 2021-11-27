@@ -1,0 +1,54 @@
+<html>
+<head><title>Modules</title></head>
+<body bgcolor=white>
+<a href="lrmcateg.html"><img src="next.gif" border=0></a> <a href="lrmroot.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="lrm.html">LANGUAGE REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>Modules</h1>
+
+
+Module = 
+["'module'" Ident] [UseClause] [ExportClause]
+Declarations .
+<br>
+UseClause =
+"'use'" Ident{ "," Ident} .
+<br>
+ExportClause =
+"'export'" Ident{ "," Ident} .
+
+<p>
+A specification may be decomposed into several modules.
+<p>
+A Module <i>M</i> has the form
+<ul>
+<li>
+
+<tt> 'module'</tt> <i>M</i><br>
+<tt> 'use'</tt> <i>M<SUB>1</SUB></i> <tt> ,</tt> <i>...</i> <tt> ,</tt> <i>M<SUB>n</SUB></i><br>
+<tt> 'export'</tt> <i>E<SUB>1</SUB></i> <tt> ,</tt> <i>...</i> <tt> ,</tt> <i>E<SUB>m</SUB></i> <br>
+<i>D<SUB>1</SUB></i><br>
+<i>...</i><br>
+<i>D<SUB>d</SUB></i>
+</ul>
+
+<p>
+Items introduced by the declarations <i>D<SUB>1</SUB></i>, <i>...</i>, <i>D<SUB>d</SUB></i>
+and items exported by modules <i>M<SUB>1</SUB></i>, <i>...</i>, <i>M<SUB>n</SUB></i>
+are visible in <i>M</i>.
+<i>E<SUB>1</SUB></i>, <i>...</i>, <i>E<SUB>m</SUB></i> must be items declared in
+<i>D<SUB>1</SUB></i>, <i>...</i>, <i>D<SUB>d</SUB></i>.
+They are exported by <i>M</i>, i.e. the can be made visible in other modules.
+<p>
+
+
+<p>
+
+<br><br>
+</ul>
+</ul>
+<a href="lrmcateg.html"><img src="next.gif" border=0></a> <a href="lrmroot.html"><img src="previous.gif" border=0></a></body>
+</html>

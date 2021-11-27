@@ -1,0 +1,146 @@
+<html>
+<head><title>Predicate Categories</title></head>
+<body bgcolor=white>
+<a href="lrmpredef.html"><img src="next.gif" border=0></a> <a href="lrmmodules.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="lrm.html">LANGUAGE REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>Predicate Categories</h1>
+
+The <i>Category</i> specification of a predicate declaration may be one of
+<ul>
+<li>
+
+"'nonterm'",
+"'token'",
+"'action'",<br>
+"'condition'",
+"'choice'",
+"'sweep'".
+</ul>
+
+The category of a predicate determines the rule-selection strategy applied
+for that predicate.
+<p>
+<h3>Grammar Predicates</h3>
+
+<p>
+<tt> token</tt> and <tt> nonterm</tt> predicates constitute the
+underlying context-free grammar and are evaluated by LR parsing.
+<p>
+<h3>Action and Condition Predicates</h3>
+
+<p>
+<tt> condition</tt> and <tt> action</tt> predicates are evaluated by
+shallow backtracking. <tt> action</tt> predicates may not fail.
+<p>
+<h3>Choice Predicates</h3>
+
+<p>
+Rules of <tt> choice</tt> predicates may be augmented by cost specifications.
+Rules are selected in such a way that the sum of the costs of all rules applied
+is minimal.
+<p>
+Rule selection for <tt> choice</tt> predicates must depend exclusively on the first
+argument of the predicate: only the first argument or its constituents may
+be used as arguments to <tt> condition</tt> predicates or as the first argument of
+<tt> choice</tt> predicates invoked in a rule of a <tt> choice</tt> predicate.
+<p>
+Invocations of <tt> condition</tt> predicates in a rule of <tt> choice</tt>
+predicates may not change
+context variables or tables or have other side effects.
+<p>
+<h3>Sweep Predicates</h3>
+
+<p>
+<tt> sweep</tt> predicates provide implicit traversals where only rules
+deviating from the default rule have to be specified.
+The default rule recursively visits the fields of its first argument.
+<p>
+A <tt> sweep</tt> predicate <i> p</i> is declared in one of three forms
+<ul>
+<li>
+
+<tt> 'sweep'</tt> <i> p</i> <tt> (ANY)</tt>
+ <br>
+<tt> 'sweep'</tt> <i> p</i> <tt> (ANY,</tt> <i> T</i> <tt> )</tt>
+ <br>
+<tt> 'sweep'</tt> <i> p</i> <tt> (ANY,</tt> <i> T</i> <tt> -></tt> <i> T</i> <tt> )</tt>
+</ul>
+
+where <i> T</i> is an arbitrary type.
+The first argument of a <tt> sweep</tt> predicate may be of any type that is
+declared with functors
+<ul>
+<li>
+
+<i>f</i> <tt> (</tt> <i>T<SUB>1</SUB></i> <tt> ,</tt> <i>...</i> <tt> ,</tt> <i>T<SUB>n</SUB></i> <tt> )</tt>
+</ul>
+
+The default rule for a functor <i> f</i> has the form
+<ul>
+<li>
+
+<tt> 'rule'</tt> <i> p</i> <tt>(</tt>
+<i>f</i> <tt> (</tt> <i>X<SUB>1</SUB></i> <tt> ,</tt> <i>...</i> <tt> ,</tt> <i>X<SUB>n</SUB></i> <tt> )):</tt>
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;
+ <i> p</i> <tt>(</tt> <i>X<SUB>1</SUB></i> <tt>)</tt>
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;
+ <i>...</i>
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;
+ <i> p</i> <tt>(</tt> <i>X<SUB>n</SUB></i> <tt>)</tt>
+</ul>
+
+<p>
+or
+<p>
+<ul>
+<li>
+
+<tt> 'rule'</tt> <i> p</i> <tt>(</tt>
+<i>f</i> <tt> (</tt> <i>X<SUB>1</SUB></i> <tt> ,</tt> <i>...</i> <tt> ,</tt> <i>X<SUB>n</SUB></i> <tt> ),</tt> <i>Z</i> <tt> ):</tt>
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;
+ <i> p</i> <tt>(</tt> <i>X<SUB>1</SUB></i> <tt>,</tt> <i>Z</i> <tt> )</tt>
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;
+ <i>...</i>
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;
+ <i> p</i> <tt>(</tt> <i>X<SUB>n</SUB></i> <tt>,</tt> <i>Z</i> <tt> )</tt>
+</ul>
+
+<p>
+or
+<p>
+<ul>
+<li>
+
+<tt> 'rule'</tt> <i> p</i> <tt>(</tt>
+<i>f</i> <tt> (</tt> <i>X<SUB>1</SUB></i> <tt> ,</tt> <i>...</i> <tt> ,</tt> <i>X<SUB>n</SUB></i> <tt> ),</tt> <i>Z<SUB>0</SUB></i> <tt> -></tt>
+<i>Z<SUB>n</SUB></i> <tt> ):</tt>
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;
+ <i> p</i> <tt>(</tt> <i>X<SUB>1</SUB></i> <tt>,</tt> <i>Z<SUB>0</SUB></i> <tt> -></tt> <i>Z<SUB>1</SUB></i> <tt> )</tt>
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;
+ <i>...</i>
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;
+ <i> p</i> <tt>(</tt> <i>X<SUB>1</SUB></i> <tt>,</tt> <i>Z<SUB>n-1</SUB></i> <tt> -></tt> <i>Z<SUB>n</SUB></i> <tt> )</tt>
+</ul>
+
+<p>
+
+<p>
+
+<br><br>
+</ul>
+</ul>
+<a href="lrmpredef.html"><img src="next.gif" border=0></a> <a href="lrmmodules.html"><img src="previous.gif" border=0></a></body>
+</html>

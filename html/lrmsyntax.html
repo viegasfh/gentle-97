@@ -1,0 +1,168 @@
+<html>
+<head><title>Syntax Summary</title></head>
+<body bgcolor=white>
+<a href="reflex.html"><img src="next.gif" border=0></a> <a href="lrmpredef.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="lrm.html">LANGUAGE REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>Syntax Summary</h1>
+
+
+Module = 
+["'module'" Ident] [UseClause] [ExportClause]
+Declarations .
+<br>
+UseClause =
+"'use'" Ident{ "," Ident} .
+<br>
+ExportClause =
+"'export'" Ident{ "," Ident} .
+<br>
+Declarations =
+{Declaration} .
+<br>
+Declaration = TypeDecl
+|
+PredicateDecl
+|
+VariableDecl
+|
+TableDecl
+|
+RootDef .
+<br>
+TypeDecl = 
+"'type'" Ident [["="] TermSpec{ [","] TermSpec}] .
+<br>
+TermSpec =
+IdentLC ["("[ParamSpec{ "," ParamSpec}]")"] .
+<br>
+ParamSpec =
+[Ident ":"] Ident .
+<br>
+VariableDecl =
+"'var'" Ident ":" Ident .
+<br>
+TableDecl =
+"'table'" Ident "(" Ident ":" Ident{ "," Ident ":" Ident}
+")" .
+<br>
+PredicateDeclaration =
+Category Ident Signature Rules .
+<br>
+Category =
+"'nonterm'"
+| "'token'"
+| "'action'"
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;|
+
+"'condition'"
+| "'choice'"
+| "'sweep'" .
+<br>
+Signature =
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;
+
+["(" [ParamSpec{ "," ParamSpec}] 
+["->"[ParamSpec{ "," ParamSpec}]]")"] .
+<br>
+Rules =
+{Head ":" Body "."}
+|
+{"'rule'" Head [":"] 
+Body ["."]} .
+<br>
+Head = Ident ["(" [Pattern{ "," Pattern}] 
+["->" [Expression{ "," Expression}]] ")"] .
+<br>
+Pattern =
+IdentUC [":" Pattern]
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;|
+
+Functor
+["("[Pattern{ "," Pattern}]")"]
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;|
+
+"_" .
+<br>
+Expression = Expr2
+|
+Expression ( "+" | "-" ) Expr2 .
+<br>
+Expr2 = Expr3
+|
+Expr2 ( "*" | "/" ) Expr3 .
+<br>
+Expr3 =
+IdentUC
+| Number
+| String
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;|
+
+Functor
+["("[Expression{ "," Expression}]")"]
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;|
+
+( "+" | "-" ) Expr3
+| "(" Expression ")"
+<br>
+Functor =
+[Ident "'"] IdentLC .
+<br>
+Body =
+{Member} [CostSpec]
+<br>
+CostSpec =
+"$" Number .
+<br>
+Member =
+Ident ["(" [Expression{ "," Expression}] 
+["->" [Pattern{ "," Pattern}]] ")"]
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;|
+
+ContextDesignator "<-" Expression
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;|
+
+ContextDesignator "->" Pattern
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;|
+
+IdentUC "::" Ident
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;|
+
+String
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;|
+
+"(|" {Member} "||" {Member}
+{"||" {Member}} "|)"
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;|
+
+"[|" {Member} "|]" .
+<br>
+ContextDesignator =
+[IdentUC "'"] Ident .
+<br>
+RootDef =
+"'root'" {Member} .
+
+
+
+
+<br><br>
+</ul>
+</ul>
+<a href="reflex.html"><img src="next.gif" border=0></a> <a href="lrmpredef.html"><img src="previous.gif" border=0></a></body>
+</html>

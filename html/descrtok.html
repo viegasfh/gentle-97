@@ -1,0 +1,84 @@
+<html>
+<head><title>How To Describe a Token</title></head>
+<body bgcolor=white>
+<a href="descrwhite.html"><img src="next.gif" border=0></a> <a href="reflexintro.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="reflex.html">REFLEX REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>How To Describe a Token</h1>
+
+For each token <tt> Token</tt> introduced in the <i> Gentle</i> specification,
+there must be a token description file <tt> Token.t</tt> .
+This file must specify a <i> Lex</i> rule that handles the token.
+Such a rule is given by a regular expression that matches the token,
+and an action that
+computes the attributes of the token.
+<PRE>
+
+   pattern { action }
+</PRE>
+If the rule does not fit on one line,
+the action may be written on several lines,
+but the opening brace must appear on the first line.
+<p>
+By way of an example, a token introduced in a <i> Gentle</i> specification as
+<PRE>
+
+   'token' Number (-> INT)
+</PRE>
+may be described in file <tt> Number.t</tt>:
+<p>
+<PRE>
+
+   [0-9]+ {
+      yylval.attr[1] = atoi(yytext);
+      yysetpos();
+      return Number;
+   }
+</PRE>
+The pattern
+<PRE>
+
+   [0-9]+ 
+</PRE>
+matches a non-empty sequence of digits.
+<p>
+The line
+<PRE>
+
+   yylval.attr[1] = atoi(yytext);
+</PRE>
+converts the matched input token (<tt> yytext</tt>) into an integer
+(using the C function <tt> atoi</tt>) and assigns it as the first
+attribute.
+The <i> Lex</i> variable <tt> yylval</tt> has a field <tt> attr</tt>
+which is an array of token attributes. 
+attr[<i> i</i>]
+stands for the <i> i</i>-th attribute.
+<p>
+The macro
+<PRE>
+
+   yysetpos();
+</PRE>
+defines the source position of the token
+(the source position is stored in yylval.attr[0]).
+In a <i> Gentle</i> specification, this value may be accessed
+with the @-predicate.
+<p>
+The line
+<PRE>
+
+   return Number;
+</PRE>
+returns the code of the token.
+The token code is a constant that has the same name as the token.
+<p>
+
+<br><br>
+</ul>
+</ul>
+<a href="descrwhite.html"><img src="next.gif" border=0></a> <a href="reflexintro.html"><img src="previous.gif" border=0></a></body>
+</html>

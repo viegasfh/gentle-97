@@ -1,0 +1,57 @@
+<html>
+<head><title>Specifications</title></head>
+<body bgcolor=white>
+<a href="lrmtypes.html"><img src="next.gif" border=0></a> <a href="lrmvoc.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="lrm.html">LANGUAGE REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>Specifications</h1>
+
+<p>
+A <i> Gentle</i> specification is a list of declarations.
+A declaration introduces a type, a predicate, a context variable,
+or a context table.
+Exactly one declaration of a specification must be a root definition,
+this defining the elaboration of the specification.
+Declarations may be given in any order.
+<p>
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+
+<strong> Example</strong>
+<PRE>
+
+'root' bits(-> N) print(N)
+
+'nonterm' bits(-> INT)
+'rule' bits(-> B): bit(-> B)
+'rule' bits(-> N*2+B): bits(-> N) bit(-> B)
+
+'nonterm' bit(-> INT)
+'rule' bit(-> 0): "0"
+'rule' bit(-> 1): "1"
+</PRE>
+ <br>
+This program reads a sequence of binary digits
+and prints the corresponding decimal value.
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+
+
+<p>
+
+<br><br>
+</ul>
+</ul>
+<a href="lrmtypes.html"><img src="next.gif" border=0></a> <a href="lrmvoc.html"><img src="previous.gif" border=0></a></body>
+</html>

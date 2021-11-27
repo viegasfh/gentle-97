@@ -1,0 +1,94 @@
+<html>
+<head><title>Abstract Syntax</title></head>
+<body bgcolor=white>
+<a href="coord.html"><img src="next.gif" border=0></a> <a href="rulesel.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="syntaxdescr.html">Describing Syntax</a>
+ /<br><br>
+</font>
+<h1>Abstract Syntax</h1>
+
+<p>
+It is advisable not to mix up the syntactic description of a language with
+its semantic analysis and transformation but to separate concerns.
+The syntax description gives the concrete grammar of the language and
+introduces a more abstract term representation. This term representation
+is then processed by predicates that follow the structure of these terms.
+This pays off because abstract syntax is usually much simpler than concrete
+syntax and because predicate evaluation is much more flexible
+than interleaving computations with parsing.
+<p>
+Given a concrete grammar, a straight forward way
+of defining an abstract representation
+is simply to mirror the grammar by term definitions.
+<p>
+For each nonterm there is corresponding type;
+for each grammar rule there is a corresponding functor.
+Terms with this functor have an argument for each nonterm and for each
+named token.
+Each nonterm has one attribute, its term representation. This is
+constructed from term representation of the members of the rule body.
+<p>
+For example,
+the nonterm <tt> Statement</tt> from above gets an associated type
+<tt> STATEMENT</tt> which is defined as follows:
+<PRE>
+
+   'type' STATEMENT
+      assignment(VARIABLE, EXPRESSION)
+      if(EXPRESSION, STATEMENT, STATEMENT)
+      while(EXPRESSION, STATEMENT)
+      compound(STMTSEQ)
+</PRE>
+We can then decorate the above grammar:
+<PRE>
+
+   'nonterm' Statement(-> STATEMENT)
+
+      'rule' Statement(-> assignment(V, E)):
+         Variable(-> V) ":=" Expression(-> E)
+      'rule' Statement(-> if(E, S1, S2)):
+         "IF" Expression(-> E) "THEN" Statement(-> S1)
+         "ELSE" Statement(-> S2)
+      'rule' Statement(-> while(E, S)):
+         "WHILE" Expression(-> E) "DO" Statement(-> S)
+      'rule' Statement(-> compound(S)):
+         "BEGIN" StmtSeq(-> S) "END"
+</PRE>
+
+Abstract syntax can be simpler than concrete syntax.
+<p>
+Since abstract syntax has a unique tree structure, it is not necessary
+to reflect binding strength using different types, as we did with
+different nonterminals to avoid ambiguity.
+For example,
+in a preceding example, the nonterminals
+<tt> expression</tt> (introducing additive operators)
+and <tt> expr2</tt> (introducing multiplicative operators)
+both have an argument of type <tt> Expr</tt> that covers all operators.
+<p>
+Abstract syntax can allow cases that are forbidden in concrete syntax.
+For example,
+whereas in concrete syntax a list may require at least one member,
+in abstract syntax one could use empty lists.
+(Lists that are terminated by an empty tail, <tt> nil</tt>,
+are simpler to process because the rule for the end of the list
+does not have to deal with a list member.)
+<p>
+Abstract syntax can normalize cases in which the concrete syntax
+allows several representations for the same meaning, e.g.
+<tt> A[i,j]</tt> and <tt> A[i][j]</tt>
+in <i> Pascal</i>.
+<p>
+Abstract syntax can simplify complex constructs of the concrete syntax
+enforced by restrictions of the parsing strategy.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="coord.html"><img src="next.gif" border=0></a> <a href="rulesel.html"><img src="previous.gif" border=0></a></body>
+</html>

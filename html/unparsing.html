@@ -1,0 +1,45 @@
+<html>
+<head><title>Unparsing</title></head>
+<body bgcolor=white>
+<a href="accu.html"><img src="next.gif" border=0></a> <a href="stackcomp.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="optimal.html">Optimal Rule Selection</a>
+ /<br><br>
+</font>
+<h1>Unparsing</h1>
+
+<p>
+The above scheme is called an <i> unparsing scheme</i>.
+While a parser reads a source text (driven by the
+structure of the source text)  and constructs abstract syntax,
+an unparser processes abstract syntax terms (driven by their structure)
+and emits a concrete target program.
+<p>
+The rules of an unparser are similar to grammar rules.
+Predicates like <tt> StackCode</tt> correspond to nonterminals,
+and predicates that directly emit target code correspond to tokens.
+In a source grammar, symbols are decorated with output parameters
+that specify their abstract representation. 
+In a target grammar,  symbols are decorated with abstract input parameters
+for which a concrete representation has to be generated.
+<p>
+In many cases an unparsing scheme simply follows the structure
+of terms. In general there is one rule for each functor,
+although sometimes larger patterns are used.
+This results in a functional description
+such as that for the stack-computer code generator.
+<p>
+This will especially be the case if the target language is 
+a higher-level language, as in source-to-source translations
+(e.g. if a parallel extension of <i> C</i> is translated into
+plain <i> C</i>).
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="accu.html"><img src="next.gif" border=0></a> <a href="stackcomp.html"><img src="previous.gif" border=0></a></body>
+</html>

@@ -1,0 +1,89 @@
+<html>
+<head><title>A Calculator</title></head>
+<body bgcolor=white>
+<a href="abstrsyn.html"><img src="next.gif" border=0></a> <a href="parser.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="glance.html">At a Glance</a>
+ /<br><br>
+</font>
+<h1>A Calculator</h1>
+
+<p>
+In this section, we turn the parser into a simple calculator.
+It will read its input (which must be an expression as defined by the above
+grammar) and print the value of the expression.
+<p>
+Our starting point is the parser given above.
+Each nonterminal gets an output parameter
+that specifies its value.
+<p>
+<PRE>
+
+'root' expression(-> X) print(X)
+
+'nonterm' expression(-> INT)
+
+   'rule' expression(-> X): expr2(-> X)
+   'rule' expression(-> X+Y): expression(-> X) "+" expr2(-> Y)
+   'rule' expression(-> X-Y): expression(-> X) "-" expr2(-> Y)
+
+'nonterm' expr2(-> INT)
+
+   'rule' expr2(-> X): expr3(-> X)
+   'rule' expr2(-> X*Y): expr2(-> X) "*" expr3(-> Y)
+   'rule' expr2(-> X/Y): expr2(-> X) "/" expr3(-> Y)
+
+'nonterm' expr3(-> INT)
+
+   'rule' expr3(-> X): Number(-> X)
+   'rule' expr3(-> - X): "-" expr3(-> X)
+   'rule' expr3(-> + X): "+" expr3(-> X)
+   'rule' expr3(-> X): "(" expression(-> X) ")"
+
+'token' Number(-> INT)
+</PRE>
+
+<p>
+Nonterminals and tokens can have output parameters.
+<PRE>
+
+'nonterm' expression(-> INT)
+</PRE>
+introduces the nonterminal <tt> expression</tt>
+with one output parameter of type <tt> INT</tt>.
+<p>
+The rule
+<PRE>
+
+'rule' expression(-> X+Y): expression(-> X) "+" expr2(-> Y)
+</PRE>
+specifies how the value of an <tt> expression</tt> is computed from the values
+of its constituents.
+<p>
+<tt> expression(-> X)</tt> and <tt> expr2(-> Y)</tt> on the right hand side
+define the variables
+<tt> X</tt> and <tt> Y</tt>
+as the values of the <tt> expression</tt> and the <tt> expr2</tt>
+constituents of the parsed phrase.
+For example, if the phrase is <tt> 10+20*30</tt>,
+then <tt> X</tt> is defined as 10 and <tt> Y</tt> is defined as 600.
+<p>
+<tt> expression(-> X + Y)</tt> on the left hand side
+defines the value of the phrase parsed according to this rule as the sum
+of <tt> X</tt> and <tt> Y</tt>, i.e. as 610 in the example given.
+<p>
+<PRE>
+
+'root' expression(-> X) print(X)
+</PRE>
+defines the following elaboration: Parse the input as an <tt> expression</tt>.
+This yields a value <tt> X</tt>. Print <tt> X</tt>.
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="abstrsyn.html"><img src="next.gif" border=0></a> <a href="parser.html"><img src="previous.gif" border=0></a></body>
+</html>

@@ -1,0 +1,75 @@
+<html>
+<head><title>A Code-Generator Specification</title></head>
+<body bgcolor=white>
+<a href="costdriven.html"><img src="next.gif" border=0></a> <a href="nondeterministic.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="optimal.html">Optimal Rule Selection</a>
+ /<br><br>
+</font>
+<h1>A Code-Generator Specification</h1>
+
+<p>
+Here is a specification of a code generator
+for the combined stack and accumulator computer:
+<p>
+<PRE>
+
+   'choice' Encode(Stmnt)
+
+      'rule' Encode(assign(V,X)):
+         StackCode(X)
+         POP(V)
+         $ 10
+      'rule' Encode(assign(V,X)):
+         AccuCode(X)
+         STOREACCU(V)
+         $ 10
+
+   'choice' StackCode(Expr)
+
+      'rule' StackCode(plus(X,Y)):
+         StackCode(X)
+         StackCode(Y)
+         PLUS
+         $ 20
+      'rule' StackCode(minus(X,Y)):
+         StackCode(X)
+         StackCode(Y)
+         MINUS
+         $ 20
+      'rule' StackCode(var(V)):
+         PUSH(V)
+         $ 10
+      'rule' StackCode(X):
+         AccuCode(X)
+         ACCUTOSTACK
+         $ 10
+
+   'choice' AccuCode(Expr)
+      
+      'rule' AccuCode(plus(X, var(V))):
+         AccuCode(X)
+         ACCUPLUS(V)
+         $ 10
+      'rule' AccuCode(minus(X, var(V))):
+         AccuCode(X)
+         ACCUMINUS(V)
+         $ 10
+      'rule' AccuCode(var(V))
+         LOADACCU(V)
+         $ 10
+      'rule' AccuCode(X):
+         StackCode(X)
+         STACKTOACCU
+         $ 20
+</PRE>
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="costdriven.html"><img src="next.gif" border=0></a> <a href="nondeterministic.html"><img src="previous.gif" border=0></a></body>
+</html>

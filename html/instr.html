@@ -1,0 +1,243 @@
+<html>
+<head><title>ICode Instructions</title></head>
+<body bgcolor=white>
+<a href="compiler.html"><img src="next.gif" border=0></a> <a href="machine.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="casestudy.html">CASE STUDY</a>
+ / <a href="target.html">The Target Machine</a>
+ /<br><br>
+</font>
+<h1>ICode Instructions</h1>
+
+<p>
+For each <i> ICode</i> instruction its operation code,  its  parameters  and  its
+meaning are given in the following. The meaning is given as text and as formula
+which describe operations on the runtime stack. To simplify  the  description,
+within formulas it is not taken care about the types of the stack elements.
+<p>
+If not further mentioned, the operations apply to the top of  the  stack,
+which  contains  the  actual  element.   The following shorthand notations are
+used:
+<p>
+
+Note: The types integer, real and boolean are encoded with 1, 2, and  3.   The
+boolean values FALSE and TRUE are encoded by 0 and 1.
+<p>
+<h3>Load Instructions</h3>
+
+LDA l o
+<p>
+   load address with base and offset
+<p>
+<PRE>
+
+   SP:=SP+1
+   S[SP]:=base(l)+o;
+</PRE>
+
+LDC t c
+<p>
+   load constant c of type t
+<p>
+<PRE>
+
+   SP:=SP+1;
+   S[SP]:=c;
+</PRE>
+
+LDI
+   
+   load indirect
+<p>
+<PRE>
+
+   S[SP]:=S[S[SP]]
+</PRE>
+<h3>Store Instructions</h3>
+
+STI
+<p>
+   store into address contained
+   in the element below the top
+<p>
+<PRE>
+
+   S[S[SP-1]]:=S[SP];
+   SP:=SP-1;
+</PRE>
+
+<h3>Jump Instructions</h3>
+
+JMP a
+<p>
+   unconditional jump
+<p>
+<PRE>
+
+   PC:=a;
+</PRE>
+
+FJP a
+<p>
+   conditional jump
+<p>
+<PRE>
+
+   if not S[SP] then PC:=a;
+   SP:=SP-1;
+</PRE>
+<h3>Arithmetic Instructions</h3>
+
+ADD t
+<p>
+   addition of type t
+<p>
+<PRE>
+
+   SP:=SP-1;
+   S[SP]:=S[SP]+S[SP+1];
+</PRE>
+
+SUB
+<p>
+   integer subtraction
+<p>
+<PRE>
+
+   SP:=SP-1;
+   S[SP]:=S[SP]-S[SP+1];
+</PRE>
+MUL t
+<p>
+   multiplication of type t
+<p>
+<PRE>
+
+   SP:=SP-1;
+   S[SP]:=S[SP]*S[SP+1];
+</PRE>
+<h3>Logic Instructions</h3>
+
+INV
+   
+<PRE>
+
+   S[SP]:=not S[SP];
+</PRE>
+
+LES t
+<p>
+   less operation of type t
+<p>
+<PRE>
+
+   SP:=SP-1;
+   S[SP]:=S[SP]<S[SP+1];
+</PRE>
+<h3>Address Calculation Instructions</h3>
+
+IXA c"
+<p>
+   compute indexed address
+<p>
+<PRE>
+
+   SP:=SP-1;
+   S[SP]:=c*S[SP+1]+S[SP];
+</PRE>
+
+<h3>Convert Instructions</h3>
+
+FLT
+<p>
+   converts from integer to real
+<p>
+<PRE>
+
+   S[SP]:=real(S[SP]);
+</PRE>
+
+<h3>Input-Output Instructions</h3>
+
+WRI t
+<p>
+<PRE>
+
+   write(S[SP]);
+   SP:=SP-1;
+</PRE>
+
+REA t
+   
+<PRE>
+
+   SP:=SP+1;
+   read(S[SP]);
+</PRE>
+
+<h3>Subroutine Handling Instructions</h3>
+
+MST l
+<p>
+   activation record initialization:
+<p>
+<PRE>
+
+   S[SP+1]:=base(l);- store static predecessor
+   S[SP+2]:=AP; - store dynamic predecessor
+   SP:=SP+3; - return address (=S[SP+3]) is stored by JSR
+</PRE>
+
+JSR o a
+<p>
+   set AP to point to new activation record<br>
+   o = number of locations for parameters
+<p>
+<PRE>
+
+   AP:=SP-(o+2);
+   S[AP+2]:=PC; - store return address
+   PC:=a ; - set PC to first instruction of subroutine
+</PRE>
+
+ENT o
+<p>
+   storage reservation for new block<br>
+   o = length of local data segment
+<p>
+<PRE>
+
+   SP:=SP+o
+</PRE>
+
+RET
+<p>
+   return from subroutine:
+<p>
+<PRE>
+
+   SP:=AP-1;
+   PC:=S[SP+3]; - fetch return address to restore PC
+   AP:=S[SP+2]; - restore activation record pointer AP
+</PRE>
+
+<h3>Check Instructions</h3>
+
+CHK c1 c2
+<p>
+   check against upper and lower bounds
+<p>
+<PRE>
+
+   if (S[SP]<c1) or (S[SP]>c2) then error
+</PRE>
+
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="compiler.html"><img src="next.gif" border=0></a> <a href="machine.html"><img src="previous.gif" border=0></a></body>
+</html>

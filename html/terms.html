@@ -1,0 +1,56 @@
+<html>
+<head><title>Terms</title></head>
+<body bgcolor=white>
+<a href="typedefs.html"><img src="next.gif" border=0></a> <a href="data.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="data.html">Describing Data</a>
+ /<br><br>
+</font>
+<h1>Terms</h1>
+
+The most important kind of data a <i> Gentle</i> program operates on
+are so-called <i> terms</i>.
+A term may be a simple constant, as e.g. <tt> red</tt> or <tt> yellow</tt>,
+or it may be a compound structure, as e.g.
+<tt> signal(red, yellow)</tt>. Here, the term is obtained by prefixing
+a so-called <i> functor</i>, <tt> signal</tt>, to two arguments:
+<tt> red</tt> and <tt> yellow</tt>.
+The simple constants are merely functors with no arguments.
+Hence, terms are constructed by applying functors to simpler terms.
+This can be done to an arbitrary depth of nesting.
+<p>
+A term may be viewed as a linear notation of a tree.
+For example,
+the term
+<PRE>
+
+   f( g(a,b), h(c,d) )
+</PRE>
+may be represented graphically as a tree <br>
+
+<pre>
+   f
+   |
+   +---g
+   |   |
+   |   +---a
+   |   |
+   |   +---b
+   |
+   +---h
+       |
+       +---c
+       |
+       +---d
+</pre>
+
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="typedefs.html"><img src="next.gif" border=0></a> <a href="data.html"><img src="previous.gif" border=0></a></body>
+</html>

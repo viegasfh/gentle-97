@@ -1,0 +1,73 @@
+<html>
+<head><title>Syntax Definitions</title></head>
+<body bgcolor=white>
+<a href="nonterms.html"><img src="next.gif" border=0></a> <a href="syntaxdescr.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="syntaxdescr.html">Describing Syntax</a>
+ /<br><br>
+</font>
+<h1>Syntax Definitions</h1>
+
+<p>
+Using this grammatical interpretation of rules we can write
+<PRE>
+
+   'rule' Program : Declarationpart Statementpart
+</PRE>
+which states that a <tt> Program</tt> is given by a <tt> Declarationpart</tt>
+and a <tt> Statementpart</tt>.
+<p>
+We also need basic symbols of the language that are not defined by
+rules. These symbols are called <i> terminal symbols</i> or <i> tokens</i>
+and are written as strings denoting themselves.
+For example,
+<PRE>
+
+   'rule' Statement : "IF" Expression "THEN" Statement "ELSE" Statement
+</PRE>
+Here, <tt> "IF"</tt>, <tt> "THEN"</tt>, and <tt> "ELSE"</tt> are terminal symbols.
+<p>
+Grammatical symbols such as <tt> Statement</tt> that are defined by
+rules are called <i> nonterminal symbols</i>.
+<p>
+A grammar not only describes what is a valid text of a language, but
+also imposes a structure on the text.
+A grammar is given by a set of terminal symbols,
+a set of nonterminal symbols, and a set of rules.
+Rules have the form:
+<ul>
+<li>
+
+'rule' <i>A</i> : <i>B<SUB>1</SUB></i> <i>B<SUB>2</SUB></i> ... <i>B<SUB>n</SUB></i>
+</ul>
+
+where <i>A</i> is a nonterminal and the <i>B<SUB>i</SUB></i> are terminal or nonterminal
+symbols.
+A valid phrase of class <i>A</i> can be constructed by replacing
+each <i>B<SUB>i</SUB></i> by a valid phrase of <i>B<SUB>i</SUB></i> (if <i>B<SUB>i</SUB></i> is a terminal, the
+valid phrase is the terminal itself).
+<p>
+Given the rule for <tt> Statement</tt> and assuming that
+<tt> x>y</tt> is an expression and that <tt> x:=x-y</tt> and <tt> y:=y-x</tt>
+are statements, we can construct the more complex statement
+<PRE>
+
+   IF x>y THEN x:=x-y ELSE y:=y-x
+</PRE>
+
+The distinction between tokens and nonterminals reflects the fact
+that the analysis of the input text is generally decomposed into
+two (interleaved) steps:
+First the input is partitioned into tokens (lexical analysis),
+then the token stream is structured into hierarchical phrases
+(syntax analysis). Different techniques are used for each task.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="nonterms.html"><img src="next.gif" border=0></a> <a href="syntaxdescr.html"><img src="previous.gif" border=0></a></body>
+</html>

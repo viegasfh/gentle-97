@@ -1,0 +1,132 @@
+<html>
+<head><title>Patterns</title></head>
+<body bgcolor=white>
+<a href="lrmpredicates.html"><img src="next.gif" border=0></a> <a href="lrmexpr.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="lrm.html">LANGUAGE REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>Patterns</h1>
+
+
+Pattern =
+IdentUC [":" Pattern]
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;|
+
+Functor
+["("[Pattern{ "," Pattern}]")"]
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;|
+
+"_" .
+
+<p>
+A given value <i>Tau</i> may be matched against a pattern <i>P</i>.
+This may succeed, thereby defining the variables appearing
+in <i>P</i>, or fail.
+<p>
+<h3>Variables</h3>
+
+If <i>P</i> has the form
+<ul>
+<li>
+
+<i>V</i>
+</ul>
+
+where <i>V</i> is a variable,
+the value of <i>V</i> is defined as <i>Tau</i> and the type of <i>V</i> is the type of the
+position.
+<p>
+<h3>Terms</h3>
+
+<p>
+If <i>P</i> has the form
+<ul>
+<li>
+
+<i>f</i> <tt> (</tt> <i>P<SUB>1</SUB></i> <tt> ,</tt> <i>...</i> <tt> ,</tt> <i>P<SUB>n</SUB></i> <tt> )</tt>
+</ul>
+
+the matching succeeds if <i>Tau</i> has
+the form
+<i>f</i> <tt> (</tt> <i>Tau<SUB>1</SUB></i> <tt> ,</tt> <i>...</i> <tt> ,</tt> <i>Tau<SUB>n</SUB></i> <tt> )</tt>
+and matching
+<i>Tau<SUB>1</SUB></i>, <i>...</i>, <i>Tau<SUB>n</SUB></i>
+against
+<i>P<SUB>1</SUB></i>, <i>...</i>, <i>P<SUB>n</SUB></i>
+succeeds, thereby defining the variables appearing in
+<i>P<SUB>1</SUB></i>, <i>...</i>, <i>P<SUB>n</SUB></i>.
+Otherwise, the matching fails.
+<p>
+If <i>P</i> appears on a position with type <i>T</i>,
+the declaration of <i>T</i> must contain a functor specification
+<i>f</i> <tt> (</tt> <i>T<SUB>1</SUB></i> <tt> ,</tt> <i>...</i> <tt> ,</tt> <i>T<SUB>n</SUB></i> <tt> )</tt>.
+<i>P<SUB>1</SUB></i>, <i>...</i>, <i>P<SUB>n</SUB></i>
+appear on positions with types
+<i>T<SUB>1</SUB></i>, <i>...</i>, <i>T<SUB>n</SUB></i>.
+<p>
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+
+<strong> Example</strong>
+<PRE>
+
+list(X1, list(yellow, X2))
+</PRE>
+ <br>
+If a value <i>Tau</i> is matched against this pattern (on a position of
+type List), the matching succeeds if
+<i>Tau</i> has the form list( <i>Tau<SUB>1</SUB></i> ,list(yellow,
+<i>Tau<SUB>2</SUB></i> )).
+It defines X1 as a variable of type Color
+with value <i>Tau<SUB>1</SUB></i>
+and X2 as a variable of type List
+with value <i>Tau<SUB>2</SUB></i>.
+Otherwise, the matching fails.
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+<p>
+<h3>Named Patterns</h3>
+
+If <i>P</i> has the form
+<ul>
+<li>
+
+<i>V</i> <tt> :</tt> <i>P<SUB>1</SUB></i>
+</ul>
+
+<i>Tau</i> is matched against <i>P<SUB>1</SUB></i> as if the pattern <i>P</i>
+had been simply <i>P<SUB>1</SUB></i>.
+If this succeeds,
+<i>V</i> is defined as if the pattern <i>P</i> had been simply <i>V</i>.
+<p>
+<h3>Joker</h3>
+
+If <i>P</i> has the form
+<ul>
+<li>
+
+<tt> _</tt>
+</ul>
+
+(underscore) the matching always succeeds.
+<p>
+
+<p>
+
+<br><br>
+</ul>
+</ul>
+<a href="lrmpredicates.html"><img src="next.gif" border=0></a> <a href="lrmexpr.html"><img src="previous.gif" border=0></a></body>
+</html>

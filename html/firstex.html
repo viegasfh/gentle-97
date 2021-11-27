@@ -1,0 +1,175 @@
+<html>
+<head><title>A First Example</title></head>
+<body bgcolor=white>
+<a href="generating.html"><img src="next.gif" border=0></a> <a href="installation.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="start.html">GETTING STARTED</a>
+ /<br><br>
+</font>
+<h1>A First Example</h1>
+
+<p>
+This section describes how to use the <i> Gentle</i> system to construct a simple
+desk calculator. This calculator will read (from standard input or from
+a specified file) an expression according to the following syntax:
+<PRE>
+
+      expression ::=
+
+         expression "+" expr2 
+      |  expression "-" expr2
+      |  expr2
+
+      expr2 ::=
+
+         expr2 "*" expr3
+      |  expr2 "/" expr3
+      |  expr3
+
+      expr3 ::=
+
+         Number
+      |  "-" expr3
+      |  "+" expr3
+      |  "(" expression ")"
+</PRE>
+where the token <tt> Number</tt> represents a sequence of decimal digits.
+The program will calculate the value of the expression  and print it on
+standard output.
+<p>
+Here is a <i> Gentle</i> specification of the calculator (file <tt> calc.g</tt>).
+This simply mirrors the above grammar, where each nonterminal has an
+output parameter that represents its value.
+<p>
+<PRE>
+
+   'root' expression(-> X) print(X)
+
+   'nonterm' expression(-> INT)
+
+      'rule' expression(-> X): expr2(-> X)
+      'rule' expression(-> X+Y): expression(-> X) "+" expr2(-> Y)
+      'rule' expression(-> X-Y): expression(-> X) "-" expr2(-> Y)
+
+   'nonterm' expr2(-> INT)
+
+      'rule' expr2(-> X): expr3(-> X)
+      'rule' expr2(-> X*Y): expr2(-> X) "*" expr3(-> Y)
+      'rule' expr2(-> X/Y): expr2(-> X) "/" expr3(-> Y)
+
+   'nonterm' expr3(-> INT)
+
+      'rule' expr3(-> X): Number(-> X)
+      'rule' expr3(-> - X): "-" expr3(-> X)
+      'rule' expr3(-> + X): "+" expr3(-> X)
+      'rule' expr3(-> X): "(" expression(-> X) ")"
+
+   'token' Number(-> INT)
+</PRE>
+
+The representation of the token <tt> Number</tt> is not specified in the <i> Gentle</i>
+specification. Instead, we use a token description file from the
+<tt> reflex</tt> directory (file <tt> Number.t</tt>):
+<p>
+<PRE>
+
+   [0-9]+ {
+      yylval.attr[1] = atoi(yytext);
+      yysetpos();
+      return Number;
+   }
+</PRE>
+
+Assume that <tt> $GENTLE</tt> is the path name for the program <tt> gentle</tt>,
+<tt> $GRTS</tt> for the <i> Gentle</i> run time system <tt> grts.o</tt>,
+<tt> $REFLEX</tt> for the program <tt> reflex</tt>,
+and <tt> $LIB</tt> is the user library.
+<p>
+Then the command sequence
+<p>
+<PRE>
+
+   $GENTLE calc.g
+   $REFLEX
+   lex gen.l
+   yacc gen.y
+   cc -o calc       \
+      calc.c        \
+      lex.yy.c      \
+      y.tab.c       \
+      $LIB/errmsg.o \
+      $LIB/main.o   \
+      $GRTS
+</PRE>
+
+can be used to create the calculator program <tt> calc</tt>.
+<p>
+Here the command
+<p>
+<PRE>
+
+   $GENTLE calc.g
+</PRE>
+
+invokes the <i> Gentle</i> compiler, which translates the specification
+<tt> calc.g</tt> into a <i> C</i> file <tt> calc.c</tt>. In addition, it generates some
+files <tt> gen.*</tt>, which  the user need not bother about.
+<p>
+The command
+<PRE>
+
+   $REFLEX
+</PRE>
+
+invokes the program <tt> reflex</tt>. This creates a specification for
+the scanner generator <i> Lex</i> (from files created by <tt> gentle</tt> and files
+provided by the user such as <tt> Number.t</tt>).
+<p>
+The commands
+<p>
+<PRE>
+
+   lex gen.l
+   yacc gen.y
+</PRE>
+
+invoke the scanner generator <i> Lex</i> and the parser generator <i> Yacc</i> respectively.
+<p>
+Finally, the <i> C</i> compiler creates the program <tt> calc</tt>:
+<PRE>
+
+   cc -o calc       \
+      calc.c        \
+      lex.yy.c      \
+      y.tab.c       \
+      $LIB/errmsg.o \
+      $LIB/main.o   \
+      $GRTS
+</PRE>
+<tt> lex.yy.c</tt> and <tt> y.tab.c</tt> are <i> C</i> files created by <i> Lex</i> and <i> Yacc</i>.
+<tt> $LIB/errmsg.o</tt> and <tt> $LIB/main.o</tt> are modules from the
+user library. They provide an error message routine and and main function
+that invokes the code created by the <i> Gentle</i> compiler 
+(a user may use these components as they are, or adapt them according
+to his or her needs).
+<p>
+If <tt> testfile</tt> contains the line
+<PRE>
+
+   2+3*4
+</PRE>
+then the command
+<PRE>
+
+   calc testfile
+</PRE>
+emits <tt> 14</tt> .
+
+<p>
+
+<br><br>
+</ul>
+</ul>
+<a href="generating.html"><img src="next.gif" border=0></a> <a href="installation.html"><img src="previous.gif" border=0></a></body>
+</html>

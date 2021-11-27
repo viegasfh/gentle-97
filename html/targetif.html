@@ -1,0 +1,120 @@
+<html>
+<head><title>Target Interface</title></head>
+<body bgcolor=white>
+<a href="references.html"><img src="next.gif" border=0></a> <a href="aux.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="casestudy.html">CASE STUDY</a>
+ / <a href="compiler.html">The Compiler</a>
+ /<br><br>
+</font>
+<h1>Target Interface</h1>
+
+The virtual <i> MiniLAX</i> machine is implemented as a <i> C</i> module.
+Here is the <i> Gentle</i> interface for this module:
+<p>
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+<font size="-1">
+<pre>
+
+424  'type' LABEL 
+425  'type' FLOAT 
+  
+426  'action' LDA(INT, INT) 
+427  'action' LDC(INT, INT)  
+428  'action' LDF(FLOAT) 
+429  'action' LDI            
+430  'action' STI 
+431  'action' JMP(LABEL) 
+432  'action' FJP(LABEL) 
+433  'action' ADD(INT)       
+434  'action' SUB 
+435  'action' MUL(INT)       
+436  'action' INV 
+437  'action' LES(INT) 
+438  'action' IXA(INT) 
+439  'action' FLT            
+440  'action' WRI(INT) 
+441  'action' REA(INT)       
+442  'action' MST(INT) 
+443  'action' JSR(INT, LABEL) 
+444  'action' ENT(INT)       
+445  'action' RET            
+446  'action' CHK(INT, INT) 
+  
+447  'action' NewLabel(-> L: LABEL) 
+448  'action' LAB(L: LABEL) 
+449  'action' Emit 
+
+</pre>
+</font>
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+
+<p>
+For each instruction (<tt> LDA</tt>, <tt> LDC</tt>, ... , <tt> CHK</tt>),
+there is a corresponding predicate.
+For example,
+<PRE>
+
+   'action' CHK (INT, INT)
+</PRE>
+corresponds
+to the <i> ICode</i> <tt> CHK</tt> instruction.
+<PRE>
+
+   CHK (1, 20)
+</PRE>
+appends an instruction
+<PRE>
+
+   CHK 1, 20
+</PRE>
+to the target program.
+<p>
+The type <tt> Label</tt> comprises
+``symbolic values'' that are used as labels; final machine addresses
+are not used as instruction operands.
+The translation of symbolic values into addresses is done by the virtual
+machine if the program is complete.
+<p>
+A new label is created by
+<PRE>
+
+   NewLabel(-> Lab)
+</PRE>
+Thereafter, <tt> Lab</tt> can be used in instructions, e.g.
+<PRE>
+
+   JMP(Lab)
+</PRE>
+
+The location of the label must be defined by the pseudo-instruction
+<PRE>
+
+   LAB(Lab)
+</PRE>
+which defines the following instruction as the target of a jump to
+<tt> Lab</tt>.
+<p>
+The action <tt> Emit</tt> writes the target program into a file
+(alternatively, it could be interpreted directly).
+
+
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="references.html"><img src="next.gif" border=0></a> <a href="aux.html"><img src="previous.gif" border=0></a></body>
+</html>

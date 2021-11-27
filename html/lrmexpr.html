@@ -1,0 +1,179 @@
+<html>
+<head><title>Expressions</title></head>
+<body bgcolor=white>
+<a href="lrmpatterns.html"><img src="next.gif" border=0></a> <a href="lrmtypes.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="lrm.html">LANGUAGE REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>Expressions</h1>
+
+
+Expression = Expr2
+|
+Expression ( "+" | "-" ) Expr2 .
+<br>
+Expr2 = Expr3
+|
+Expr2 ( "*" | "/" ) Expr3 .
+<br>
+Expr3 =
+IdentUC
+| Number
+| String
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;|
+
+Functor
+["("[Expression{ "," Expression}]")"]
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;|
+
+( "+" | "-" ) Expr3
+| "(" Expression ")"
+<br>
+Functor =
+[Ident "'"] IdentLC .
+
+<p>
+An expression describes the computation of a value.
+The value of an expression <i>E</i> on a position with type <i>T</i>
+is computed as follows.
+<p>
+<h3>Variables</h3>
+
+If <i>E</i> has the form
+<ul>
+<li>
+
+<i>V</i>
+</ul>
+
+where <i>V</i> is a variable, the value of the expression is the value of the
+variable. The type of the variable must be <i>T</i>.
+<p>
+<h3>Numbers</h3>
+
+If <i>E</i> has the form
+<ul>
+<li>
+
+<i>N</i>
+</ul>
+
+where <i>N</i> is a number,
+<i>T</i> must be INT.
+The value of <i>E</i> is the value of the number.
+<p>
+<h3>Strings</h3>
+
+If <i>E</i> has the form
+<ul>
+<li>
+
+<i>S</i>
+</ul>
+
+where <i>S</i> is a string,
+<i>T</i> must be STRING.
+The value of <i>E</i> is the value of the string.
+<p>
+<h3>Terms</h3>
+
+<p>
+If <i>E</i> has the form
+<ul>
+<li>
+
+<i>f</i> <tt> (</tt> <i>E<SUB>1</SUB></i> <tt> ,</tt> <i>...</i> <tt> ,</tt> <i>E<SUB>n</SUB></i> <tt> )</tt>
+</ul>
+
+the declaration of <i>T</i> must contain a functor specification
+<i>f</i> <tt> (</tt> <i>T<SUB>1</SUB></i> <tt> ,</tt> <i>...</i> <tt> ,</tt> <i>T<SUB>n</SUB></i> <tt> )</tt>.
+<i>E<SUB>1</SUB></i>, <i>...</i>, <i>E<SUB>n</SUB></i>
+appear on positions with types
+<i>T<SUB>1</SUB></i>, <i>...</i>, <i>T<SUB>n</SUB></i>.
+<i>E<SUB>1</SUB></i>, <i>...</i>, <i>E<SUB>n</SUB></i>
+are evaluated yielding values
+<i>Sigma<SUB>1</SUB></i>, <i>...</i>, <i>Sigma<SUB>n</SUB></i>.
+The value of <i>E</i> is given as
+<i>f</i> <tt> (</tt> <i>Sigma<SUB>1</SUB></i> <tt> ,</tt> <i>...</i> <tt> ,</tt> <i>Sigma<SUB>n</SUB></i> <tt> )</tt>.
+<p>
+
+If the type <i>T</i> of the position is  unknown (in the case of generic
+predicates) and if <i>f</i> is defined for more than one type,
+<i>f</i> must be prefixed by the type:
+<i>T</i> ' <i>f</i> .
+<p>
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+
+<strong> Example</strong>
+<PRE>
+
+list(X1, list(yellow, X2))
+</PRE>
+ <br>
+If the value of X1 is red
+and the value of X2 is nil,
+the value of the expression is
+list(red(list(yellow,nil)).
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+<p>
+<h3>Arithmetic Expressions</h3>
+
+<p>
+If <i>E</i> has the form
+<ul>
+<li>
+
+<i>E<SUB>1</SUB></i> <i>op</i> <i>E<SUB>2</SUB></i>
+</ul>
+
+where <i>op</i> is one of <tt> +</tt>, <tt> -</tt>, <tt> *</tt>, <tt> /</tt>,
+<i>T</i> must be INT and
+<i>E<SUB>1</SUB></i> and <i>E<SUB>2</SUB></i> must be expressions of type INT.
+The value of <i>P</i> is computed by applying the operator to the values
+of <i>E<SUB>1</SUB></i> and <i>E<SUB>2</SUB></i>.
+<p>
+If <i>E</i> has the form
+<ul>
+<li>
+
+<i>op</i> <i>E<SUB>1</SUB></i>
+</ul>
+
+where <i>op</i> is one of <tt> +</tt>, <tt> -</tt>,
+<i>T</i> must be INT and
+<i>E<SUB>1</SUB></i> must be an expression of type INT.
+The value of <i>P</i> is computed by applying the operator to the value
+of <i>E<SUB>1</SUB></i>.
+<p>
+If <i>E</i> has the form
+<ul>
+<li>
+
+<tt> (</tt> <i>E<SUB>1</SUB></i> <tt> )</tt>
+</ul>
+
+the value of <i>E</i> is the value of <i>E<SUB>1</SUB></i>.
+<i>E<SUB>1</SUB></i> must be an expression of type <i>T</i>.
+<p>
+
+<p>
+
+<br><br>
+</ul>
+</ul>
+<a href="lrmpatterns.html"><img src="next.gif" border=0></a> <a href="lrmtypes.html"><img src="previous.gif" border=0></a></body>
+</html>

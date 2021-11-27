@@ -1,0 +1,51 @@
+<html>
+<head><title>Expressions</title></head>
+<body bgcolor=white>
+<a href="mlstmts.html"><img src="next.gif" border=0></a> <a href="mlvars.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="casestudy.html">CASE STUDY</a>
+ / <a href="sourcelang.html">The Source Language</a>
+ /<br><br>
+</font>
+<h1>Expressions</h1>
+
+<p>
+     Expressions are constructs denoting rules of  computation  for  obtaining
+values of variables and generating new values by the application of operators.
+Expressions consist of operators and operands, i.e.  variables and constants.
+<p>
+     The rules of composition specify operator precedences according  to  four
+classes  of  operators.  The operator NOT has the highest precedence, followed
+by the multiplying operator '*', the adding operator '+',  and  finally,  with
+the  lowest  precedence, the relational operator. Sequences of operators of the
+same precedence are executed from left to right.
+<p>
+<PRE>
+
+Expr ::= Expr ( '+' | '*' | '<' ) Expr | 'NOT' Expr
+     | '(' Expr ')' | Var | IntConst | RealConst
+     | 'TRUE' | 'FALSE'
+</PRE>
+
+Examples:
+<p>
+<PRE>
+
+i       15        TRUE       2*(i+r)
+NOT b   NOT (i<1)
+</PRE>
+
+<p>
+The operators are summarized in the following table:
+<p>
+
+Note that, for Boolean values, FALSE < TRUE.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="mlstmts.html"><img src="next.gif" border=0></a> <a href="mlvars.html"><img src="previous.gif" border=0></a></body>
+</html>

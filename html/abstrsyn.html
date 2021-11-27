@@ -1,0 +1,87 @@
+<html>
+<head><title>Abstract Syntax</title></head>
+<body bgcolor=white>
+<a href="cs2as.html"><img src="next.gif" border=0></a> <a href="calculator.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="glance.html">At a Glance</a>
+ /<br><br>
+</font>
+<h1>Abstract Syntax</h1>
+
+<p>
+We presented above a concrete syntax for expressions.
+In this section, we discuss a so-called <i> abstract syntax</i>.
+<p>
+Abstract syntax is often much better suited as the basis
+for the specification of
+program transformations, and is used as an intermediate program representation
+in compilers.
+<p>
+Similar to concrete syntax, a class of phrases (here called <i> terms</i>)
+are defined by listing the alternatives (corresponding to the rules)
+and specifying the constituents of each alternative.
+Each alternative has a name (called a <i> functor</i>).
+<PRE>
+
+'type' Expr
+
+   plus(Expr, Expr)
+   minus(Expr, Expr)
+   mult(Expr, Expr)
+   div(Expr, Expr)
+   neg(Expr)
+   num(INT)
+</PRE>
+
+<p>
+This introduces the type <tt> Expr</tt>. Values of this type are constructed
+as specified by the given alternatives.
+<p>
+For example, the alternative
+<PRE>
+
+num(INT)
+</PRE>
+specifies that the functor <tt> num</tt> used with an argument of type <tt> INT</tt>
+represents a value of type <tt> Expr</tt>.
+For example,
+<tt> num(20)</tt> and <tt> num(30)</tt>
+are values of type <tt> Expr</tt>.
+<p>
+The alternative 
+<PRE>
+
+mult(Expr, Expr)
+</PRE>
+specifies that the functor <tt> mult</tt> may be used with two arguments of type
+<tt> Expr</tt>. E.g. since
+<tt> num(20)</tt> and <tt> num(30)</tt> are values of type <tt> Expr</tt>
+the term
+<tt> mult(num(20), num(30))</tt> is also a value of type <tt> Expr</tt>.
+<p>
+Similarly the alternative
+<PRE>
+
+plus(Expr, Expr)
+</PRE>
+can be used to construct the value
+<tt> plus(num(10), mult(num(20), num(30)))</tt>.
+This abstract syntax term can be used as a representation of the expression
+<tt> 10+20*30</tt>.
+<p>
+Note that in abstract syntax the structure of terms is uniquely determined.
+Thus, we do not need to introduce several types to reflect the binding strength
+of operators. 
+<tt> plus(num(10), mult(num(20), num(30)))</tt>
+is used as a representation of <tt> 10+(20*30)</tt>
+and also as a representation of
+the expression <tt> 10+20*30</tt>.
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="cs2as.html"><img src="next.gif" border=0></a> <a href="calculator.html"><img src="previous.gif" border=0></a></body>
+</html>

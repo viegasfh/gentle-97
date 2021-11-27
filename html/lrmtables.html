@@ -1,0 +1,89 @@
+<html>
+<head><title>Context Tables</title></head>
+<body bgcolor=white>
+<a href="lrmmemebers.html"><img src="next.gif" border=0></a> <a href="lrmvars.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="lrm.html">LANGUAGE REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>Context Tables</h1>
+
+
+TableDecl =
+"'table'" Ident "(" Ident ":" Ident{ "," Ident ":" Ident}
+")" .
+
+<p>
+A declaration of the form
+<ul>
+<li>
+
+<tt> 'table'</tt> <i>T</i> <tt> (</tt> 
+<i>F<SUB>1</SUB></i> <tt> :</tt> <i>T<SUB>n</SUB></i> <tt> ,</tt>
+<i>...</i> <tt> ,</tt>
+<i>F<SUB>n</SUB></i> <tt> :</tt> <i>T<SUB>n</SUB></i> <tt> )</tt>
+</ul>
+
+introduces a context table <i>T</i>.
+<p>
+A context table is an unbounded collection of entries.
+An entry has a unique key and a record of fields.
+These fields have names
+<i>F<SUB>1</SUB></i>, ..., <i>F<SUB>n</SUB></i>
+and types <i>T<SUB>1</SUB></i>, ..., <i>T<SUB>n</SUB></i>.
+The name of the table, <i>T</i>, acts as the name for the type of the keys.
+<p>
+A unique key is created by a key definition statement.
+The value of a field is defined by a context update
+and accessed in a context query.
+<p>
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+
+<strong> Example</strong>
+<PRE>
+
+'table' Label (Coordinate: INT)
+</PRE>
+This defines a table <tt> Label</tt>. 
+Entries of this table have one field with name <tt> Coordinate</tt>
+and type <tt> INT</tt>.
+Keys of entries have type <tt> Label</tt>.
+<p>
+A value of type <tt> Label</tt> can be created without knowing the
+value of field <tt> Coordinate</tt>.
+<PRE>
+
+Lab :: Label
+</PRE>
+defines <tt> Lab</tt> as unique value of type <tt> Label</tt>.
+<PRE>
+
+Lab'Coordinate <- Loc
+</PRE>
+may be used later to define the field <tt> Coordinate</tt>.
+<PRE>
+
+Lab'Coordinate -> Loc
+</PRE>
+is used to access the field <tt> Coordinate</tt>.
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+<p>
+
+<p>
+
+<br><br>
+</ul>
+</ul>
+<a href="lrmmemebers.html"><img src="next.gif" border=0></a> <a href="lrmvars.html"><img src="previous.gif" border=0></a></body>
+</html>

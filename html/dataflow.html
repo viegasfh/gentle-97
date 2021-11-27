@@ -1,0 +1,53 @@
+<html>
+<head><title>Dataflow</title></head>
+<body bgcolor=white>
+<a href="where.html"><img src="next.gif" border=0></a> <a href="alternative.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="control.html">Control Structures</a>
+ /<br><br>
+</font>
+<h1>Dataflow</h1>
+
+In our example, the variables <tt> A</tt> and <tt> B</tt> are defined outside
+the alternative statement. They can be used inside.
+<p>
+The general rule is:
+A variable that is used in a pattern
+must be in a defined state at the beginning of the whole alternative statement,
+or must defined by a preceding member of the same alternative.
+<p>
+In the example, the variable <tt> C</tt> is used after the alternative statement,
+and has no definition outside the alternative statement.
+This is allowed because it is defined in both alternatives. Regardless of
+which alternative is taken, <tt> C</tt> would be defined in all cases
+(if no alternative is applicable then statement using <tt> C</tt> will not be
+reached).
+<p>
+The general rule is:
+A variable that is defined in all alternatives is said to be defined
+by the whole alternative statement, and may be used subsequently.
+If a variable is defined in all alternatives, it must be defined
+everywhere with the same type.
+<p>
+If a variable is defined in one or more - but not all - alternatives,
+it is said to be <i> local</i> to the alternative containing the definition
+and cannot be used outside the alternative statement.
+<p>
+If, in the above example, we had written
+<PRE>
+
+   (| ge(A, B) process(A -> ResultA) || process(B -> ResultB) |)
+</PRE>
+neither <tt> ResultA</tt> nor <tt> ResultB</tt> could have been used in a
+subsequent statement because it could not be guaranteed that it is
+always defined.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="where.html"><img src="next.gif" border=0></a> <a href="alternative.html"><img src="previous.gif" border=0></a></body>
+</html>

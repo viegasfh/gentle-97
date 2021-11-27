@@ -1,0 +1,45 @@
+<html>
+<head><title>Failure</title></head>
+<body bgcolor=white>
+<a href="patterns.html"><img src="next.gif" border=0></a> <a href="rules.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="compuations.html">Describing Computations</a>
+ /<br><br>
+</font>
+<h1>Failure</h1>
+
+The invocation
+of a predicate can <i> fail</i> for two reasons:
+the predicate is not applicable for the given input values, or
+the returned output values do not match the corresponding values
+in the invocation.
+<p>
+Consider
+<PRE>
+
+   IsJimsColor(yellow)
+</PRE>
+This invocation will fail because <tt> IsJimsColor</tt> is only applicable
+for <tt> red</tt>.
+An invocation fails if there is no applicable rule.
+<p>
+Consider also
+<PRE>
+
+   JimsColor(-> yellow)
+</PRE>
+This invocation will fail since <tt> JimsColor</tt> returns <tt> red</tt>
+which does not match <tt> yellow</tt>.
+<p>
+Failure does not mean error.
+As we shall see, it can be used to control predicate evaluation.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="patterns.html"><img src="next.gif" border=0></a> <a href="rules.html"><img src="previous.gif" border=0></a></body>
+</html>

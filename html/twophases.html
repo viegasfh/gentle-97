@@ -1,0 +1,39 @@
+<html>
+<head><title>The Two Processing Phases</title></head>
+<body bgcolor=white>
+<a href="wellformed.html"><img src="next.gif" border=0></a> <a href="usingoutput.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="optimal.html">Optimal Rule Selection</a>
+ /<br><br>
+</font>
+<h1>The Two Processing Phases</h1>
+
+<p>
+Rules of <tt> choice</tt> predicates are processed in two phases:
+in the first phase,
+the optimal rule combination is determined;
+in the second phase,
+these rules are elaborated just as for ordinary predicates.
+<p>
+To determine which rules should be applied,
+the first phase performs pattern matching
+and evaluates conditions.
+Conditions invoked from rules of <tt> choice</tt> predicates
+should only test their arguments,
+but must have no side effects such as changing global variables.
+<p>
+In the second phase, only those rules are elaborated that were selected
+in the first phase.
+During rule elaboration, now also predicates of the category <tt> action</tt>
+are invoked.
+These invocations may have side effects, such as emitting code.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="wellformed.html"><img src="next.gif" border=0></a> <a href="usingoutput.html"><img src="previous.gif" border=0></a></body>
+</html>

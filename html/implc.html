@@ -1,0 +1,87 @@
+<html>
+<head><title>Implementing Types and Predicates in C</title></head>
+<body bgcolor=white>
+<a href="casestudy.html"><img src="next.gif" border=0></a> <a href="strings.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="library.html">LIBRARY REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>Implementing Types and Predicates in C</h1>
+
+<p>
+A type that is is defined without functors or a procedure that is defined
+without rules must be implemented in <i> C</i>.
+<p>
+Abstract types may be implemented as values of type <tt> long</tt> or as
+pointers.
+<p>
+For example, if a <i> Gentle</i> specification contains the declaration
+<PRE>
+
+'type' IDENT
+</PRE>
+this type may be implemented in a <i> C</i> module as
+<PRE>
+
+typedef struct IDENTSTRUCT *IDENT;
+</PRE>
+which defines values of type <tt> IDENT</tt>
+as references to structures.
+<p>
+Abstract procedures are implemented by <i> C</i> routines that take <tt> long</tt>
+arguments as input parameters and use <tt> (long *)</tt> arguments to realize
+output parameters.
+<p>
+For example, if a <i> Gentle</i> specifications defines a procedure as
+<PRE>
+
+'action' Max (INT, INT -> INT)
+</PRE>
+it may be implemented in C as
+<PRE>
+
+void Max (x, y, ref_result)
+   long x;
+   long y;
+   long *ref_result;
+{
+   *ref_result = (x > y ? x : y);
+}
+</PRE>
+
+The <i> Gentle</i> type <tt> INT</tt> corresponds to the <i> C</i> type <tt> long</tt>.
+<i> Gentle</i> terms and the type <tt> POS</tt>
+may also be treated as <tt> long</tt>. The <i> Gentle</i>
+type <tt> STRING</tt> corresponds to <tt> (char *)</tt>.
+<p>
+A <tt> 'condition'</tt> must be implemented as a function returning <tt> int</tt>
+that yields 1 if the call succeeds and 0 if it fails.
+<p>
+For example, a procedure introduced by
+<PRE>
+
+'condition' HasMeaning (IDENT -> MEANING)
+</PRE>
+may be implemented by
+<PRE>
+
+int HasMeaning (id, ref_meaning)
+   IDENT id;
+   long *ref_meaning;
+{
+   if (id->meaning == 0)
+      return 0;
+   *ref_meaning = id->meaning;
+   return 1;
+}
+</PRE>
+
+
+
+
+<br><br>
+</ul>
+</ul>
+<a href="casestudy.html"><img src="next.gif" border=0></a> <a href="strings.html"><img src="previous.gif" border=0></a></body>
+</html>

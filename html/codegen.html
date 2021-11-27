@@ -1,0 +1,58 @@
+<html>
+<head><title>Code Generation</title></head>
+<body bgcolor=white>
+<a href="elements.html"><img src="next.gif" border=0></a> <a href="transf.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="glance.html">At a Glance</a>
+ /<br><br>
+</font>
+<h1>Code Generation</h1>
+
+While the parser of a compiler translates a concrete program
+(of the source language) into a (high-level)
+abstract syntax
+(which may then be transformed into a lower-level intermediate
+representation),
+the code generator of a compiler translates the abstract syntax into
+a concrete program (of the target language).
+This mapping can be specified in exactly the same way as within the
+parser with the exception that abstract syntax now becomes an input parameter
+that controls rule selection.
+<p>
+As an example, we translate expressions into code for a stack computer:
+here, the code for operands is followed by an operator that works on
+these operands.
+<p>
+The root clause of this compiler is
+<PRE>
+
+'root' expression(-> X) code(X)
+
+</PRE>
+
+<p>
+The procedure <tt> code</tt> is defined as follows
+<PRE>
+
+'action' code (Expr)
+
+'rule' code(plus(X1, X2)): code(X1) code(X2) print("plus")
+'rule' code(minus(X1, X2)): code(X1) code(X2) print("minus")
+'rule' code(mult(X1, X2)): code(X1) code(X2) print("mult")
+'rule' code(div(X1, X2)): code(X1) code(X2) print("div")
+'rule' code(neg(X)): code(X) print("neg")
+'rule' code(num(N)): print(N)
+</PRE>
+
+<p>
+
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="elements.html"><img src="next.gif" border=0></a> <a href="transf.html"><img src="previous.gif" border=0></a></body>
+</html>

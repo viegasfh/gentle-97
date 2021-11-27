@@ -1,0 +1,43 @@
+<html>
+<head><title>Input and Output</title></head>
+<body bgcolor=white>
+<a href="mlprogs.html"><img src="next.gif" border=0></a> <a href="mlstmts.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="casestudy.html">CASE STUDY</a>
+ / <a href="sourcelang.html">The Source Language</a>
+ /<br><br>
+</font>
+<h1>Input and Output</h1>
+
+<p>
+     Input and output of values of simple types is achieved  by  the  standard
+procedures READ and WRITE.
+<p>
+     The procedure READ takes one actual parameter which must be a variable of
+a  simple  type.  It reads a value of the corresponding type from the standard
+input and assigns it to that variable.
+<p>
+The procedure WRITE takes one actual parameter which must be  an
+expression  with  a  simple  type.
+It writes the value of that expression onto the
+standard output.
+<p>
+Example:
+<PRE>
+
+(* read integers and write            *)
+(* until a nonpositive number is read *)
+READ (i);
+WHILE 0 < i DO
+  WRITE (i); READ (i)
+END
+</PRE>
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="mlprogs.html"><img src="next.gif" border=0></a> <a href="mlstmts.html"><img src="previous.gif" border=0></a></body>
+</html>

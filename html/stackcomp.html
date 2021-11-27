@@ -1,0 +1,117 @@
+<html>
+<head><title>A Stack Computer</title></head>
+<body bgcolor=white>
+<a href="unparsing.html"><img src="next.gif" border=0></a> <a href="codegenexpr.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="optimal.html">Optimal Rule Selection</a>
+ /<br><br>
+</font>
+<h1>A Stack Computer</h1>
+
+Our target computer is a stack computer with the following instructions
+(the instructions are given as predicates, that, when invoked,
+emit the instruction):
+<p>
+<PRE>
+
+   'action' PLUS
+   'action' MINUS
+   'action' PUSH(Variable)
+   'action' POP(Variable)
+</PRE>
+
+The instructions modify the stack of the computer.
+If the stack has the form
+<ul>
+<li>
+
+... <i>X</i> <i>Y</i>
+</ul>
+
+then <tt> PLUS</tt> replaces the top two elements by their sum
+<i>Z = X+Y</i>,
+i.e.  the stack becomes
+<ul>
+<li>
+
+... <i>Z</i>
+</ul>
+
+Similarly, <tt> MINUS</tt> replaces <i>X</i> and <i>Y</i> by
+<i>Z = X-Y</i>.
+<p>
+If <i>K</i> is the value of a variable <tt> V</tt>, then
+<tt> PUSH(V)</tt>
+puts <i>K</i> onto the stack.
+<p>
+If <i>K</i> is the value on top of the stack, then
+<tt> POP(V)</tt>
+removes it from the stack and stores it in <tt> V</tt>.
+<p>
+Let us write predicates <tt> Encode</tt> and <tt> StackCode</tt>
+that emit instructions for statements and expressions.
+<p>
+If we have to generate code for
+<tt> assign(V, X)</tt>,
+we have to emit code for the expression <tt> X</tt>
+that computes its value on top of the stack.
+Then, we can use the <tt> POP</tt> instruction to store it in <tt> V</tt>.
+<PRE>
+
+   'rule' Encode(assign(V,X)):
+      StackCode(X)
+      POP(V)
+</PRE>
+
+The predicate <tt> StackCode</tt> processes the alternatives for
+<tt> Expr</tt>:
+<PRE>
+
+   'rule' StackCode(plus(X,Y)):
+      StackCode(X)
+      StackCode(Y)
+      PLUS
+   'rule' StackCode(minus(X,Y)):
+      StackCode(X)
+      StackCode(Y)
+      MINUS
+   'rule' StackCode(var(V)):
+      PUSH(V)
+</PRE>
+For the <tt> Statement</tt>
+<PRE>
+
+   assign("Res", plus("A", minus("B", "C")))
+</PRE>
+the generated code is
+<PRE>
+
+   PUSH A
+   PUSH B
+   PUSH C
+   MINUS
+   PLUS
+   POP Res
+</PRE>
+which, when executed, results in the following stack configurations
+<ul>
+<li>
+
+   ... <i>(A)</i> <br>
+   ... <i>(A)</i> <i>(B)</i> <br>
+   ... <i>(A)</i> <i>(B)</i> <i>(C)</i> <br>
+   ... <i>(A)</i> <i>(B-C)</i> <br>
+   ... <i>(A+(B-C))</i> <br>
+   ...
+</ul>
+
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="unparsing.html"><img src="next.gif" border=0></a> <a href="codegenexpr.html"><img src="previous.gif" border=0></a></body>
+</html>

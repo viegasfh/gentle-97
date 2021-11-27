@@ -1,0 +1,66 @@
+<html>
+<head><title>Shallow Backtracking</title></head>
+<body bgcolor=white>
+<a href="preddcl.html"><img src="next.gif" border=0></a> <a href="srategy.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="compuations.html">Describing Computations</a>
+ /<br><br>
+</font>
+<h1>Shallow Backtracking</h1>
+
+Using shallow
+backtracking, a predicate invocation is elaborated as follows.
+The rules are tested in the given order.
+If a rule fails, the next rule is considered.
+If a rule succeeds, the predicate succeeds and the result is determined.
+If all rules fail, the predicate fails.
+<p>
+This implies that, when one considers a certain rule,
+one can be sure that preceding rules were not applicable.
+<p>
+For example, a predicate <tt> max</tt> computing the maximum of two integers
+(using the built-in predicates <tt> ge</tt> and <tt> lt</tt> for
+the relations greater-or-equal and less-than)
+that is defined by
+<PRE>
+
+   'rule' max(X, Y -> X): ge(X, Y)
+   'rule' max(X, Y -> Y): lt(X, Y)
+</PRE>
+could also have been written as
+<PRE>
+
+   'rule' max(X, Y -> X): ge(X, Y)
+   'rule' max(X, Y -> Y)
+</PRE>
+because the second rule is only used when <tt> X</tt> is less than <tt> Y</tt>.
+The disadvantage is that now the rule cannot be understood in isolation.
+<p>
+This style is often used for abbreviation.
+For example, a predicate <tt> kind</tt>
+that maps the set of letters <tt> a</tt>, <tt> b</tt>, <tt> c</tt>, ... , <tt> z</tt>
+onto the constants <tt> vowl</tt> or <tt> consonant</tt>
+can be written is this way:
+<PRE>
+
+   'rule'  kind(a -> vowl)
+   'rule'  kind(e -> vowl)
+   'rule'  kind(i -> vowl)
+   'rule'  kind(o -> vowl)
+   'rule'  kind(u -> vowl)
+
+   'rule'  kind(Other -> consonant)
+</PRE>
+where the last rule replaces 21 rules dealing with consonants.
+Since none of the first five rules was applicable, we know that <tt> Other</tt>
+is a consonant.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="preddcl.html"><img src="next.gif" border=0></a> <a href="srategy.html"><img src="previous.gif" border=0></a></body>
+</html>

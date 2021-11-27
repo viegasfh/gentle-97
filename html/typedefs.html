@@ -1,0 +1,83 @@
+<html>
+<head><title>Type Definitions</title></head>
+<body bgcolor=white>
+<a href="usingterms.html"><img src="next.gif" border=0></a> <a href="terms.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="data.html">Describing Data</a>
+ /<br><br>
+</font>
+<h1>Type Definitions</h1>
+
+A set of term values is introduced by a type definition.
+For example,
+the set of terms <tt> red</tt>, <tt> yellow</tt>, and <tt> blue</tt>
+can be defined as a type <tt> Color</tt>
+by the type definition
+<PRE>
+
+'type' Color
+   red
+   yellow
+   blue
+</PRE>
+A type definition gives the name of the type
+and lists the possible alternatives.
+<p>
+If an alternative is given by a functor with arguments,
+then the types
+of the arguments are listed.
+For example,
+a type <tt> Signal</tt> is defined by
+<PRE>
+
+'type' Signal
+   signal(Color, Color)
+</PRE>
+A possible value of this type is
+<tt> signal(red, yellow)</tt>.
+<p>
+Type definitions may be recursive.
+E. g. a type <tt> ColorList</tt> can be defined by
+<PRE>
+
+'type' ColorList
+   list(Color, ColorList)
+   nil
+</PRE>
+
+Type definitions specify how to construct valid terms of a type:
+a value of a type may be obtained by replacing the type names in an
+alternative for that type by valid terms of the corresponding types.
+For example,
+since <tt> red</tt> is a <tt> Color</tt> and <tt> nil</tt> is 
+a <tt> ColorList</tt>, one can choose the alternative
+<tt> list(Color, ColorList)</tt> and replace <tt> Color</tt> by <tt> red</tt>
+and <tt> ColorList</tt> by <tt> nil</tt> to obtain
+<tt> list(red, nil)</tt> as valid term of type <tt> ColorList</tt>.
+Using <tt> yellow</tt> as <tt> Color</tt> and the <tt> ColorList</tt> just constructed,
+one can build the more complex term <tt> list(yellow, list(red, nil))</tt>
+of type <tt> ColorList</tt>.
+<p>
+In a type definition the fields may be given names to document their
+meaning, e. g.
+<PRE>
+
+   list(Head: Color, Tail: ColorList)
+</PRE>
+
+<p>
+The terms considered so far are so-called <i> ground terms</i>:
+they do not contain variables as placeholders.
+A ground term is built from a simple functor without arguments
+or by taking already available ground terms and applying a functor to them,
+thus yielding a more complex term.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="usingterms.html"><img src="next.gif" border=0></a> <a href="terms.html"><img src="previous.gif" border=0></a></body>
+</html>

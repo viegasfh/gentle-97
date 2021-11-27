@@ -1,0 +1,59 @@
+<html>
+<head><title>External Types</title></head>
+<body bgcolor=white>
+<a href="extpred.html"><img src="next.gif" border=0></a> <a href="external.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="external.html">Using Types and Predicates Written in C</a>
+ /<br><br>
+</font>
+<h1>External Types</h1>
+
+<p>
+An external type, i.e. a type whose values are not defined in
+<i> Gentle</i>, may be introduced by a type declaration without
+functor definitions.
+<p>
+By way of example, consider the declaration
+<PRE>
+
+   'type' IDENT
+</PRE>
+which introduces an external type <tt> IDENT</tt>.
+<p>
+Since in <i> Gentle</i> the values of this type are not specified
+they cannot be denoted by terms.
+On the other hand, values of an external type such as <tt> IDENT</tt>
+can be used in the same way as values of other types:
+they can appear as parameters of predicates and may be used
+as constituents of terms.
+<p>
+We could, for example, define a new type
+that introduces lists of <tt> IDENT</tt>s:
+<PRE>
+
+   'type' IDENTLIST
+      list (IDENT, IDENTLIST)
+      nil
+</PRE>
+
+and pass values of type <tt> IDENT</tt> as parameters as in
+<PRE>
+
+   'action' DeclareIdentList(IDENTLIST, TYPE)
+
+   'rule' DeclareIdentList(list(Ident, IdentList), Type):
+      DeclareIdent(Ident, Type)
+      DeclareIdentList(IdentList, Type)
+
+   'rule' DeclareIdentList(nil, Type)
+</PRE>
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="extpred.html"><img src="next.gif" border=0></a> <a href="external.html"><img src="previous.gif" border=0></a></body>
+</html>

@@ -1,0 +1,96 @@
+<html>
+<head><title>Translating Expressions</title></head>
+<body bgcolor=white>
+<a href="trdesig.html"><img src="next.gif" border=0></a> <a href="trstats.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="casestudy.html">CASE STUDY</a>
+ / <a href="compiler.html">The Compiler</a>
+ /<br><br>
+</font>
+<h1>Translating Expressions</h1>
+
+Here is the specification for translating expressions:
+<p>
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+<font size="-1">
+<pre>
+
+253  'action' Expression(Expr: EXPR -> Type: TYPE) 
+254     'rule' Expression(binary(Op, X, Y, Pos) -> T) : 
+255        Expression(X -> TX) 
+256        Expression(Y -> TY) 
+257        BinaryOp(Op, TX, TY, Pos -> T) 
+258     'rule' Expression(opnot(X, Pos) -> TX) : 
+259        Expression(X -> TX) 
+260        CheckBool(TX, Pos) 
+261     'rule' Expression(int(N) -> integer) : 
+262        LDC(1, N) 
+263     'rule' Expression(float(Float) -> real) : 
+264        LDF(Float) 
+265     'rule' Expression(true -> boolean) : 
+266        LDC(3, 1) 
+267     'rule' Expression(false -> boolean) : 
+268        LDC(3, 0) 
+269     'rule' Expression(desig(D) -> T) : 
+270        Designator(D -> T) 
+271        LDI 
+  
+272  'action' BinaryOp(Op: OP, T1: TYPE, T2: TYPE, Pos: POS -> T: TYPE) 
+273     'rule' BinaryOp(less, integer, integer, Pos -> boolean) : LES(1) 
+274     'rule' BinaryOp(less, real, real, Pos -> boolean) : LES(2) 
+275     'rule' BinaryOp(less, boolean, boolean, Pos -> boolean) : LES(3) 
+276     'rule' BinaryOp(plus, integer, integer, Pos -> integer) : ADD(1) 
+277     'rule' BinaryOp(mult, integer, integer, Pos -> integer) : MUL(1) 
+278     'rule' BinaryOp(plus, real, real, Pos -> real) : ADD(2) 
+279     'rule' BinaryOp(mult, real, real, Pos -> real) : MUL(2) 
+280     'rule' BinaryOp(Op, T1, T2, Pos -> none) : 
+281        Error("Invalid types for operator", Pos) 
+
+</pre>
+</font>
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+
+<p>
+<tt> Expression</tt>
+ 
+The predicate <tt> Expression(Expr -> Type)</tt> translates an expression <tt> E</tt>
+and  computes its type <tt> T</tt>.
+<p>
+An expression that is simply a literal is translated into an instruction
+that pushes the value onto the stack.
+<p>
+An expression involving an operator is translated into code for the
+operands, followed by an instruction depending on the operator.
+In the case of binary operators, this instruction is selected by the predicate
+<tt> BinaryOp</tt>.
+<p>
+If the operand is a designator (a construct that designates a variable or
+an array element), then code to compute the address is generated,
+followed by a load instruction (<tt> LDI</tt>).
+<p>
+ <br>
+<tt> BinaryOp</tt>
+<p>
+In the case of binary operators the corresponding instruction is selected
+by <tt> BinaryOp(Op, T1, T2, Pos -> T)</tt>,
+which also checks the types of the arguments and yields the
+type of the result.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="trdesig.html"><img src="next.gif" border=0></a> <a href="trstats.html"><img src="previous.gif" border=0></a></body>
+</html>

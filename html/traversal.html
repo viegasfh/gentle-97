@@ -1,0 +1,85 @@
+<html>
+<head><title>Traversal</title></head>
+<body bgcolor=white>
+<a href="transf.html"><img src="next.gif" border=0></a> <a href="cs2as.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="glance.html">At a Glance</a>
+ /<br><br>
+</font>
+<h1>Traversal</h1>
+
+<p>
+In this section we show how to process abstract syntax.
+For this purpose we discuss a calculator
+which is based on abstract syntax.
+<p>
+The root clause of this specification has the form
+<PRE>
+
+'root' expression(-> X) eval(X -> N) print(N)
+
+</PRE>
+
+<p>
+where <tt> expression</tt> is defined as in the preceding example.
+It yields a term <tt> X</tt> of type <tt> Expr</tt>, as defined above.
+<p>
+<tt> eval</tt> is a procedure with one input parameter of type
+<tt> Expr</tt> and one output parameter of type <tt> INT</tt>. It maps
+its input value (the abstract syntax of a particular expression)
+onto the numeric value of this expression.
+<p>
+This mapping is defined by the following rules.
+<p>
+<PRE>
+
+'action' eval (Expr -> INT)
+
+'rule' eval(plus(X1, X2) -> N1+N2): eval(X1 -> N1) eval(X2 -> N2)
+'rule' eval(minus(X1, X2) -> N1-N2): eval(X1 -> N1) eval(X2 -> N2)
+'rule' eval(mult(X1, X2) -> N1*N2): eval(X1 -> N1) eval(X2 -> N2)
+'rule' eval(div(X1, X2) -> N1/N2): eval(X1 -> N1) eval(X2 -> N2)
+'rule' eval(neg(X) -> -N): eval(X -> N)
+'rule' eval(num(N) -> N)
+</PRE>
+
+<p>
+Whereas in concrete syntax rules are selected according to the structure
+of the concrete input, here rules are selected according to the structure of
+the terms of the abstract syntax. In this example, there is a rule for
+each alternative of the type <tt> Expr</tt> that specifies how to compute
+the numerical value from the numerical value of the constituents of
+the term.
+<p>
+Consider the rule
+<PRE>
+
+'rule' eval(plus(X1, X2) -> N1+N2): eval(X1 -> N1) eval(X2 -> N2)
+</PRE>
+which is selected if the input term of <tt> eval</tt> has the structure
+<tt> plus(</tt><i>S<SUB>1</SUB></i><tt>,</tt><i>S<SUB>2</SUB></i><tt>)</tt> with subterms <i>S<SUB>1</SUB></i> and <i>S<SUB>2</SUB></i>.
+The variables <tt> X1</tt> and <tt> X2</tt> are defined as these subterms.
+The invocations <tt> eval(X1 -> N1)</tt>
+and <tt> eval(X2 -> N2)</tt> define <tt> N1</tt> and <tt> N2</tt> as
+the numeric values of the corresponding subterms.
+These values are then used to compute the output parameter
+<tt> N1 + N2</tt>.
+<p>
+For example, if the input term is <tt> plus(num(10), mult(num(20), num(30))</tt>,
+then <tt> X1</tt> is defined as <tt> num(10)</tt> and <tt> X2</tt> is defined as
+<tt> mult(num(20), num(30))</tt>.
+The recursive invocations of <tt> eval</tt> then define <tt> N1</tt> as 10
+(the numeric value of <tt> X1</tt>) and <tt> N2</tt> as 600 (the numeric value of
+<tt> X2</tt>).
+With these values the output parameter of the left-hand side is computed,
+<tt> N1+N2</tt> yields 610.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="transf.html"><img src="next.gif" border=0></a> <a href="cs2as.html"><img src="previous.gif" border=0></a></body>
+</html>

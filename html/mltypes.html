@@ -1,0 +1,65 @@
+<html>
+<head><title>Data Types</title></head>
+<body bgcolor=white>
+<a href="mlvars.html"><img src="next.gif" border=0></a> <a href="mlvoc.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="casestudy.html">CASE STUDY</a>
+ / <a href="sourcelang.html">The Source Language</a>
+ /<br><br>
+</font>
+<h1>Data Types</h1>
+
+<p>
+     A data type determines the set of values which variables of that type may
+assume.
+<PRE>
+
+Type ::= SimpleType | ArrayType
+</PRE>
+
+<h3>Simple Types</h3>
+
+<p>
+<PRE>
+
+SimpleType ::= 'INTEGER' | 'REAL' | 'BOOLEAN'
+</PRE>
+
+The values of type INTEGER are a subset of the whole numbers defined by
+individual implementations.  Its values are the integers.
+<p>
+     The values of type REAL are a subset of the real numbers depending  on  a
+particular implementation.  The values are denoted by real numbers.
+<p>
+     The values of type BOOLEAN are the truth values denoted by  the  reserved
+identifiers TRUE and FALSE.
+<p>
+<h3>Array Types</h3>
+
+An array type is  a  structure  consisting  of  a  fixed
+number  of  components  which  are  all of the same type, called the component
+type.  The elements of the array are designated by integer indices.  The array
+type  specifies the component type as well as a subrange of the integers to be
+used as indices.
+<PRE>
+
+ArrayType ::= 'ARRAY' '[' IntConst '..' IntConst ']'
+              'OF' Type
+</PRE>
+Examples:
+<PRE>
+
+ARRAY [1..100] OF INTEGER
+ARRAY [4..7] OF ARRAY [2..2] OF BOOLEAN
+</PRE>
+The index range must contain at least one element, i.e. the lower bound of  an
+index range must not exceed the upper bound.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="mlvars.html"><img src="next.gif" border=0></a> <a href="mlvoc.html"><img src="previous.gif" border=0></a></body>
+</html>

@@ -1,0 +1,110 @@
+<html>
+<head><title>Cost-Driven Rule Selection</title></head>
+<body bgcolor=white>
+<a href="usingoutput.html"><img src="next.gif" border=0></a> <a href="codegenspec.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="optimal.html">Optimal Rule Selection</a>
+ /<br><br>
+</font>
+<h1>Cost-Driven Rule Selection</h1>
+
+<p>
+A rule gives the cost of the respective operation of the rule.
+For example,
+in the <tt> PLUS</tt> operation counts <tt> 20</tt> in
+<PRE>
+
+   'rule' StackCode(minus(X,Y)):
+      StackCode(X)
+      StackCode(Y)
+      MINUS
+      $ 20
+</PRE>
+The total cost of translating <tt> minus(X,Y)</tt> with this rule
+would be <tt> 20</tt> plus the total cost of translating <tt> X</tt>
+plus the total cost of translating <tt> Y</tt>.
+<p>
+The corresponding accumulator operation is cheaper:
+<PRE>
+
+   'rule' AccuCode(minus(X, var(V)):
+      AccuCode(X)
+      ACCUMINUS(V)
+      $ 10
+</PRE>
+
+The computation of an expression is cheaper
+if performed in the accumulator; hence the translation of
+source source text
+<PRE>
+
+   r := x-y
+</PRE>
+is
+<PRE>
+
+   LOADACCU x
+   ACCUMINUS y
+   STOREACCU r
+</PRE>
+and not
+<PRE>
+
+   PUSH a
+   PUSH b
+   MINUS
+   POP r
+</PRE>
+which is also a possible result of a series of rule applications.
+<p>
+If the expression appears in a context where stack code is required
+(the outer minus does not have a simple operand) as in
+<PRE>
+
+   r := (x-y)-(a-b)
+</PRE>
+it is computed on the stack:
+<PRE>
+
+   PUSH x
+   PUSH y
+   MINUS
+   PUSH a
+   PUSH b
+   MINUS
+   MINUS
+   POP r
+</PRE>
+because an operation that moves the intermediate result from
+the stack to the accumulator would be too costly.
+<p>
+If a larger subexpression is used, then the cheaper accumulator computation
+outweighs the cost of the <tt> ACCUTOSTACK</tt> instruction.
+The input
+<PRE>
+
+   r := (x-y-z)-(a-b)
+</PRE>
+is translated into
+<PRE>
+
+   LOADACCU x
+   ACCUMINUS y
+   ACCUMINUS z
+   ACCUTOSTACK
+   PUSH a
+   PUSH b
+   MINUS
+   MINUS
+   POP r
+</PRE>
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="usingoutput.html"><img src="next.gif" border=0></a> <a href="codegenspec.html"><img src="previous.gif" border=0></a></body>
+</html>

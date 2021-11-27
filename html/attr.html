@@ -1,0 +1,55 @@
+<html>
+<head><title>Attributes</title></head>
+<body bgcolor=white>
+<a href="actgram.html"><img src="next.gif" border=0></a> <a href="tokens.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="syntaxdescr.html">Describing Syntax</a>
+ /<br><br>
+</font>
+<h1>Attributes</h1>
+
+<p>
+Nonterm and token predicates may have parameters
+that are declared and used in the same way as with other
+predicates, except that for grammar symbols only output parameters
+are supported.
+<p>
+Given a structuring of the input into phrases (a parse),
+each nonterm application corresponds to a particular part of the input.
+The parameter values for that nonterm are often called
+<i> attributes</i> of the construct that corresponds to the nonterm application.
+Attributes can be computed from the attributes of constituents.
+<p>
+Here is a classical grammar that computes the value of a binary number:
+<p>
+<PRE>
+
+   'root' bits(-> N) print(N)
+
+   'nonterm' bits(-> INT)
+   'rule' bits(-> B): bit(-> B)
+   'rule' bits(-> N*2+B): bits(-> N) bit(-> B)
+
+   'nonterm' bit(-> INT)
+   'rule' bit(-> 0): "0"
+   'rule' bit(-> 1): "1"
+</PRE>
+
+Consider the input
+<PRE>
+
+   1 0 1
+</PRE>
+which is decomposed by the second rule into <tt> bits</tt> (<tt> 1 0</tt>)
+with value <tt> N</tt> = 2 and <tt> bit</tt> (<tt> 1</tt>) with value <tt> B</tt> = 1.
+The attribute of the whole sequence is computed as <tt> N*2+B</tt> = 5.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="actgram.html"><img src="next.gif" border=0></a> <a href="tokens.html"><img src="previous.gif" border=0></a></body>
+</html>

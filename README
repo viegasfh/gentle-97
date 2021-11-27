@@ -1,0 +1,93 @@
+
+   GENTLE 97
+
+   Gentle Compiler Construction System 3.0
+   Copyright (C) 1992, 1997  F.W. Schroeer
+
+
+   WELCOME TO THE GENTLE COMPILER CONSTRUCTION SYSTEM
+   --------------------------------------------------
+
+      Gentle is a high-level compiler construction system
+      that is widely used in industry and research.
+      Various commercial products have been constructed with Gentle.
+
+      The Gentle compiler description language covers the full spectrum
+      of compiler construction. It supports
+
+      * language recognition,
+      * definition of abstract syntax trees,
+      * construction of tree walkers based on pattern-matching,
+      * smart traversal,
+      * simple unparsing for source-to-source translation, and
+      * optimal code selection for microprocessors.
+
+      Gentle provides a uniform framework for all of these tasks.
+
+      The Gentle compiler construction system translates high-level
+      specifications into portable and efficient Lex, Yacc, and C code,
+      thereby relieving users from the need to deal with
+      implementation details.
+      The language has been designed to enable errors to be detected
+      as early as possible; this drastically reduces debugging effort.
+      The underlying methodology proves to be a useful guideline
+      in compiler projects. Users report that Gentle significantly
+      increases productivity.  Because the uniform framework makes
+      the language simple and easy to learn,
+      Gentle is also well suite for education.
+
+
+   LICENSE
+   -------
+
+      GENTLE 97 is freely redistributable.
+      It may be used at no charge for the production of free software
+      as well as for personal and educational purposes.
+      See the file `LICENSE' for the conditions.
+
+
+   INSTALLATION
+   ------------
+
+      See the file `INSTALL' for instructions how to install Gentle.
+
+
+   USAGE
+   -----
+
+      See the file `USAGE' for a first example how to use Gentle.
+
+
+   DOCUMENTATION
+   -------------
+
+      Gentle is documented in:
+
+	    Friedrich Wilhelm Schroeer
+	    The GENTLE Compiler Construction System
+	    R. Oldenbourg, Munich and Vienna, 1997
+	    142 pages, DM 44.00
+	    ISBN 3-486-247034-4
+      
+      The file `BOOK.ps' contains a PostScript version of this book.
+      This distribution also contains an online version of the book,
+      see `BOOK.html' and the directory `html'.
+
+
+   FURTHER INFORMATION
+   -------------------
+
+      Gentle is being actively maintained and supported.
+      For up-to-date information visit
+
+	    http://www.first.gmd.de/gentle/
+
+      Please feel free to send your questions to the author.
+
+
+
+   Friedrich Wilhelm Schroeer               Berlin, November 1997
+   friwi@first.gmd.de
+
+   GMD German National Research Center for Information Technology
+

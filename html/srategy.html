@@ -1,0 +1,75 @@
+<html>
+<head><title>Evaluation Strategy</title></head>
+<body bgcolor=white>
+<a href="shallow.html"><img src="next.gif" border=0></a> <a href="vars.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="compuations.html">Describing Computations</a>
+ /<br><br>
+</font>
+<h1>Evaluation Strategy</h1>
+
+In the examples
+we have discussed in this chapter one rule at most was applicable
+for a given input.
+This is typical for many predicates because they are often written
+in a way that follows the type definition of their arguments.
+<p>
+There may also be definitions where more than one rule is applicable
+for a given input. 
+For example,
+the definition of <tt> favorite</tt> could contain
+<PRE>
+
+   'rule' favorite (julia -> blue)
+   'rule' favorite (julia -> red)
+</PRE>
+
+Several interpretations would be possible:
+<p>
+<i> Shallow Backtracking</i>.
+The first applicable rule is selected and it determines the result.
+For example, in
+<PRE>
+
+   favorite(julia -> X)
+</PRE>
+<tt> X</tt> is defined as <tt> blue</tt>.
+This approach treats predicates as functions.
+<p>
+<i> Deep Backtracking</i>.
+All results are delivered, one after the other.
+For example, in
+<PRE>
+
+   favorite(julia -> X) IsJimsColor(X)
+</PRE>
+<tt> X</tt> is first defined as <tt> blue</tt>, but <tt> IsJimsColor</tt>
+fails for this value, so <tt> favorite</tt> is resumed and then
+defines <tt> X</tt> as <tt> red</tt>.
+This approach treats predicates as relations.
+<p>
+Most of the concepts a compiler has to deal with are functions of other items:
+e.g. ``the type of an expression'', ``the offset of a variable''
+(an expression has unique type, a variable has a unique offset).
+Hence, the usual strategy in <i> Gentle</i> is shallow backtracking.
+<p>
+However, there is one important concept that is not functional by nature:
+a given source construct may have various 
+possible representations in the target language.
+Here, one wishes to list possible translations of pieces which are
+automatically selected and combined into a globally optimal translation.
+This is also supported by <i> Gentle</i>. Since the number of possibilities
+in general is exponential,
+<i> Gentle</i> code does not enumerate them, but computes the best rule selection 
+using a linear time algorithm.
+This will be discussed later.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="shallow.html"><img src="next.gif" border=0></a> <a href="vars.html"><img src="previous.gif" border=0></a></body>
+</html>

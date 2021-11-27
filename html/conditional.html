@@ -1,0 +1,51 @@
+<html>
+<head><title>The Conditional Statement</title></head>
+<body bgcolor=white>
+<a href="usingalt.html"><img src="next.gif" border=0></a> <a href="disjunct.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="control.html">Control Structures</a>
+ /<br><br>
+</font>
+<h1>The Conditional Statement</h1>
+
+A frequent case is that, if a certain condition holds, a specific action
+should be initiated, otherwise nothing should happen.
+This could be expressed by an alternative statement
+with an empty second alternative.
+<p>
+For example,
+<PRE>
+
+   (|  IsBad(Item) Complain(Item) || /*nothing*/ |)
+</PRE>
+This can be abbreviated by a <i> conditional statement</i>.
+<PRE>
+
+   [|  IsBad(Item) Complain(Item) |]
+</PRE>
+
+An alternative statement has the form
+<ul>
+<li>
+
+   <tt> [|</tt> <i>M<SUB>1</SUB></i> <i>M<SUB>2</SUB></i> ... <i>M<SUB>n</SUB></i> <tt> |]</tt>
+</ul>
+
+The members <i>M<SUB>i</SUB></i> are elaborated in the given order.
+If one member fails elaboration is completed and
+and the conditional statement succeeds.
+If all members succeed the conditional statement succeeds.
+<p>
+A conditional statement cannot define variables
+because if one member fails its conceptual empty second case is taken
+which defines no variables.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="usingalt.html"><img src="next.gif" border=0></a> <a href="disjunct.html"><img src="previous.gif" border=0></a></body>
+</html>

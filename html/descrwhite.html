@@ -1,0 +1,45 @@
+<html>
+<head><title>How To Describe Layout and Comments</title></head>
+<body bgcolor=white>
+<a href="reflexuse.html"><img src="next.gif" border=0></a> <a href="descrtok.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="reflex.html">REFLEX REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>How To Describe Layout and Comments</h1>
+
+<p>
+The generated  <i> Lex</i> specification contains blocks that can be overridden
+by the user. A block <tt> Block</tt> may be replaced by the content
+of a file <tt> Block.b</tt> .
+<p>
+There is a block <tt> LAYOUT</tt> which unless overridden has the following form:
+<PRE>
+
+   \  { yypos += 1; }
+   \n { yyPosToNextLine(); }
+   \t { yypos += 1; }
+</PRE>
+These are three <i> Lex</i> rules that match blank, newline, and tabulator.
+They do not include <tt> return</tt> statements, so the input recognized
+by the rule is skipped.
+<p>
+The variable <tt> yypos</tt> keeps track of the source position.
+It is incremented by the length of the input.
+In the case of newlines the variable is adjusted by the library function
+<tt> yyPosToNextLine</tt>.
+<p>
+This handling of white space may be overridden by providing a file
+<tt> LAYOUT.b</tt> .
+<p>
+In addition, a file <tt> COMMENTS.b</tt> may define
+comments that are to be skipped.
+By default, the <tt> COMMENTS</tt> block is empty.
+<p>
+
+<br><br>
+</ul>
+</ul>
+<a href="reflexuse.html"><img src="next.gif" border=0></a> <a href="descrtok.html"><img src="previous.gif" border=0></a></body>
+</html>

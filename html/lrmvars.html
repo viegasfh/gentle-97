@@ -1,0 +1,66 @@
+<html>
+<head><title>Context Variables</title></head>
+<body bgcolor=white>
+<a href="lrmtables.html"><img src="next.gif" border=0></a> <a href="lrmpredicates.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="lrm.html">LANGUAGE REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>Context Variables</h1>
+
+
+VariableDecl =
+"'var'" Ident ":" Ident .
+
+<p>
+A declaration of the form
+<ul>
+<li>
+
+<tt> 'var'</tt> <i>C</i> <tt> :</tt> <i>T</i>
+</ul>
+
+introduces a context variable <i>C</i> of type <i>T</i>.
+<p>
+The value of a context variable is defined by a context update
+and is accessed in a context query.
+<p>
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+
+<strong> Example</strong>
+<PRE>
+
+'var' NestingLevel: INT
+</PRE>
+defines a context variable <tt> NestingLevel</tt> of type <tt> INT</tt>.
+<p>
+This variable may be defined as in
+<PRE>
+
+NestingLevel <- N
+</PRE>
+and accessed as in
+<PRE>
+
+NestingLevel -> N
+</PRE>
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+
+<p>
+
+<br><br>
+</ul>
+</ul>
+<a href="lrmtables.html"><img src="next.gif" border=0></a> <a href="lrmpredicates.html"><img src="previous.gif" border=0></a></body>
+</html>

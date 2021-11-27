@@ -1,0 +1,72 @@
+<html>
+<head><title>The Predicates <tt>eq</tt>, <tt>ne</tt>, <tt>lt</tt>, <tt>le</tt>, <tt>ge</tt>, <tt>gt</tt></title></head>
+<body bgcolor=white>
+<a href="print.html"><img src="next.gif" border=0></a> <a href="predefined.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="predefined.html">A Summary of Predefined Predicates</a>
+ /<br><br>
+</font>
+<h1>The Predicates <tt>eq</tt>, <tt>ne</tt>, <tt>lt</tt>, <tt>le</tt>, <tt>ge</tt>, <tt>gt</tt></h1>
+
+The conditions
+<tt> eq</tt> and
+<tt> ne</tt>
+are used to compare values for equality.
+<PRE>
+
+   eq(X, Y)
+</PRE>
+succeeds if X is equal to Y
+and fails otherwise.
+<PRE>
+
+   ne(X, Y)
+</PRE>
+succeeds if X is not equal to Y
+and fails otherwise.
+These predicates work for all types including user-defined types,
+i.e. they may be used to compare terms.
+For example,
+<PRE>
+
+   eq(list(red, X), list(red, list(yellow,nil)))
+</PRE>
+succeeds if <tt> X</tt> is <tt> list(yellow,nil)</tt>.
+<p>
+The predicates <tt> gt</tt>, <tt> ge</tt>, <tt> lt</tt>, and <tt> le</tt>
+are defined only for the types <tt> INT</tt> and <tt> STRING</tt>.
+<PRE>
+
+   gt(X, Y)
+</PRE>
+succeeds if <tt> X</tt> is greater than <tt> Y</tt> and fails otherwise.
+<p>
+For example,
+<PRE>
+
+   gt(N, 0)
+</PRE>
+succeeds if <tt> N</tt> is a positive number.
+<p>
+In the case of strings, the lexicographical order is used for comparison.
+For example,
+<PRE>
+
+   gt("axy", "abc")
+   gt("aaaa", "aa")
+</PRE>
+succeed.
+<p>
+Similarly, <tt> ge</tt>, <tt> lt</tt>, and <tt> le</tt>
+stand for ``greater or equal'', ``less than'', and ``less or equal'',
+respectively
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="print.html"><img src="next.gif" border=0></a> <a href="predefined.html"><img src="previous.gif" border=0></a></body>
+</html>

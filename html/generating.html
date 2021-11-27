@@ -1,0 +1,125 @@
+<html>
+<head><title>Generating a Compiler</title></head>
+<body bgcolor=white>
+<a href="lrm.html"><img src="next.gif" border=0></a> <a href="firstex.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="start.html">GETTING STARTED</a>
+ /<br><br>
+</font>
+<h1>Generating a Compiler</h1>
+
+<p>
+
+To generate a compiler from a <i> Gentle</i> specification
+the <i> Gentle</i> compiler has to be invoked for each <i> Gentle</i> module.
+Then the <i> Reflex</i> program is used to produce a <i> Lex</i> specification.
+<i> Lex</i> and <i> Yacc</i> are used to generate a scanner and a parser.
+The <i> C</i> compiler then translates the generated and (possibly user supplied)
+<i> C</i> modules.
+
+This Figure shows the way these tools cooperate:
+<p>
+<img src="tools.gif">
+
+<p>
+<h3>Gentle</h3>
+
+<p>
+The <i> Gentle</i> compiler is invoked by the
+command
+<PRE>
+
+   gentle module.g
+</PRE>
+This translates a <i> Gentle</i> module <tt> module.g</tt> into a <i> C</i> module <tt> module.c</tt>
+(file names for <i> Gentle</i> modules must have the suffix <tt> .g</tt>).
+<p>
+If the module contains a grammar specification, then the following files
+are generated in addition:
+<tt> gen.lit</tt>
+contains <i> Lex</i> specifications for terminal symbols
+that appear literally in the specification.
+<tt> gen.tkn</tt>
+contains a list of tokens introduced in the specification.
+<tt> gen.h</tt>
+is a <i> C</i> header file that introduces a data type for token attributes
+and defines the codes of the tokens.
+<tt> gen.y</tt>
+is a <i> Yacc</i> specification of the underlying grammar.
+<p>
+See the <i> Language Reference Manual</i> for a description of <i> Gentle</i>.
+<p>
+<h3>Reflex</h3>
+
+<p>
+<i> Reflex</i> assembles various files and combines them to form
+a <i> Lex</i> specification.
+<p>
+For each token <tt> Token</tt> introduced in the specification,
+there must be a token description file <tt> Token.t</tt> .
+This  file must specify a regular expression for the token and an action that
+computes the attributes of the token.
+<p>
+A block <tt> Block</tt> of the <i> Lex</i> specification may be overridden by a file
+<tt> Block.b</tt> .
+This allows the specific definition of white space and comment conventions
+(<tt> LAYOUT.b</tt>, <tt> COMMENTS.b</tt>).
+<p>
+The directory <tt> reflex</tt> contains reusable token description and block files.
+<p>
+<i> Reflex</i> is invoked by the command
+<PRE>
+
+   reflex
+</PRE>
+This creates a <i> Lex</i> specification <tt> gen.l</tt> .
+<p>
+See the <i> Reflex Reference Manual</i> for details.
+<p>
+<h3>Lex</h3>
+
+<p>
+The command
+<PRE>
+
+   lex gen.l
+</PRE>
+invokes the scanner generator <i> Lex</i> with the specification <tt> gen.l</tt> .
+This creates a <i> C</i> module <tt> lex.yy.c</tt> .
+<p>
+<h3>Yacc</h3>
+
+<p>
+The command
+<PRE>
+
+   yacc gen.y
+</PRE>
+invokes the parser generator <i> Yacc</i> with the specification <tt> gen.y</tt> .
+This creates a <i> C</i> module <tt> y.tab.c</tt> .
+<p>
+<h3>C Compiler</h3>
+
+<p>
+The command
+<PRE>
+
+   cc file.c ... grts.o
+</PRE>
+creates an executable program.
+<tt> file.c ...</tt> is a list of generated or user-written <i> C</i> files.
+One of these modules must supply
+a function <tt> main</tt> that invokes the generated
+function <tt> ROOT()</tt>.
+The library provides such a function (module <tt> main.c</tt>).
+<p>
+See the <i> Library Reference Manual</i> for a description of library modules.
+
+
+
+<br><br>
+</ul>
+</ul>
+<a href="lrm.html"><img src="next.gif" border=0></a> <a href="firstex.html"><img src="previous.gif" border=0></a></body>
+</html>

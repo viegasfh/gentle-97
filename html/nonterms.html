@@ -1,0 +1,33 @@
+<html>
+<head><title>Nonterm Predicates</title></head>
+<body bgcolor=white>
+<a href="tokens.html"><img src="next.gif" border=0></a> <a href="syndef.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="syntaxdescr.html">Describing Syntax</a>
+ /<br><br>
+</font>
+<h1>Nonterm Predicates</h1>
+
+<p>
+Nonterminals must be declared as predicates of the class <tt> 'nonterm'</tt>.
+For example,
+the full declaration of <tt> Statement</tt> might be
+<PRE>
+
+   'nonterm' Statement
+
+      'rule' Statement: Variable ":=" Expression
+      'rule' Statement: "IF" Expression "THEN" Statement "ELSE" Statement
+      'rule' Statement: "WHILE" Expression "DO" Statement
+      'rule' Statement: "BEGIN" StmtSeq "END"
+</PRE>
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="tokens.html"><img src="next.gif" border=0></a> <a href="syndef.html"><img src="previous.gif" border=0></a></body>
+</html>

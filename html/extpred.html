@@ -1,0 +1,48 @@
+<html>
+<head><title>External Predicates</title></head>
+<body bgcolor=white>
+<a href="global.html"><img src="next.gif" border=0></a> <a href="exttypes.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="external.html">Using Types and Predicates Written in C</a>
+ /<br><br>
+</font>
+<h1>External Predicates</h1>
+
+<p>
+Actions and conditions may also be implemented externally.
+To make them accessible, the <i> Gentle</i> specification
+must provide a declaration without rules
+(just as a type declaration without functors introduces an external type).
+<p>
+The declaration
+<PRE>
+
+   'action' string_to_id (STRING -> IDENT)
+</PRE>
+that comes without rules introduces a predicate that takes a <tt> STRING</tt>
+and yields an <tt> IDENT</tt>.
+The implementation is not given in <i> Gentle</i>.
+The actual <i> C</i> implementation may insert the string into a hash table
+and return a unique reference to the entry. <tt> IDENT</tt> is the type of these
+references.
+<p>
+Other predicates may be declared that allow us to associate a ``meaning''
+with an <tt> IDENT</tt> and access this later:
+<PRE>
+
+   'action' DefMeaning (IDENT, MEANING)
+   'condition' HasMeaning (IDENT -> MEANING)
+</PRE>
+
+(See the <i> Library Reference Manual</i> for information on how to implement
+external types and predicates.)
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="global.html"><img src="next.gif" border=0></a> <a href="exttypes.html"><img src="previous.gif" border=0></a></body>
+</html>

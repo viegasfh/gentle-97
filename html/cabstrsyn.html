@@ -1,0 +1,93 @@
+<html>
+<head><title>Abstract Syntax</title></head>
+<body bgcolor=white>
+<a href="concrsyn.html"><img src="next.gif" border=0></a> <a href="overall.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="casestudy.html">CASE STUDY</a>
+ / <a href="compiler.html">The Compiler</a>
+ /<br><br>
+</font>
+<h1>Abstract Syntax</h1>
+
+Here is the definition of the abstract representation
+of <i> MiniLAX</i> programs:
+
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+<font size="-1">
+<pre>
+
+003  'type' DECL 
+004     dcl(IDENT, DEF, POS) 
+  
+005  'type' DECLLIST 
+006     decllist(DECL, DECLLIST) 
+007     nil 
+  
+008  'type' DEF 
+009     variable(TYPE) 
+010     valueparam(TYPE) 
+011     varparam(TYPE) 
+012     proc(Formals: DECLLIST, Locals: DECLLIST, STMT) 
+  
+013  'type' TYPE 
+014     integer 
+015     real 
+016     boolean 
+017     array(INT, INT, TYPE) 
+018     none 
+  
+019  'type' STMT 
+020     assign(DESIG, EXPR, POS) 
+021     read(DESIG, POS) 
+022     write(EXPR, POS) 
+023     call(IDENT, EXPRLIST, POS) 
+024     if(EXPR, STMT, STMT, POS) 
+025     while(EXPR, STMT, POS) 
+026     seq(STMT, STMT) 
+  
+027  'type' DESIG 
+028     id(IDENT, POS) 
+029     subscr(DESIG, EXPR, POS) 
+030     none 
+  
+031  'type' EXPR 
+032     binary(OP, EXPR, EXPR, POS) 
+033     opnot(EXPR, POS) 
+034     int(INT) 
+035     float(FLOAT) 
+036     true 
+037     false 
+038     desig(DESIG) 
+  
+039  'type' EXPRLIST 
+040     exprlist(EXPR, EXPRLIST, POS) 
+041     nil(POS) 
+  
+042  'type' OP 
+043     less 
+044     plus 
+045     mult 
+
+</pre>
+</font>
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="concrsyn.html"><img src="next.gif" border=0></a> <a href="overall.html"><img src="previous.gif" border=0></a></body>
+</html>

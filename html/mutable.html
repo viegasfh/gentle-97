@@ -1,0 +1,176 @@
+<html>
+<head><title>Handling Mutable Information</title></head>
+<body bgcolor=white>
+<a href="control.html"><img src="next.gif" border=0></a> <a href="global.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ /<br><br>
+</font>
+<h1>Handling Mutable Information</h1>
+
+Besides global variables, <i> tables</i>
+are another data structure that can be updated.
+They are motivated by the observation that in certain cases
+not all information required to construct a term is already available,
+and we need a mechanism to supply this later.
+As we will see, tables may also be used to represent cyclic structures.
+<p>
+In <i> Gentle</i>, one cannot modify the fields of a term, but one
+can supply an immutable key, that refers to a mutable record.
+<p>
+A <i> table</i> is an unbounded collection of records.
+Each record is identified by a unique key.
+A record is a list of one or more mutable fields.
+<p>
+A <i> table declaration</i>
+has the form
+<ul>
+<li>
+
+<tt> 'table'</tt> <i>Name</i> <tt> (</tt> <i>Fields</i> <tt> )</tt>
+</ul>
+
+where <i>Fields</i> is a comma-separated list of one or more field specifications.
+The identifier <i> Name</i> serves as a type name for the keys.
+<p>
+A field is specified in the form
+<ul>
+<li>
+
+<i>FieldName</i> <tt> :</tt> <i>Type</i>
+</ul>
+
+<p>
+To illustrate the use of tables,
+let us discuss the so-called basic-block-graph representation of programs.
+In this representation, the instructions of a program are grouped
+into blocks
+(only the last instruction of a block can be a jump;
+only the first instruction of a block can be the target of a jump).
+<p>
+Each block is characterized by a list of its instructions and a list
+of its successor blocks.
+<p>
+The basic-block graph can be described by a table:
+<p>
+<PRE>
+
+   'table' BLOCK (Instructions: INSTRLIST, Successors: BLOCKLIST)
+</PRE>
+
+This introduces a table of records, where each record
+has a field <tt> Instructions</tt> (of type <tt> INSTRLIST</tt>)
+and a field <tt> Successors</tt> (of type <tt> BLOCKLIST</tt>).
+It also introduces a new type, <tt> BLOCK</tt>,
+the values of which are references to block records.
+<p>
+The type <tt> BLOCK</tt> can be used in the same way as any other type,
+e.g. as the type of the fields of a term.
+Hence we can define the type <tt> BLOCKLIST</tt> as usual:
+<PRE>
+
+   'type' BLOCKLIST
+      list(BLOCK, BLOCKLIST)
+      nil
+</PRE>
+
+A new record and its unique key are created by an <i> allocation statement</i>.
+It has the form
+<ul>
+<li>
+
+   <i>Var</i> <tt> ::</tt> <i>Name</i>
+</ul>
+
+This defines <i>Var</i> as a local variable of the key type <i>Name</i>,
+holding a unique key of a fresh record.
+The fields of this record are still undefined.
+<p>
+For example,
+<PRE>
+
+   B :: BLOCK
+</PRE>
+defines the variable <tt> B</tt> as a new key of a <tt> BLOCK</tt> record.
+This key can already be used as a value in terms,
+and it cannot be altered (hence terms still have the property
+of being constants). But the associated record can be modified
+by subsequent statements.
+<p>
+The fields of an entry can be modified and inspected
+in exactly the same way as a global variable, i.e. by
+update and query statements.
+<p>
+Instead of a simple variable name, a <i> designator</i> is used
+that specifies the key and the field:
+<ul>
+<li>
+
+   <i>Key</i> <tt>'</tt> <i>FieldName</i>
+</ul>
+
+For example,
+<PRE>
+
+   B'Successors
+</PRE>
+designates the <tt> Successors</tt> field of the record associated with the key
+given by the local variable <tt> B</tt>.
+<p>
+An update statement
+<PRE>
+
+   B'Successors <- nil
+</PRE>
+sets this field to <tt> nil</tt>.
+<p>
+A query statement
+<PRE>
+
+   B'Successors -> L
+</PRE>
+accesses the field and copies its value into <tt> L</tt>.
+<p>
+With the statements
+<PRE>
+
+   B'Successors -> OldList
+   B'Successors <- list(NewBlock, OldList)
+</PRE>
+a new block can be inserted into the list of successors of <tt> B</tt>.
+<p>
+It is a checked run-time error to access a field that has not been defined.
+<p>
+In general, the basic blocks of a program form a graph that contains cycles.
+This can be expressed with tables, for example:
+<PRE>
+
+
+   'action' BuildLoop(-> BLOCK)
+
+      'rule' BuildLoop(-> B1)
+
+         B1 :: BLOCK
+         B2 :: BLOCK
+
+         B1'Instructions <- nil
+         B2'Instructions <- nil
+
+         B1'Successors <- list(B2, nil)
+         B2'Successors <- list(B1, nil)
+</PRE>
+After an invocation
+<PRE>
+
+   BuildLoop(-> B)
+</PRE>
+<tt> B</tt> will refer to a block with one successor, the successor
+of which is <tt> B</tt> itself.
+
+
+<br><br>
+</ul>
+</ul>
+<a href="control.html"><img src="next.gif" border=0></a> <a href="global.html"><img src="previous.gif" border=0></a></body>
+</html>

@@ -1,0 +1,168 @@
+<html>
+<head><title>Auxiliary Predicates</title></head>
+<body bgcolor=white>
+<a href="targetif.html"><img src="next.gif" border=0></a> <a href="scopes.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="casestudy.html">CASE STUDY</a>
+ / <a href="compiler.html">The Compiler</a>
+ /<br><br>
+</font>
+<h1>Auxiliary Predicates</h1>
+
+<p>
+We now define some auxiliary predicates that were used in the
+above specifications.
+<p>
+(The checks could also be written ``inline'' using conditional statements.
+We refrained from doing so in order to keep the number of concepts small
+in the example compiler).
+<p>
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+<font size="-1">
+<pre>
+
+362  'action' CheckInt(Type: TYPE, Pos: POS) 
+363     'rule' CheckInt(integer, Pos) 
+364     'rule' CheckInt(T, Pos) : Error("Integer expected", Pos) 
+  
+365  'action' CheckBool(Type: TYPE, Pos: POS) 
+366     'rule' CheckBool(boolean, Pos) : 
+367     'rule' CheckBool(T, Pos) : Error("Boolean expected", Pos) 
+  
+368  'action' CheckSimple(Type: TYPE, Pos: POS) 
+369     'rule' CheckSimple(integer, _) 
+370     'rule' CheckSimple(real, _) 
+371     'rule' CheckSimple(boolean, _) 
+372     'rule' CheckSimple(T, Pos) : Error("simple type expected", Pos) 
+  
+373  'action' CheckArrayType(Type: TYPE, Pos: POS 
+374           -> Lwb: INT, Upb: INT, ElemType: TYPE) 
+375     'rule' CheckArrayType(array(Lwb, Upb, ElemType), Pos 
+376            -> Lwb, Upb, ElemType) 
+377     'rule' CheckArrayType(T, Pos -> 0, 0, none) : 
+378        Error("Subscripted var is not an array", Pos) 
+  
+379  'action' CheckDesignator(E: EXPR, Pos: POS -> D: DESIG) 
+380     'rule' CheckDesignator(desig(D), _ -> D) 
+381     'rule' CheckDesignator(E, Pos -> none) : 
+382        Error("VAR parameter expected", Pos) 
+  
+383  'action' CheckEquiv(T1: TYPE, T2: TYPE, Pos: POS) 
+384     'rule' CheckEquiv(T1, T2, Pos) : eq(T1, T2) 
+385     'rule' CheckEquiv(T1, T2, Pos) : 
+386        Error("Types are not equivalent", Pos) 
+  
+387  'action' CheckType(Type: TYPE, Pos: POS) 
+388     'rule' CheckType(array(Lwb, Upb, ElemType), Pos) : 
+389        CheckBounds(Lwb, Upb, Pos) CheckType(ElemType, Pos) 
+390     'rule' CheckType(_, _) : 
+  
+391  'action' CheckBounds(Lwb: INT, Upb: INT, Pos: POS) 
+392     'rule' CheckBounds(Lwb, Upb, _): le(Lwb, Upb) 
+393     'rule' CheckBounds(_, _, Pos): 
+394        Error("lower bound exceeds upper bound", Pos) 
+  
+395  'action' CheckNotYetDeclared(Obj: OBJ, Lev: INT, Pos: POS) 
+396     'rule' CheckNotYetDeclared(none, Level, Pos) : 
+397     'rule' CheckNotYetDeclared(object(_, ObjLev, _), Level, Pos) : 
+398        lt(ObjLev, Level) 
+399     'rule' CheckNotYetDeclared(_, _, Pos) : 
+400        Error("id already declared", Pos) 
+  
+401  'action' CheckProcedure(OBJ, POS -> DECLLIST, INT, LABEL) 
+402     'rule' CheckProcedure(object(procobj(Start,Formals),Level,_),_ 
+403        -> Formals, Level, Start) 
+404     'rule' CheckProcedure(_, Pos -> nil, 0, Null): 
+405        Error("procedure expected", Pos) 
+406        NewLabel(-> Null) 
+  
+407  'action' Error(Msg: STRING, Pos: POS) 
+
+</pre>
+</font>
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+
+<p>
+The above predicates check their first argument for
+semantic constraints. If it is erroneous,
+then an error message is issued using the library predicate
+<tt> Error(Msg, Pos))</tt>.
+<p>
+Some predicates return certain characteristics of their argument.
+<p>
+For example, <tt> CheckArrayType(Type, Pos -> Lwb, Upb, ElemType)</tt>
+checks whether the argument is an array type,
+and returns the lower and upper bound and the element type
+if this is true.
+<p>
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+<font size="-1">
+<pre>
+
+408  'var' CurNestingLevel: INT 
+  
+409  'action' SetCurrentNesting(N: INT)  
+410     'rule' SetCurrentNesting(N): CurNestingLevel <- N 
+  
+411  'action' GetCurrentNesting(-> INT) 
+412     'rule' GetCurrentNesting(-> N): CurNestingLevel -> N 
+  
+413  'action' TypeCode(Type: TYPE -> Code: INT) 
+414     'rule' TypeCode(integer -> 1) 
+415     'rule' TypeCode(real -> 2) 
+416     'rule' TypeCode(boolean -> 3) 
+  
+417  'action' TypeSize(Type: TYPE -> Size: INT) 
+418     'rule' TypeSize(integer -> 1) 
+419     'rule' TypeSize(real -> 1) 
+420     'rule' TypeSize(boolean -> 1) 
+421     'rule' TypeSize(array(Lwb, Upb, ElemType) 
+422            ->((Upb-Lwb)+1)*ElemSize) : 
+423        TypeSize(ElemType -> ElemSize) 
+
+</pre>
+</font>
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+
+<p>
+The current nesting level of procedures is implemented as a global
+variable, the predicates
+<tt> SetCurrentNesting</tt>
+and
+<tt> GetCurrentNesting</tt>
+are used to
+set and get its value.
+<p>
+The predicates <tt> TypeCode</tt>
+and
+<tt> TypeSize</tt>
+compute the encoding and the size of a type.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="targetif.html"><img src="next.gif" border=0></a> <a href="scopes.html"><img src="previous.gif" border=0></a></body>
+</html>

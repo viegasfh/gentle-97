@@ -1,0 +1,387 @@
+<html>
+<head><title>Scope Handling</title></head>
+<body bgcolor=white>
+<a href="aux.html"><img src="next.gif" border=0></a> <a href="trdesig.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="casestudy.html">CASE STUDY</a>
+ / <a href="compiler.html">The Compiler</a>
+ /<br><br>
+</font>
+<h1>Scope Handling</h1>
+
+We now discuss <i> scope handling</i>, a topic that has to be
+treated in most compilers.
+<p>
+While in most cases the translation of a phrase can be constructed
+from the translation of its constituents,
+the meaning of identifiers depends on the context.
+<p>
+The <i> Gentle</i> library provides the type <tt> IDENT</tt>
+and predicates for defining and querying the meaning of <tt> IDENT</tt> values.
+<p>
+In order to allow fast access, <tt> IDENT</tt> values are not merely strings
+that stand for identifiers, but references into a ``symbol table''.
+The library module <tt> idents</tt> provides a procedure
+<tt> string_to_id</tt> for converting a
+string into an <tt> IDENT</tt> value. 
+This procedure is used in the token description for identifiers.
+<p>
+Given a value <tt> Id</tt> of type <tt> IDENT</tt>
+<PRE>
+
+   DefMeaning(Id, M)
+</PRE>
+associates a meaning <tt> M</tt> with <tt> Id</tt>.
+<PRE>
+
+   GetMeaning(Id -> M)
+</PRE>
+later returns the meaning <tt> M</tt> associated with <tt> Id</tt>.
+<tt> GetMeaning</tt> is defined as a <i> condition</i>: it signals <i> failure</i>
+if there was no previous <tt> DefMeaning</tt> for <tt> Id</tt>.
+Thus it can be used to check whether an identifier is undeclared.
+<p>
+Here is the signature of these predicates
+(<tt> IDENT</tt> is an abstract type defined by the library,
+and <tt> OBJ</tt> is a user-defined type, discussed below):
+<p>
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+<font size="-1">
+<pre>
+
+312  'type' IDENT 
+  
+313  'action' DefMeaning(Id: IDENT, Obj: OBJ) 
+314  'condition' HasMeaning(Id: IDENT -> Obj: OBJ) 
+
+</pre>
+</font>
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+
+<p>
+These predicates can be used to implement a flat name space,
+i.e. they can be used directly to deal with languages without
+nested scopes.
+<p>
+Most languages (including <i> MiniLAX</i>) support nested scopes. 
+These can be implemented on top of the predicates discussed so far.
+<p>
+Consider the program
+<PRE>
+
+   PROGRAM test;
+    
+   DECLARE
+     x : BOOLEAN;
+    
+     PROCEDURE P;
+     DECLARE
+       x : INTEGER
+     BEGIN
+       x := 1
+     END
+    
+   BEGIN
+     x := TRUE
+   END.
+</PRE>
+Here the <tt> x</tt> declared as <tt> INTEGER</tt> local to procedure <tt> P</tt>
+hides the globally declared <tt> x</tt> of type <tt> BOOLEAN</tt>.
+<p>
+We want to associate a descriptor with each declared item.
+For this we introduce the type <tt> DESCR</tt>:
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+<font size="-1">
+<pre>
+
+315  'type' DESCR 
+316     varobj(INT, TYPE) 
+317     varparamobj(INT, TYPE) 
+318     valueparamobj(INT, TYPE) 
+319     procobj(LABEL, DECLLIST) 
+
+</pre>
+</font>
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+
+For example, if an item is declared as a variable with offset
+<tt> 3</tt> and <tt> BOOLEAN</tt>
+(such as the global <tt> x</tt>) it gets the descriptor
+<PRE>
+
+   varobj( 3, boolean )
+</PRE>
+The local <tt> x</tt> gets the descripror
+<PRE>
+
+   varobj( 3, integer )
+</PRE>
+In the case of a flat name space we could merely associate the descriptor
+with an identifier, using the action <tt> DefMeaning</tt>.
+In case of nested scopes the situation is sligthly more complex.
+<p>
+In the discussion of translating procedures we already sketched
+the general strategy:
+<p>
+When we enter a procedure (recall that the program itself is treated as
+a procedure), we make the items declared there visible. We do this by invoking
+<tt> DeclareList</tt> for the formal parameters and the local declarations,
+thereby hiding possible declarations for items with the same name.
+When leaving the procedure, the hidden declarations are made visible again.
+This is done by invoking <tt> UndeclareList</tt>.
+<p>
+We therefore associate an entry with an identifier,
+that not only specifies its descriptor but also what is currently hidden
+by the actual declaration. When we use the identifier we get the actual
+descriptor. When leaving the procedure, we can return to the old meaning.
+For this prpose we introduce the type <tt> OBJ</tt>:
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+<font size="-1">
+<pre>
+
+320  'type' OBJ 
+321     object(DESCR, INT, OBJ) 
+322     none 
+
+</pre>
+</font>
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+
+If a term
+<PRE>
+
+   object( Descr, Level, Hidden )
+</PRE>
+is associated with an identifier, this means that the actual descriptor
+is <tt> Descr</tt>, that the corresponding declaration was at 
+nesting level <tt> Level</tt>, and that <tt> Hidden</tt>
+was the previous association of the identifier
+(the <tt> Hidden</tt> entry forms a list of zero or more associations).
+<p>
+For example, if we access the identifier <tt> x</tt> at the assignment
+<tt> x := TRUE</tt> in the global scope, the association is
+<PRE>
+
+   object(
+      varobj( 3, boolean ),
+      1,
+      none
+   )
+</PRE>
+The current descriptor is 
+<PRE>
+
+   varobj( 3, boolean )
+</PRE>
+the nesting level is <tt> 1</tt>,
+and there is no hidden item.
+<p>
+If we access <tt> x</tt> at the assignment <tt> x := 1</tt> in the local scope,
+we get the association
+<PRE>
+
+   object(
+      varobj( 3, integer ),
+      2,
+      object(
+         varobj( 3, boolean ),
+         1,
+         none
+      )
+   )
+</PRE>
+The current descriptor is
+<PRE>
+
+   varobj( 3, integer ),
+</PRE>
+the nesting level is <tt> 2</tt>,
+and the previous association is defined as hidden.
+<p>
+We use the predicates <tt> GetMeaning</tt> and <tt> HasMeaning</tt>
+define and query these associations.
+<p>
+Note that with this strategy accessing the meaning of identifiers
+has the same cost as in the case of a flat name space.
+It is done in constatnt time because the library predicates
+use a hash table algorithm.
+<p>
+Here are the predicates for scope handling:
+<p>
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+<font size="-1">
+<pre>
+
+323  'action' DeclareList(Decls: DECLLIST, Location: INT -> Size: INT) 
+324     'rule' DeclareList(decllist(D, Ds), Loc -> Size1+Size2) : 
+325        Declare(D, Loc -> Size1) DeclareList(Ds,Loc+Size1 -> Size2) 
+326     'rule' DeclareList(nil, Loc -> 0) 
+  
+327  'action' Declare(Decl: DECL, Location: INT -> Size: INT) 
+328     'rule' Declare(dcl(Ident, Def, Pos), Loc -> Size) : 
+329        GetCurrentNesting(-> Level) 
+330        CurObject(Ident -> Hidden) 
+331        CheckNotYetDeclared(Hidden, Level, Pos) 
+332        Descriptor(Def, Loc, Pos -> Descr, Size) 
+333        DefMeaning(Ident, object(Descr, Level, Hidden)) 
+  
+334  'action' UndeclareList(Decls: DECLLIST) 
+335     'rule' UndeclareList(decllist(D, Ds)) : 
+336        Undeclare(D) UndeclareList(Ds) 
+337     'rule' UndeclareList(nil) 
+  
+338  'action' Undeclare(Decl: DECL) 
+339     'rule' Undeclare(dcl(Ident, Def, Pos)) : 
+340        HasMeaning(Ident -> object(Descr, Level, Hidden)) 
+341        DefMeaning(Ident, Hidden) 
+  
+342  'action' CurObject(Ident: IDENT -> Obj: OBJ) 
+343     'rule' CurObject(Ident -> Obj) : HasMeaning(Ident -> Obj) 
+344     'rule' CurObject(Ident -> none) 
+  
+345  'action' Apply(Ident: IDENT, Pos: POS -> Obj: OBJ) 
+346     'rule' Apply(Ident, Pos -> Obj) : HasMeaning(Ident -> Obj) 
+347     'rule' Apply(Ident, Pos -> none) : Error("id not declared", Pos) 
+  
+348  'action' Descriptor(Def: DEF, Loc: INT, Pos: POS 
+349           -> Descr: DESCR, Size: INT) 
+350     'rule' Descriptor(variable(T), Loc, Pos 
+351            -> varobj(Loc, T), Size) : 
+352        CheckType(T, Pos) TypeSize(T -> Size) 
+353     'rule' Descriptor(valueparam(T), Loc, Pos 
+354            -> valueparamobj(Loc, T), 1) : 
+355        CheckType(T, Pos) CheckSimple(T, Pos) 
+356     'rule' Descriptor(varparam(T), Loc, Pos 
+357            -> varparamobj(Loc, T), 1) : 
+358        CheckType(T, Pos) 
+359     'rule' Descriptor(proc(Fs, Ds, S), _, _ 
+360            -> procobj(Start, Fs), 0) 
+361        NewLabel(-> Start) 
+
+</pre>
+</font>
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+
+<p>
+<tt> DeclareList</tt>
+<p>
+<tt> DeclareList(List, Loc -> Size)</tt>
+declares the items appearing in the declaration list <tt> List</tt>,
+i.e. it makes them visible.
+The items start at <tt> Loc</tt> in the stackfame and occupy <tt> Size</tt>
+locations.
+<p>
+ <br>
+<tt> Declare</tt>
+<p>
+Declare(dcl(Ident, Def, Pos), Loc -> Size)
+declares the identfier <tt> Ident</tt> with definition <tt> Def</tt>.
+It determines the current nesting level (<tt> Level</tt>),
+gets the current association of <tt> Ident</tt> (<tt> Hidden</tt>),
+builds a descriptor (<tt> Descr</tt>),
+and the defines
+<PRE>
+
+   object(Descr, Level, Hidden)
+</PRE>
+as the the new meaning of <tt> Ident</tt>.
+<p>
+ <br>
+<tt> UndeclareList</tt>
+<p>
+UndeclareList(Decls)
+invokes the predicate <tt> Undeclare</tt> for each member of <tt> Decls</tt>.
+<p>
+ <br>
+<tt> Undeclare</tt>
+<p>
+Undeclare(dcl(Ident, Def, Pos))
+resets the meaning of <tt> Ident</tt> to its old value.
+<p>
+ <br>
+<tt> CurObject</tt>
+<p>
+CurObj(Ident -> Obj) returns the current object associated with
+<tt> Ident</tt>
+(which is <tt> none</tt> if there was no previous declaration for <tt> Ident</tt>.
+<p>
+The specification
+<PRE>
+
+  'rule' CurObject(Ident -> Obj) : HasMeaning(Ident -> Obj)
+  'rule' CurObject(Ident -> none)
+</PRE>
+relies on the fact the rules are evaluated in the given order.
+Hence we know in the second rule that <tt> HasMeaning</tt>
+was not applicable (failed) for <tt> Ident</tt> and that we
+have to return <tt> none</tt>.
+<p>
+This could also have been written in one rule using a conditional statement.
+<p>
+ <br>
+<tt> Apply</tt>
+<p>
+Apply(Ident, Pos -> Obj)
+is similar to
+CurObj(Ident -> Obj)
+except that it emits an error message if there is no current association
+for <tt> Ident</tt>.
+<p>
+ <br>
+<tt> Descriptor</tt>
+<p>
+Descriptor(Def, Loc, Pos -> Descr, Size),
+where <tt> Def</tt> is a definition of an item that should be
+placed at location <tt> Loc</tt> and was declared at position <tt> Pos</tt>,
+construct a  corresponding descriptor <tt> Descr</tt>. It also computes the size
+<tt> Size</tt> of the item.
+The invocation also checks the definition for semantic constraints.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="aux.html"><img src="next.gif" border=0></a> <a href="trdesig.html"><img src="previous.gif" border=0></a></body>
+</html>

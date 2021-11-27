@@ -1,0 +1,57 @@
+<html>
+<head><title>Token Predicates</title></head>
+<body bgcolor=white>
+<a href="attr.html"><img src="next.gif" border=0></a> <a href="nonterms.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="syntaxdescr.html">Describing Syntax</a>
+ /<br><br>
+</font>
+<h1>Token Predicates</h1>
+
+<p>
+Besides recognizing tokens that appear literally in the grammar,
+lexical analysis often also deals with items that appear
+as atoms for syntactic analysis but are structured at a lower level.
+An example of this are numbers that are treated as tokens, but
+specified as a sequence of digits at the level of lexical analysis.
+<p>
+Things like blanks, comments, and other separators that do not
+contribute to the syntactic structure are usually filtered out by
+lexical analysis as white space.
+Thus one criterion for deciding whether an item should be handled as a token
+is whether its components can be separated by white space:
+in a <tt> Statement</tt> a newline can (or must) appear between <tt> IF</tt>
+and the following <tt> Expression</tt>.
+In a <tt> Number</tt> this is not allowed as it would split the number into two
+tokens.
+<p>
+A complex token is introduced as a predicate of the category <tt> token</tt>.
+A predicate of this category is not defined by rules.
+<p>
+For example,
+a token <tt> Variable</tt> can be declared as
+<PRE>
+
+   'token' Variable
+</PRE>
+and can then be used as member of a rule body:
+<PRE>
+
+   'rule' Statement: Variable ":=" Expression
+</PRE>
+The declaration of a token does not provide rules.
+The actual description is given outside the <i> Gentle</i>
+specification. In many cases existing descriptions can be reused.
+<p>
+(See the manual on the <i> Reflex</i> tool for
+details of how to describe tokens and white space conventions.)
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="attr.html"><img src="next.gif" border=0></a> <a href="nonterms.html"><img src="previous.gif" border=0></a></body>
+</html>

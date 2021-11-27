@@ -1,0 +1,66 @@
+<html>
+<head><title>Organizing Larger Projects</title></head>
+<body bgcolor=white>
+<a href="modulename.html"><img src="next.gif" border=0></a> <a href="at.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ /<br><br>
+</font>
+<h1>Organizing Larger Projects</h1>
+
+<p>
+A <i> Gentle</i> specification is a list of declarations of types, predicates,
+and  other items. In simple cases, a specification is written into
+a single file and submitted to the compiler.
+<p>
+If projects become larger and if more than one programmer is involved,
+it becomes desirable to split a specification into several files.
+Nevertheless, the compiler must still be able to check whether an application
+of an item (say, a predicate)
+matches the corresponding definition,
+even if that appears in a different file.
+<i> Gentle</i> supports this kind of separate compilation.
+<p>
+A specification may be decomposed into <i> modules</i>,
+where each module is written into its own file.
+<p>
+The content of a module is a list of declarations.
+Hence, the simple case can be understood as a one-module
+specification.
+<p>
+In addition to the list of declarations, a module may have a heading
+that lists
+the name of the module,
+other modules whose items are used here,
+as well as items declared here and made available to other modules.
+<p>
+Here is an example of a module heading:
+<PRE>
+
+   'module' CodeGen
+
+   'use'
+      IR, TargetFile
+
+   'export'
+      Encode
+</PRE>
+This introduces a module name <tt> CodeGen</tt>.
+The module uses items that are declared in two other modules
+named <tt> IR</tt> and <tt> TargetFile</tt>.
+It declares an item (say a predicate) <tt> Encode</tt> that can be used
+by other modules.
+<p>
+
+<br><br>
+<ul>
+<li><a href="modulename.html">The Module Name</a><br>
+<li><a href="useclause.html">The Use Clause</a><br>
+<li><a href="export.html">The Export Clause</a><br>
+<li><a href="rootmod.html">The Root Module</a><br>
+</ul>
+</ul>
+</ul>
+<a href="modulename.html"><img src="next.gif" border=0></a> <a href="at.html"><img src="previous.gif" border=0></a></body>
+</html>

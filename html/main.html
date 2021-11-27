@@ -1,0 +1,42 @@
+<html>
+<head><title>Module <tt>main</tt></title></head>
+<body bgcolor=white>
+<a href="errmsg.html"><img src="next.gif" border=0></a> <a href="libintro.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="library.html">LIBRARY REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>Module <tt>main</tt></h1>
+
+<p>
+
+<p>
+For compilers generated with <i> Gentle</i> a <i> C</i> function <tt> main</tt>
+must be provided.
+This function must call the generated function
+<tt> ROOT</tt>, which has no parameters and elaborates the <tt> 'root'</tt> clause
+of the <i> Gentle</i> specification.
+In the simplest case the procedure <tt> main</tt> could have the form
+<PRE>
+
+main() { ROOT(); }
+</PRE>
+
+In addition the function <tt> main</tt> may contain code for
+initialization and finalization.
+The parameters of main provide access to the <i> Unix</i> command arguments.
+<p>
+The library provides a simple version of <tt> main</tt>.
+It implements a command with none or one argument.
+If no argument is specified, standard input is used as source file.
+If one argument is specified, this is taken as name of the source file.
+<p>
+
+
+
+<br><br>
+</ul>
+</ul>
+<a href="errmsg.html"><img src="next.gif" border=0></a> <a href="libintro.html"><img src="previous.gif" border=0></a></body>
+</html>

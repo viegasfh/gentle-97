@@ -1,0 +1,46 @@
+<html>
+<head><title>Default Rule</title></head>
+<body bgcolor=white>
+<a href="braodcast.html"><img src="next.gif" border=0></a> <a href="smart.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="smart.html">Smart Traversal</a>
+ /<br><br>
+</font>
+<h1>Default Rule</h1>
+
+<p>
+Consider a predicate
+<ul>
+<li>
+
+   <tt> 'sweep'</tt> <i>P</i> ( <tt> ANY</tt> )
+</ul>
+
+i.e. with one parameter.
+For a given functor
+<ul>
+<li>
+
+<i>f</i> ( <i>T<SUB>1</SUB></i> , <i>T<SUB>2</SUB></i> , ... , <i>T<SUB>n</SUB></i> )
+</ul>
+
+the default rule has the form
+<ul>
+<li>
+
+   <tt> 'rule'</tt> <i>P</i>( <i>f</i>(<i>X<SUB>1</SUB></i> , <i>X<SUB>2</SUB></i> , ... , <i>X<SUB>n</SUB></i>) )  :<br>
+       <i>P</i>( <i>X<SUB>1</SUB></i> ) <i>P</i>( <i>X<SUB>2</SUB></i> ) ... <i>P</i>( <i>X<SUB>n</SUB></i> )
+</ul>
+
+where a member <i>P</i>(<i>X<SUB>i</SUB></i>) is omitted if the corresponding type
+<i>T<SUB>i</SUB></i> is not defined by terms (e.g if it is <tt> INT</tt>).
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="braodcast.html"><img src="next.gif" border=0></a> <a href="smart.html"><img src="previous.gif" border=0></a></body>
+</html>

@@ -1,0 +1,97 @@
+<html>
+<head><title>Introduction</title></head>
+<body bgcolor=white>
+<a href="lrmvoc.html"><img src="next.gif" border=0></a> <a href="lrm.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="lrm.html">LANGUAGE REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>Introduction</h1>
+
+<p>
+<i> Gentle</i> is a high-level programming language for compiler writers.
+It covers the whole spectrum of compiler construction,
+ranging from analysis over transformation to synthesis.
+<i> Gentle</i> provides a uniform notation for all tasks.
+<p>
+<h3>Language Overview</h3>
+
+The language is based on recursive definition and structural induction,
+the underlying paradigm of virtually all translation tasks.
+<p>
+<i> Gentle</i> allows the user to define
+mutally recursive types by enumerating alternative structures
+<p>
+<PRE>
+
+   Expr = plus(Expr,Expr), minus(Expr,Expr), const(INT)
+</PRE>
+
+Programs in <i> Gentle</i> are expressed by rules of the form
+<PRE>
+
+   G : A B C
+</PRE>
+
+These rules may be interpreted
+as grammar rules (<tt> G</tt> is constructed from <tt> A</tt>, <tt> B</tt>, and <tt> C</tt>),
+as logical statements
+(<tt> G</tt> is true if <tt> A</tt>, <tt> B</tt>, and <tt> C</tt> are true),
+or in a procedural manner
+(to solve task <tt> G</tt>, solve subtasks <tt> A</tt>, <tt> B</tt>, and <tt> C</tt>).
+<p>
+Members of a rule may  have parameters
+(an arrow separating input from output parameters).
+This results in attributed
+grammars
+<PRE>
+
+   AddingExpression(-> plus(X1, X2)):
+      AddingExpression(-> X1) "+" Primary(-> X2)
+</PRE>
+or in transformation schemes that inductively follow the structure
+of terms
+<PRE>
+
+   Eval(plus (X1, X2)->N1+N2): Eval(X1->N1) Eval(X2->N2).
+   Eval(minus(X1, X2)->N1-N2): Eval(X1->N1) Eval(X2->N2).
+   Eval(const(N)     ->N).
+</PRE>
+Unparsing may be expressed in a similar way
+<PRE>
+
+   Code(plus(X1, X2) -> Reg2) :
+      Code(X1 -> Reg1)
+      Code(X2 -> Reg2)
+      Emit("add", Reg1, Reg2).
+</PRE>
+Such rules can be augmented by cost values. Then, rules are selected
+in such a way that the sum of the costs of all selected rules is optimal.
+This allows a nondeterministic specification that handles idioms of the
+target machine by rules with corresponding patterns.
+<p>
+<i> Gentle</i> is a strongly typed language that allows a tool
+to statically check the consistency of the specification.
+Traditional errors
+such as uninitialized variables can be detected at the earliest point.
+<p>
+<i> Gentle</i> has a declarative flavor. It also provides mutable
+global variables and tables to represent deferred information
+and cyclic structures.
+<i> Gentle</i> supports procedures written in other languages.
+<p>
+<h3>Related Languages</h3>
+
+<p>
+<i> Gentle</i> descends from <i> CDL</i> <a href="references.html">[7]</a> and <i> Prolog</i> <a href="references.html">[15]</a>.
+An early version was described in <a href="references.html">[10]</a>.
+<p>
+
+<p>
+
+<br><br>
+</ul>
+</ul>
+<a href="lrmvoc.html"><img src="next.gif" border=0></a> <a href="lrm.html"><img src="previous.gif" border=0></a></body>
+</html>

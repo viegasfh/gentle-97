@@ -1,0 +1,42 @@
+<html>
+<head><title>The Use Clause</title></head>
+<body bgcolor=white>
+<a href="export.html"><img src="next.gif" border=0></a> <a href="modulename.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="projects.html">Organizing Larger Projects</a>
+ /<br><br>
+</font>
+<h1>The Use Clause</h1>
+
+<p>
+The <i> use clause</i> follows the name clause.
+It may be empty or of the form
+<PRE>
+
+   'use' M1 , ... , Mn
+</PRE>
+where <tt> M1 , ... , Mn</tt> is a list of module names (optionally
+separated by commas). The items provided by modules that appear in this list
+can be used in the module containing the use clause.
+<p>
+For example. if module <tt> IR</tt> provides a definition of a type <tt> Expr</tt>
+and module <tt> CodeGen</tt> contains a use clause
+<PRE>
+
+   'use'
+      IR, TargetFile
+</PRE>
+then the type <tt> Expr</tt> can be used inside <tt> CodeGen</tt>.
+<p>
+A module with an empty use clause cannot use items declared in
+other modules.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="export.html"><img src="next.gif" border=0></a> <a href="modulename.html"><img src="previous.gif" border=0></a></body>
+</html>

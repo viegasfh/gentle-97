@@ -1,0 +1,155 @@
+<html>
+<head><title>Types</title></head>
+<body bgcolor=white>
+<a href="lrmexpr.html"><img src="next.gif" border=0></a> <a href="lrmspec.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="lrm.html">LANGUAGE REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>Types</h1>
+
+
+TypeDecl = 
+"'type'" Ident [["="] TermSpec{ [","] TermSpec}] .
+<br>
+TermSpec =
+IdentLC ["("[ParamSpec{ "," ParamSpec}]")"] .
+<br>
+ParamSpec =
+[Ident ":"] Ident .
+
+<p>
+<h3>Term Types</h3>
+
+A type declaration
+<ul>
+<li>
+
+
+<tt> 'type'</tt> <i>T</i>
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;
+ <i>f<SUB>1</SUB></i> <tt> (</tt>
+<i>T<SUB>1,1</SUB></i>
+<tt> ,</tt>
+<i>...</i> <tt> ,</tt> <i>T<SUB>1,n<sub>1</sub></SUB></i> <tt> )</tt>
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;
+ <i>...</i>
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;
+ <i>f<SUB>m</SUB></i> <tt> (</tt> <i>T<SUB>m,1</SUB></i> <tt> ,</tt> <i>...</i> <tt> ,</tt> <i>T<SUB>m,n<sub>m</sub></SUB></i> <tt> )</tt>
+</ul>
+
+defines a type <i>T</i> and a set of values of that type.
+A value is called a term
+and is constructed by applying a functor <i>f<SUB>i</SUB></i> to arguments.
+If <i>Tau<SUB>1</SUB></i>, <i>...</i> , <i>Tau<SUB>n<sub>i</sub></SUB></i>
+are values of types <i>T<SUB>i,1</SUB></i>, <i>...</i>, <i>T<SUB>i,n<sub>i</sub></SUB></i>,
+then
+<i>f<SUB>i</SUB>(Tau<SUB>1</SUB> , ... , Tau<SUB>n<sub>i</sub></SUB>)</i>
+is a value of type
+<i>T</i>.
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+
+<strong> Examples</strong>
+<PRE>
+
+'type' Color
+   red, yellow, blue
+</PRE>
+ <br>
+Values of type <tt> Color</tt> are: <tt> red</tt>, <tt> yellow</tt>, and <tt> blue</tt>.
+<p>
+<PRE>
+
+'type' List
+   list(Color, List)
+   nil
+</PRE>
+ <br>
+Values of type <tt> List</tt> include: <br>
+<tt> nil</tt>,
+<tt> list(red,nil)</tt>,
+<tt> list(yellow(list(red,nil))</tt>.
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+<p>
+A parameter specification may be written as
+<ul>
+<li>
+
+<i>N</i> <tt> :</tt> <i>T</i>
+</ul>
+
+where <i>N</i> is an identifier documenting the meaning
+of the parameter.
+<p>
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+
+<strong> Example</strong>
+<PRE>
+
+list(Head: Color, Tail: List)
+</PRE>
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+<p>
+<h3>Abstract Types</h3>
+
+A type declaration without functor specifications introduces an abstract type.
+The values of such a type are not specified in <i> Gentle</i>.
+<p>
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+
+<strong> Example</strong>
+<PRE>
+
+'type' IDENT
+</PRE>
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+<p>
+<h3>Basic Types</h3>
+
+There are three basic types that may be used without being declared.
+The type INT comprises integer numbers.
+The type STRING comprises strings of characters.
+The type POS comprises source coordinates.
+<p>
+
+<p>
+
+<br><br>
+</ul>
+</ul>
+<a href="lrmexpr.html"><img src="next.gif" border=0></a> <a href="lrmspec.html"><img src="previous.gif" border=0></a></body>
+</html>

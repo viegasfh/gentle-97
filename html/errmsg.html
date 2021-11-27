@@ -1,0 +1,98 @@
+<html>
+<head><title>Module <tt>errmsg</tt></title></head>
+<body bgcolor=white>
+<a href="idents.html"><img src="next.gif" border=0></a> <a href="main.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="library.html">LIBRARY REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>Module <tt>errmsg</tt></h1>
+
+The module <tt> errmsg</tt>
+provides procedures to emit error messages.
+This module supports the <i> Gentle</i> type <tt> POS</tt>
+and encodes the current file,
+line, and column into a value.
+
+<PRE>
+
+long yypos;
+</PRE>
+
+The variable <tt> yypos</tt> keeps track of the current source position.
+<p>
+To advance to the next column this variable must be incremented by one.
+To advance to the next line or the next file the procedures
+<tt> yyPosToNextLine</tt> or <tt> yyPosToNextFile</tt> must be used.
+<p>
+At the beginning of a line the column is set to one, after reading a token
+the column is the first column after the token.
+
+<p>
+<PRE>
+
+void yyGetPos(ref_pos)
+   long *ref_pos;
+</PRE>
+The procedure <tt> yyGetPos</tt> sets the variable referred by its argument
+to the current source position minus 1.
+<p>
+
+
+<p>
+
+<PRE>
+
+void yyPosToNextLine()
+</PRE>
+The procedure <tt> yyPosToNextLine</tt> must be called by the lexer
+when a new source line is read.
+It adjust the variable <tt> yypos</tt>.
+<p>
+
+
+<PRE>
+
+void yyPosToNextFile()
+</PRE>
+The procedure <tt> yyPosToNextFile</tt> must be called by the lexer
+when a new source file is read.
+It adjust the variable <tt> yypos</tt>.
+
+
+<PRE>
+
+'action' Error (STRING, POS)
+</PRE>
+<PRE>
+
+void Error(msg, pos)
+   char *msg;
+   long pos;
+</PRE>
+The procedure <tt> error</tt> prints the message specified by the first parameter
+together with the source position specified by the second parameter.
+Then the program is terminated.
+<p>
+
+<PRE>
+
+yyerror(msg)
+   char *msg;
+</PRE>
+The procedure <tt> yyerror</tt> is called by the <i> Yacc</i> generated parser
+in case of syntax errors.
+It may also be called by the lexer.
+It behaves like <tt> Error</tt> where the actual
+source position is used.
+
+<p>
+
+
+
+<br><br>
+</ul>
+</ul>
+<a href="idents.html"><img src="next.gif" border=0></a> <a href="main.html"><img src="previous.gif" border=0></a></body>
+</html>

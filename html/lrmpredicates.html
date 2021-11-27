@@ -1,0 +1,227 @@
+<html>
+<head><title>Predicates</title></head>
+<body bgcolor=white>
+<a href="lrmvars.html"><img src="next.gif" border=0></a> <a href="lrmpatterns.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="lrm.html">LANGUAGE REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>Predicates</h1>
+
+
+PredicateDecl =
+Category Ident Signature Rules .
+<br>
+Category =
+"'nonterm'"
+| "'token'"
+| "'action'"
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;|
+
+"'condition'"
+| "'choice'"
+| "'sweep'" .
+<br>
+Signature =
+<br>
+&nbsp; &nbsp; &nbsp; &nbsp;
+
+["(" [ParamSpec{ "," ParamSpec}] 
+["->"[ParamSpec{ "," ParamSpec}]]")"] .
+<br>
+Rules =
+{Head ":" Body "."}
+|
+{"'rule'" Head [":"] 
+Body ["."]} .
+<br>
+Head = Ident ["(" [Pattern{ "," Pattern}] 
+["->" [Expression{ "," Expression}]] ")"] .
+<br>
+Body =
+{Member} [CostSpec]
+<br>
+CostSpec =
+"$" Number .
+
+<p>
+<h3>Predicate Declarations</h3>
+
+<p>
+A predicate declaration of the form
+<ul>
+<li>
+
+<i>Category</i> <i>p</i> <tt> (</tt>
+<i>T<SUB>1</SUB></i> <tt> ,</tt>
+<i>...</i> <tt> ,</tt>
+<i>T<SUB>n</SUB></i>
+<tt> -></tt>
+<i>S<SUB>1</SUB></i> <tt> ,</tt>
+<i>...</i> <tt> ,</tt>
+<i>S<SUB>m</SUB></i>
+<tt> )</tt><br>
+<i>Rule<SUB>1</SUB></i> <br>
+<i>...</i> <br>
+<i>Rule<SUB>r</SUB></i><br>
+</ul>
+
+<p>
+introduces a predicate <i>p</i> of category <i>Category</i> with <i>n</i>
+input parameters of types 
+<i>T<SUB>1</SUB></i>, <i>...</i>, <i>T<SUB>n</SUB></i>,
+and with <i>m</i> output parameters of types
+<i>S<SUB>1</SUB></i>, <i>...</i>, <i>S<SUB>m</SUB></i>.
+<p>
+A predicate may be used in a predicate invocation.
+<p>
+A predicate that is invoked with input values 
+<i>Tau<SUB>1</SUB></i>, <i>...</i>, <i>Tau<SUB>n</SUB></i>
+is elaborated as follows.
+If no rule is applicable, the invocation fails.
+Otherwise, a rule is selected and elaborated,
+yielding output values
+<i>Sigma<SUB>1</SUB></i>, <i>...</i>, <i>Sigma<SUB>n</SUB></i>, and the invocation succeeds.
+<p>
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+
+<strong> Example</strong>
+<PRE>
+
+'condition' HasCode (Color -> INT)
+'rule' HasCode(red -> 1)
+'rule' HasCode(yellow -> 2)
+</PRE>
+ <br>
+An invocation of HasCode with input value yellow
+succeeds and yields output value 2.
+An invocation of HasCode with input value blue fails.
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+<p>
+<h3>Rules</h3>
+
+A rule has the form
+<ul>
+<li>
+
+<tt> 'rule'</tt>
+<i>p</i> <tt>(</tt>
+<i>P<SUB>1</SUB></i> <tt> ,</tt>
+<i>...</i> <tt> ,</tt>
+<i>P<SUB>n</SUB></i> <tt> -></tt>
+<i>E<SUB>1</SUB></i> <tt> ,</tt>
+<i>...</i> <tt> ,</tt>
+<i>E<SUB>m</SUB></i> <tt> )</tt> <tt> :</tt>
+<i>M<SUB>1</SUB></i> <i>...</i> <i>M<SUB>k</SUB></i>
+</ul>
+
+<p>
+For given input values
+<i>Tau<SUB>1</SUB></i>, <i>...</i>, <i>Tau<SUB>n</SUB></i>,
+the rule is elaborated as follows.
+Let 
+<i>V<SUB>1</SUB></i>, <i>...</i>, <i>V<SUB>n<sub>in</sub></SUB></i>
+be the variables appearing in
+<i>P<SUB>1</SUB></i>, <i>...</i>, <i>P<SUB>n</SUB></i>,
+and 
+<i>W<SUB>1</SUB></i>, <i>...</i>, <i>W<SUB>n<sub>out</sub></SUB></i>
+the variables appearing in
+<i>E<SUB>1</SUB></i>, <i>...</i>, <i>E<SUB>m</SUB></i>.
+If the input values
+<i>Tau<SUB>1</SUB></i>, <i>...</i>, <i>Tau<SUB>n</SUB></i>
+do not match the patterns
+<i>P<SUB>1</SUB></i>, <i>...</i>, <i>P<SUB>n</SUB></i>,
+the rule is not applicable.
+Otherwise, the variables 
+<i>V<SUB>1</SUB></i>, <i>...</i>, <i>V<SUB>n<sub>in</sub></SUB></i>
+are defined.
+Then the members
+<i>M<SUB>1</SUB></i> <i>...</i> <i>M<SUB>k</SUB></i>
+are elaborated.
+If one of the members fails, the rule is not applicable.
+Otherwise, the variables
+<i>W<SUB>1</SUB></i>, <i>...</i>, <i>W<SUB>n<sub>out</sub></SUB></i>
+are defined.
+The expressions
+<i>E<SUB>1</SUB></i> <i>...</i> <i>E<SUB>m</SUB></i>
+are evaluated, yielding output values
+<i>Sigma<SUB>1</SUB></i>, <i>...</i>, <i>Sigma<SUB>m</SUB></i>.
+<p>
+A variable that appears in a pattern is said to be defined.
+A variable that appears in an expression is said to be applied.
+Each applied variable must be a defined variable. Variables that are
+applied in a member
+<i>M<SUB>i</SUB></i>
+must be defined by one of the patterns
+<i>P<SUB>1</SUB></i>, <i>...</i>, <i>P<SUB>n</SUB></i>
+or in a member 
+<i>M<SUB>j</SUB></i>
+that appears to the left of
+<i>M<SUB>i</SUB></i> .
+A defined variable cannot be redefined.
+<p>
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+
+<strong> Example</strong>
+<PRE>
+
+'action' append(List, List -> List)
+'rule' append(list(H,T), L -> list(H, TL): append(T, L -> TL)
+'rule' append(nil, L -> L)
+</PRE>
+ <br>
+For input values
+<i>Tau<SUB>1</SUB></i> <i>=</i> list(red,nil)
+and
+<i>Tau<SUB>2</SUB></i> <i>=</i> list(yellow,nil),
+the second rule is not applicable because 
+<i>Tau<SUB>1</SUB></i> <i>&ne;</i> nil.
+<p>
+The elaboration of the first rule
+matches <i>Tau<SUB>1</SUB></i> with list(H,T)
+defining H as red
+and T as nil;
+it matches <i>Tau<SUB>2</SUB></i> with L,
+defining L as list(yellow,nil).
+<p>
+The member append(T,L -> TL) defines
+TL as list(yellow,nil).
+<p>
+The output value
+<i>Sigma<SUB>1</SUB></i> <i>=</i> list(red,(list(yellow,nil))
+is yielded by replacing
+H and TL in
+list(H,TL)
+by their values.
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+<p>
+
+<p>
+
+<br><br>
+</ul>
+</ul>
+<a href="lrmvars.html"><img src="next.gif" border=0></a> <a href="lrmpatterns.html"><img src="previous.gif" border=0></a></body>
+</html>

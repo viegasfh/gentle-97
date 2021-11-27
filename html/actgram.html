@@ -1,0 +1,30 @@
+<html>
+<head><title>Actions in Grammar Rules</title></head>
+<body bgcolor=white>
+<a href="rulesel.html"><img src="next.gif" border=0></a> <a href="attr.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="syntaxdescr.html">Describing Syntax</a>
+ /<br><br>
+</font>
+<h1>Actions in Grammar Rules</h1>
+
+Besides computations on parameter position (as in the above example),
+grammar rules can also contain normal statements
+such as predicate invocations to compute attribute values.
+<p>
+The second rule could have been written
+<PRE>
+
+   'rule' bits(-> R): bits(-> N) bit(-> B) ShiftAndAdd(N, B -> R)
+</PRE>
+where <tt> ShiftAndAdd</tt> is an action.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="rulesel.html"><img src="next.gif" border=0></a> <a href="attr.html"><img src="previous.gif" border=0></a></body>
+</html>

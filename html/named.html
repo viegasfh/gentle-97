@@ -1,0 +1,46 @@
+<html>
+<head><title>Named Patterns</title></head>
+<body bgcolor=white>
+<a href="prefix.html"><img src="next.gif" border=0></a> <a href="joker.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="special.html">Special Patterns and Expressions</a>
+ /<br><br>
+</font>
+<h1>Named Patterns</h1>
+
+<p>
+Sometimes one wishes to process the constituents of a pattern,
+but also the pattern as a whole.
+We can use the <tt> where</tt> predicate to inspect the term, as in
+<PRE>
+
+   'rule' HandleSignal(S):
+      where (S -> signal(C1, C2))
+      ProcessSignal(S)
+      ProcessColor(C1)
+      ProcessColor(C2)
+</PRE>
+Alternatively, we can prefix a pattern with a variable name
+(followed by a colon).
+This is equivalent to the unprefixed pattern but if matching succeeds, then
+the named variable is defined
+as if the pattern had simply been the variable name.
+<p>
+Thus, the above rule could also be written:
+<PRE>
+
+   'rule' HandleSignal(S : signal(C1, C2)):
+      ProcessSignal(S)
+      ProcessColor(C1)
+      ProcessColor(C2)
+</PRE>
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="prefix.html"><img src="next.gif" border=0></a> <a href="joker.html"><img src="previous.gif" border=0></a></body>
+</html>

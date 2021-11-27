@@ -1,0 +1,65 @@
+<html>
+<head><title>Installation</title></head>
+<body bgcolor=white>
+<a href="firstex.html"><img src="next.gif" border=0></a> <a href="start.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="start.html">GETTING STARTED</a>
+ /<br><br>
+</font>
+<h1>Installation</h1>
+
+<p>
+<i> Gentle</i> runs on various platforms, including <i> Unix</i>,
+<i> DOS</i>, and <i> Windows 95</i>.
+For <i> Unix</i> systems, <i> Gentle</i> is distributed as a compressed tar file
+<tt> gentle-97.tar.gz</tt> .
+To unpack the system, type
+<PRE>
+
+   gunzip gentle-97.tar.gz
+   tar -xvf gentle-97.tar
+</PRE>
+
+This creates a directory <tt> gentle-97</tt> with subdirectories
+<tt> gentle</tt>, <tt> lib</tt>, <tt> reflex</tt>, and <tt> examples</tt>.
+<p>
+Go to directory <tt> gentle</tt> and type
+<PRE>
+
+   build
+</PRE>
+This creates the executable program <tt> gentle</tt>, the <i> Gentle</i> compiler,
+as well as the
+object file <tt> grts.o</tt>, the <i> Gentle</i> run time system.
+<p>
+Go to directory <tt> lib</tt> and type
+<PRE>
+
+   build
+</PRE>
+This compiles the modules of the user library.
+<p>
+Go to directory <tt> reflex</tt> and type
+<PRE>
+
+   build
+</PRE>
+This creates the executable program <tt> reflex</tt>, a generator for
+<i> Lex</i> specifications.
+<p>
+To test the installation, go to directory <tt> examples/calc</tt>
+and type
+<PRE>
+
+   build
+</PRE>
+This creates a simple desk calculator.
+
+<p>
+
+<br><br>
+</ul>
+</ul>
+<a href="firstex.html"><img src="next.gif" border=0></a> <a href="start.html"><img src="previous.gif" border=0></a></body>
+</html>

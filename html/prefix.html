@@ -1,0 +1,63 @@
+<html>
+<head><title>Type Prefixes</title></head>
+<body bgcolor=white>
+<a href="predefined.html"><img src="next.gif" border=0></a> <a href="named.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="special.html">Special Patterns and Expressions</a>
+ /<br><br>
+</font>
+<h1>Type Prefixes</h1>
+
+In virtually all cases, the type of a particular position
+is clear from the context. Hence one can use the same names for functors
+of different types.
+<p>
+There is one exception where the type is not known:
+the parameter of ``generic'' predicates such as the built-in predicate
+<tt> where</tt> or user defined predicates of the category <tt> sweep</tt>.
+<p>
+For example, in
+<PRE>
+
+   where(nil -> List)
+</PRE>
+it is not clear what kind of list should be constructed if there are several
+types (say, <tt> ColorList</tt> and <tt> StatementList</tt>) that introduce <tt> nil</tt>.
+<p>
+To resolve the ambiguity, we can prefix the functor with the name of the type
+(followed by a single quote (``<tt> '</tt>'')) as in
+<PRE>
+
+   where(ColorList'nil -> List)
+</PRE>
+The same holds for the first parameter of <tt> sweep</tt> predicates.
+For example, in
+<PRE>
+
+   'sweep' Visit(ANY)
+
+   'rule' Visit(list(Head, Tail)):
+      ProcessElem(Head)
+      Visit(Tail)
+</PRE>
+it is not clear whether the rule deals with values of type
+<tt> ColorList</tt> or <tt> StatementList</tt> if both types introduce the
+functor <tt> list</tt>. Again, we can prefix the ambiguous term:
+<PRE>
+
+   'sweep' Visit(ANY)
+
+   'rule' Visit(ColorList'list(Head, Tail)):
+      ProcessElem(Head)
+      Visit(Tail)
+</PRE>
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="predefined.html"><img src="next.gif" border=0></a> <a href="named.html"><img src="previous.gif" border=0></a></body>
+</html>

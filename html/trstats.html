@@ -1,0 +1,224 @@
+<html>
+<head><title>Translating Statements</title></head>
+<body bgcolor=white>
+<a href="trexpr.html"><img src="next.gif" border=0></a> <a href="trprocs.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="casestudy.html">CASE STUDY</a>
+ / <a href="compiler.html">The Compiler</a>
+ /<br><br>
+</font>
+<h1>Translating Statements</h1>
+
+Here is the specification for translating statements:
+<p>
+<table>
+<tr>
+<td>&nbsp; &nbsp;</td>
+<td><hr></td>
+</tr><td></td>
+<td bgcolor="#e9e9d2">
+<font size="-1">
+<pre>
+
+179  'action' Statement(Stmt: STMT) 
+180     'rule' Statement(assign(V, E, Pos)) : 
+181        Designator(V -> TV) 
+182        Expression(E -> TE) 
+183        Assign(TV, TE, Pos) 
+184     'rule' Statement(read(V, Pos)) : 
+185        Designator(V -> T) 
+186        CheckSimple(T, Pos) 
+187        TypeCode(T -> N) 
+188        REA(N) 
+189        STI 
+190     'rule' Statement(write(E, Pos)) : 
+191        Expression(E -> T) 
+192        CheckSimple(T, Pos) 
+193        TypeCode(T -> N) 
+194        WRI(N) 
+195     'rule' Statement(call(Ident, Actuals, Pos)) : 
+196        Apply(Ident, Pos -> Obj) 
+197        CheckProcedure(Obj, Pos -> Formals, Level, Start) 
+198        GetCurrentNesting(-> CurLev) 
+199        MST(CurLev-Level) 
+200        ParamList(Formals, Actuals  -> Size) 
+201        JSR(Size, Start) 
+202     'rule' Statement(if(E, S1, S2, Pos)) : 
+203        Expression(E -> T) 
+204        CheckBool(T, Pos) 
+205        NewLabel(-> L1) 
+206        NewLabel(-> L2) 
+207        FJP(L1) 
+208        Statement(S1) 
+209        JMP(L2) 
+210        LAB(L1) 
+211        Statement(S2) 
+212        LAB(L2) 
+213     'rule' Statement(while(E, S, Pos)) : 
+214        NewLabel(-> L1) 
+215        NewLabel(-> L2) 
+216        JMP(L2) 
+217        LAB(L1) 
+218        Statement(S) 
+219        LAB(L2) 
+220        Expression(E -> T) 
+221        CheckBool(T, Pos) 
+222        INV 
+223        FJP(L1) 
+224     'rule' Statement(seq(S1, S2)) : 
+225        Statement(S1) 
+226        Statement(S2) 
+  
+227  'action' Assign(LhsType: TYPE, RhsType: TYPE, Pos: POS) 
+228     'rule' Assign(integer, integer, Pos) : STI 
+229     'rule' Assign(real, integer, Pos) : FLT STI 
+230     'rule' Assign(real, real, Pos) : STI 
+231     'rule' Assign(boolean, boolean, Pos) : STI 
+232     'rule' Assign(T1, T2, Pos) : 
+233        Error("Invalid types in assignment", Pos) 
+  
+234  'action' ParamList(Formals: DECLLIST, Actuals: EXPRLIST 
+235           -> Size: INT) 
+236     'rule' ParamList(decllist(dcl(Id,D,_), Fs), exprlist(E,Es,Pos) 
+237            -> S+1) : 
+238        Param(D, E, Pos) 
+239        ParamList(Fs, Es -> S) 
+240     'rule' ParamList(nil, nil -> 0) 
+241     'rule' ParamList(decllist(D, Fs), nil(Pos) -> 0) : 
+242        Error("Too few actual parameters", Pos) 
+243     'rule' ParamList(nil, exprlist(E, Es, Pos) -> 0) : 
+244        Error("Too many actual parameters", Pos) 
+  
+245  'action' Param(Formal: DEF, Actual: EXPR, Pos: POS) 
+246     'rule' Param(valueparam(FType), Actual, Pos) : 
+247        Expression(Actual -> AType) 
+248        CheckEquiv(FType, AType, Pos) 
+249     'rule' Param(varparam(FType), Actual, Pos) : 
+250        CheckDesignator(Actual, Pos -> D) 
+251        Designator(D -> AType) 
+252        CheckEquiv(FType, AType, Pos) 
+
+</pre>
+</font>
+</td>
+</tr>
+<tr><td></td>
+<td><hr></td></tr>
+</table>
+
+
+<tt> Statement</tt>
+<p>
+The predicate <tt> Statement(Stmt)</tt> analyzes and translates statements.
+For each alternative of the abstract syntax, there is a separate rule.
+<p>
+As an example, consider the treatment of <i> if-statements</i>
+that are represented
+by
+<PRE>
+
+   if(E, S1, S2, Pos)
+</PRE>
+
+The code for this construct is
+<PRE>
+
+   code for expression E
+   FJP(L1)
+   code for statement S1
+   JMP(L2)
+   LAB(L1)
+   code for statement S2
+   LAB(L2)
+</PRE>
+where <tt> L1</tt> and <tt> L2</tt> are two unique labels.
+First, the expression is evaluated. If this yields false,
+the <tt> FJP</tt> instruction jumps to <tt> L2</tt>.
+Otherwise, the statement <tt> S1</tt> is executed.
+After that, we jump over the code for <tt> S2</tt>.
+The code for <tt> S2</tt> is preceded by a label <tt> S2</tt>,
+which is the target of <tt> FJP</tt>.
+<p>
+New labels are created by <tt> NewLabel</tt>.
+The predicate <tt> Expression</tt> not only 
+generates codes for its argument <tt> E</tt>, but also computes the type
+<tt> T</tt> of <tt> E</tt>. In an if-statement this type must be <tt> bool</tt>.
+This is checked by <tt> CheckBool</tt>.
+<p>
+Hence, the rule for <tt> if</tt> is
+<PRE>
+
+'rule' Statement(if(E, S1, S2, Pos)) :
+   Expression(E -> T)
+   CheckBool(T, Pos)
+   NewLabel(-> L1)
+   NewLabel(-> L2)
+   FJP(L1)
+   Statement(S1)
+   JMP(L2)
+   LAB(L1)
+   Statement(S2)
+   LAB(L2)
+</PRE>
+
+An <i> assignment</i>
+<PRE>
+
+   assign(V, E, Pos)
+</PRE>
+is compiled into code for the designator <tt> V</tt>
+and code for the expression <tt> E</tt>.
+<p>
+After evaluation of these code sequences, the stack top comprises the
+address given by <tt> V</tt> and the value of <tt> E</tt>.
+An instruction <tt> STI</tt> is used to store the value at the given address
+and to remove the two items from the stack.
+The types <tt> TV</tt> and <tt> TE</tt> of <tt> V</tt> and <tt> E</tt> must be equal
+and scalar. In addition, <tt> TV</tt> may be real and <tt> TE</tt> may be int.
+Then the <tt> STI</tt> must be preceeded by an <tt> FLT</tt> instruction.
+This check and the generation of <tt> FLT</tt> and <tt> STI</tt>
+are expressed by the predicate <tt> Assign</tt>.
+<p>
+The code for a <i> procedure call</i> is
+<PRE>
+
+   MST(CurLev-Level)
+   code for parameters
+   JSR(Size, Start)
+</PRE>
+
+where <tt> CurLev</tt> is the current nesting level and the procedure has been
+declared at level <tt> Level</tt> and with start label <tt> Start</tt>.
+The code for parameters is generated by <tt> ParamList</tt>.
+<p>
+ <br>
+<tt> Assign</tt>
+<p>
+<tt> Assign(LhsType, RhsType, Pos)</tt>
+checks whether a value of type <tt> RhsType</tt> can be assigned to
+a designator of type <tt> LhsType</tt>. If so, it emits the corresponding
+instruction(s).
+<p>
+
+ <br>
+<tt> ParamList</tt>
+<p>
+The code for parameter passing is constructed by the predicate
+<tt> ParamList(Formals, Actuals -> Size)</tt>
+which processes the lists of formal and actual
+parameters in parallel.
+<p>
+ <br>
+<tt> Param</tt>
+<p>
+A pair of formal and actual parameters is
+handled by <tt> Param(Formal, Actual, Pos)</tt>.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="trexpr.html"><img src="next.gif" border=0></a> <a href="trprocs.html"><img src="previous.gif" border=0></a></body>
+</html>

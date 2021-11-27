@@ -1,0 +1,79 @@
+<html>
+<head><title>Source Coordinates</title></head>
+<body bgcolor=white>
+<a href="external.html"><img src="next.gif" border=0></a> <a href="abstract.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="syntaxdescr.html">Describing Syntax</a>
+ /<br><br>
+</font>
+<h1>Source Coordinates</h1>
+
+<p>
+Syntactic errors are detected while the source file is being read,
+hence the actual position is available and can be used as part
+of an error message (this does not need to be programmed by the user).
+Semantic errors are detected when processing abstract syntax terms.
+In order to be able to issue a user-friendly error message,
+the source coordinates of the program text that is represented
+by the term should be available.
+<p>
+<i> Gentle</i> code automatically computes the coordinate of the
+``most significant'' terminal of a construct.
+This is defined as follows: If a rule body contains one or more
+terminals, the position of the leftmost terminal is taken.
+If the rule body does not contain any terminals but one or more nonterminals
+then the coordinate of the leftmost nonterminal is taken.
+If the rule body is empty then the actual source position is taken.
+<p>
+This means, for example, that for expressions the coordinate of its top operator is
+taken.
+The expression
+<tt> a*b+c*d</tt> gets the coordinate of <tt> +</tt>.
+The expression <tt> a-b*c-d</tt> gets the coordinate of the second <tt> -</tt>.
+<p>
+This coordinate is available via the built-in predicate <tt> @</tt>,
+which can appear at the beginning of a syntax rule or
+after a nonterminal or token.
+If it appears at the beginning of a rule, it delivers the most significant
+coordinate of the phrase recognized by that rule; if it appears
+after a symbol, it delivers the coordinate of that symbol.
+An invocation has the form
+<PRE>
+
+   @(-> P)
+</PRE>
+and the output parameter has the type <tt> POSITION</tt>.
+<p>
+The type <tt> POSITION</tt> need not be declared.
+Its representation is not defined by the <i> Gentle</i> language.
+A library provides functions that implement and process this type.
+Values normally contain an indication of the line and column of
+a coordinate.
+See the <i> Library Reference Manual</i> for details.
+<p>
+The position should be part of those abstract syntax terms that
+may be the subject of error messages.
+For example,
+<PRE>
+
+   'type' DECLARATION
+      declare(VARIABLE, TYPE, POSITION)
+   
+   'nonterm' Declaration(-> DECLARATION)
+      'rule' Declaration(-> declare(V,T,P)):
+         "DECLARE" Variable(-> V) @(-> P) ":" Type(-> T) ";"
+</PRE>
+selects the coordinate of the <tt> Variable</tt>
+and stores it in the abstract syntax
+term for a declaration.
+This can then be used for semantic processing.
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="external.html"><img src="next.gif" border=0></a> <a href="abstract.html"><img src="previous.gif" border=0></a></body>
+</html>

@@ -1,0 +1,47 @@
+<html>
+<head><title>Syntax and Vocabulary</title></head>
+<body bgcolor=white>
+<a href="lrmspec.html"><img src="next.gif" border=0></a> <a href="lrmintro.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="lrm.html">LANGUAGE REFERENCE MANUAL</a>
+ /<br><br>
+</font>
+<h1>Syntax and Vocabulary</h1>
+
+<p>
+The syntax of <i> Gentle</i> is defined in the
+<i> Extended Backus Naur Formalism</i>
+which uses the following conventions:
+<tt> X|Y</tt> denotes <tt> X</tt> or <tt> Y</tt>,
+<tt> [X]</tt> denotes <tt> X</tt> or empty,
+<tt> {X}</tt> denotes a possibly empty sequence of <tt> X</tt>'s, and
+<tt> (X)</tt> denotes <tt> X</tt>.
+<p>
+Terminal symbols are enclosed in quotes. In addition,
+ Ident denotes a sequence composed of letters, digits,
+and underscores and starting with a letter.
+ IdentLC is an  Ident that starts with a lower-case letter,
+ IdentUC is an  Ident that starts with an upper-case letter.
+ Number denotes a sequence of decimal digits.
+ String denotes a possibly empty sequence of characters
+enclosed in quotes (`<tt> "</tt>').
+Inside a  String, the sequence
+`\t' represents a tabulator,
+`\n' represents a new-line character,
+`\\' stands for `\', and
+`\"' stands for `"'.
+<p>
+Blanks, newlines, tabulators, and comments may be inserted between symbols.
+A comment is a sequence of characters starting with `<tt>-</tt>' and ending
+at the end of the line, or a sequence of characters enclosed in
+`<tt> /*</tt>' and `<tt> */</tt>' (comments of this style may be nested).
+<p>
+
+<p>
+
+<br><br>
+</ul>
+</ul>
+<a href="lrmspec.html"><img src="next.gif" border=0></a> <a href="lrmintro.html"><img src="previous.gif" border=0></a></body>
+</html>

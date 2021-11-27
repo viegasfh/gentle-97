@@ -1,0 +1,79 @@
+<html>
+<head><title>Invocations and Rules</title></head>
+<body bgcolor=white>
+<a href="failure.html"><img src="next.gif" border=0></a> <a href="compuations.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="compuations.html">Describing Computations</a>
+ /<br><br>
+</font>
+<h1>Invocations and Rules</h1>
+
+A  <i> predicate</i> is used to specify a computation.
+Such a computation is triggered by a <i> predicate invocation</i>.
+For example,
+if we have defined a predicate <tt> favorite</tt> that
+determines for a given <tt> Person</tt> the favorite <tt> Color</tt>,
+then we can write
+<PRE>
+
+   favorite(P -> C)
+</PRE>
+to ask for the favorite color <tt> C</tt> of <tt> P</tt>.
+<p>
+A predicate is described by <i> rules</i>.
+For example,
+the predicate <tt> favorite</tt> could have been defined
+by the following rules:
+<PRE>
+
+   'rule' favorite (jim -> red)
+   'rule' favorite (julia -> blue)
+   'rule' favorite (jane -> red)
+   'rule' favorite (john -> yellow)
+</PRE>
+An item like <tt> favorite (jim -> red)</tt> here is called a <i> rule heading</i>
+(rule bodies, here empty, are discussed later).
+<p>
+An invocation
+<PRE>
+
+   favorite (julia -> C)
+</PRE>
+would define the variable <tt> C</tt> as <tt> blue</tt>
+because the second rule defines the output <tt> blue</tt> for the input
+<tt> julia</tt>.
+<p>
+A predicate may have input and output parameters.
+The input parameters come first, the output parameters being separated
+by an arrow. Here is a predicate with no output parameters:
+<PRE>
+
+   IsJimsColor(Val)
+</PRE>
+with rule
+<PRE>
+
+   'rule' IsJimsColor(red)
+</PRE>
+and one with no input parameters:
+<PRE>
+
+   JimsColor(-> Val)
+</PRE>
+with rule
+<PRE>
+
+   'rule' JimsColor(-> red)
+</PRE>
+If a list of input or output parameters is supplied, a comma is used
+to separate the members.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="failure.html"><img src="next.gif" border=0></a> <a href="compuations.html"><img src="previous.gif" border=0></a></body>
+</html>

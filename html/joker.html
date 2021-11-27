@@ -1,0 +1,41 @@
+<html>
+<head><title>Joker</title></head>
+<body bgcolor=white>
+<a href="named.html"><img src="next.gif" border=0></a> <a href="special.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="special.html">Special Patterns and Expressions</a>
+ /<br><br>
+</font>
+<h1>Joker</h1>
+
+<p>
+In some cases, one is not interested in all constituents of a term.
+For example, if we wish to process the head of a list but without consisdering
+the tail, we may write:
+<PRE>
+
+   'rule' ProcessHead(list(Head, Tail)):
+      ProcessColor(Head)
+</PRE>
+In this rule, two variables are defined in a pattern
+(<tt> Head</tt> and <tt> Tail</tt>),
+but only one of them is applied in an expression (<tt> Head</tt>),
+In such cases, it is not necessary to invent a name for a variable
+that is not used (here <tt> Tail</tt>);
+instead, we can use a <i> joker</i>, which is written as an underscore
+(``_'') and matches any value. Hence, the above rule can be rewritten:
+<PRE>
+
+   'rule' ProcessHead(list(Head, _)):
+      ProcessColor(Head)
+</PRE>
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="named.html"><img src="next.gif" border=0></a> <a href="special.html"><img src="previous.gif" border=0></a></body>
+</html>

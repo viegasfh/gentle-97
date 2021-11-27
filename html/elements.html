@@ -1,0 +1,115 @@
+<html>
+<head><title>Elements of Specifications</title></head>
+<body bgcolor=white>
+<a href="data.html"><img src="next.gif" border=0></a> <a href="codegen.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ /<br><br>
+</font>
+<h1>Elements of Specifications</h1>
+
+<p>
+A <i> Gentle</i> specification is a list of declarations.
+<p>
+A declaration may introduce a <i> data type</i> as in
+<PRE>
+
+   'type' Expr
+
+      plus(Expr, Expr)
+      minus(Expr, Expr)
+      mult(Expr, Expr)
+      div(Expr, Expr)
+      neg(Expr)
+      num(INT)
+</PRE>
+a <i> predicate</i> as in
+<PRE>
+
+   'action' eval (Expr -> INT)
+
+      'rule' eval(plus(X1, X2) -> N1+N2): eval(X1 -> N1) eval(X2 -> N2)
+      'rule' eval(minus(X1, X2) -> N1-N2): eval(X1 -> N1) eval(X2 -> N2)
+      'rule' eval(mult(X1, X2) -> N1*N2): eval(X1 -> N1) eval(X2 -> N2)
+      'rule' eval(div(X1, X2) -> N1 / N2): eval(X1 -> N1) eval(X2 -> N2)
+      'rule' eval(neg(X) -> -N): eval(X -> N)
+      'rule' eval(num(N) -> N)
+</PRE>
+
+a <i> global variable</i> as in
+<PRE>
+
+   'var' CurLoopContext: LoopContext
+</PRE>
+or a <i> global table</i> as in
+<PRE>
+
+   'table' Label (Address: INT)
+</PRE>
+
+Declarations may be given in any order.
+<p>
+<h3>The Root Definition</h3>
+
+<p>
+One of the declarations must be a <i> root definition</i>.
+It consists of the the keyword <tt> 'root'</tt> followed by one or more
+statements. The program generated from the specification
+elaborates these statements.
+<p>
+Consider
+<PRE>
+
+  'root' expression(-> X) code(X)
+</PRE>
+Here, <tt> expression</tt> is elaborated first yielding a value <tt> X</tt>,
+then <tt> code</tt> is elaborated with <tt> X</tt> as an argument.
+<tt> expression</tt> and <tt> code</tt> must be declared as predicates.
+<p>
+Here is a complete <i> Gentle</i> specification
+<PRE>
+
+  'root' print("Hello World!")
+</PRE>
+using the predefined predicate <tt> print</tt>.
+<p>
+
+<h3>Comments</h3>
+
+Comments may be interspersed into the specification.
+They allow
+documentation
+to be included
+for a human reader
+and are ignored by the compiler.
+There are two forms of comments in <i> Gentle</i>.
+<p>
+Comments of the first form start with ``<tt> -</tt>''
+and finish at the end of the line.
+For example,
+<PRE>
+
+   -- this comment extends to the end of the line
+</PRE>
+
+The second form is text enclosed in ``<tt> /*</tt>'' and ``<tt> */</tt>'',
+these comments can range over several lines. E.g.
+<PRE>
+
+   /* this comment 
+      ranges over two lines */
+</PRE>
+
+Comments of the second form may be nested.
+This is of particular value because it allows us to ``comment out''
+a text without bothering whether the text contains comments.
+
+
+<p>
+
+<br><br>
+</ul>
+</ul>
+<a href="data.html"><img src="next.gif" border=0></a> <a href="codegen.html"><img src="previous.gif" border=0></a></body>
+</html>

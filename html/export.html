@@ -1,0 +1,48 @@
+<html>
+<head><title>The Export Clause</title></head>
+<body bgcolor=white>
+<a href="rootmod.html"><img src="next.gif" border=0></a> <a href="useclause.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="projects.html">Organizing Larger Projects</a>
+ /<br><br>
+</font>
+<h1>The Export Clause</h1>
+
+<p>
+The <i> export clause</i> follows the use clause.
+It may be empty or of the form
+<PRE>
+
+   'export' I1 , ... , In
+</PRE>
+where <tt> I1 , ... , In</tt> is a list of identifiers (optionally)
+separated by commas. The identifiers name items
+that are declared inside the module.
+These items are provided for other modules.
+They can be used there if the module containing the export clause
+appears in the use clauses of the other modules.
+<p>
+E.g. if a module <tt> CodeGen</tt> contains an export clause
+<PRE>
+
+   'export'
+      Encode
+</PRE>
+then it must declare an item (say a predicate) <tt> Encode</tt>.
+This item can be used in the module <tt> Compiler</tt>
+if <tt> Compiler</tt> lists <tt> CodeGen</tt> in its use clause.
+<p>
+Items declared in a module but not listed in the export clause
+are not available to other modules.
+(A module does not constitute a separate name space; hence the name of such
+an item cannot be reused in other modules.)
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="rootmod.html"><img src="next.gif" border=0></a> <a href="useclause.html"><img src="previous.gif" border=0></a></body>
+</html>

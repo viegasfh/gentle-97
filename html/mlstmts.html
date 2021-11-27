@@ -1,0 +1,232 @@
+<html>
+<head><title>Statements</title></head>
+<body bgcolor=white>
+<a href="mlio.html"><img src="next.gif" border=0></a> <a href="mlexpr.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="casestudy.html">CASE STUDY</a>
+ / <a href="sourcelang.html">The Source Language</a>
+ /<br><br>
+</font>
+<h1>Statements</h1>
+
+<p>
+     Statements denote algorithmic actions, and are said to be executable.
+<p>
+<PRE>
+
+Stat ::= AssignStat | CondStat | LoopStat | ProcStat
+</PRE>
+
+<p>
+<h3>Statement sequences</h3>
+
+A statement sequence  specifies  that  its  component statements are to be executed in the same sequence as they are written.
+<p>
+<PRE>
+
+StatSeq ::= Stat { ';' Stat }
+</PRE>
+
+<p>
+<h3>Assignment Statements</h3>
+
+The assignment statement serves to replace the
+current value of a variable by a new value specified as an expression.
+<p>
+<PRE>
+
+AssignStat ::= Var ':=' Expr
+</PRE>
+
+Examples:
+<p>
+<PRE>
+
+i := i+1
+r := r*3.141592
+b := i<1
+a[4][2] := r
+</PRE>
+
+The variable and the expression must be of identical type, with the  following
+exception  being  permitted: The type of the variable is REAL, and the type of
+the expression is INTEGER.  In any case, the variable  must  be  of  a  simple
+type.
+<p>
+<h3>Procedure Statements</h3>
+
+A procedure statement  serves  to  execute  the
+procedure  denoted  by  the procedure identifier.  The procedure statement may
+contain a list of actual parameters which are substituted in  place  of  their
+corresponding  formal  parameters  defined  in the procedure declaration.  The
+correspondence is established by the positions of the parameters in the  lists
+of actual and formal parameters respectively.  There exist two kinds of
+parameters: value parameters and variable parameters.
+<p>
+In the case of a value parameter, the actual parameter must be an 
+expression (of which a variable is a simple case).
+The corresponding formal parameter represents a local variable of the
+called procedure, and the current value
+of  the  expression  is initially assigned to this variable.  Value parameters
+must have a simple type.  In the case of  a  variable  parameter,  the  actual
+parameter  must  be  a variable of the same type, and the corresponding formal
+parameter represents this actual variable during the entire execution  of  the
+procedure.   If  this  variable  is  a  component  of  an  array, its index is
+evaluated when the procedure is called.  A variable  parameter  must  be  used
+whenever the parameter represents a result of the procedure.
+<p>
+<PRE>
+
+ProcStat ::= Id [ '(' Expr { ',' Expr } ')' ]
+</PRE>
+
+Examples:
+<p>
+<PRE>
+
+next   Transpose(a,m,n)
+</PRE>
+
+<h3>Conditional Statements</h3>
+
+The if statement specifies that  a  statement
+be  executed  only if a certain condition (Boolean expression) is true.  If it
+is false, the statement following the delimiter ELSE is to be executed.
+<p>
+<PRE>
+
+CondStat ::= 'IF' Expr 'THEN' StatSeq
+             'ELSE' StatSeq 'END'
+</PRE>
+
+Examples:
+<p>
+<PRE>
+
+IF i < 0 THEN i := 1 ELSE i := 2 END
+</PRE>
+
+The expression between the delimiters IF and THEN must be of type Boolean.
+<p>
+<h3>Repetitive Statements</h3>
+
+The while statement specifies that  a  certain
+statement is to be executed repeatedly.
+<p>
+<PRE>
+
+LoopStat ::= 'WHILE' Expr 'DO' StatSeq 'END'
+</PRE>
+
+The expression controlling repetition must be of type Boolean.  The  statement
+is  repeatedly executed as long as the expression is true.  If it evaluates to
+false at the beginning, the statement is  not  executed  at  all.   The  while
+statement
+<p>
+<PRE>
+
+WHILE b DO s END
+</PRE>
+
+is equivalent to
+<p>
+<PRE>
+
+IF b
+THEN s; WHILE b DO s END
+ELSE (* nothing *)
+END
+</PRE>
+
+Examples:
+<p>
+<PRE>
+
+WHILE a [i] < r DO i := i + 1 END
+
+WHILE i < n DO
+   r := 2 * r;
+   i := i + 1
+END
+</PRE>
+
+<h3>Declarations</h3>
+
+Procedure declarations serve to define  parts
+of  programs  and  to  associate  identifiers  with  them  so that they can be
+activated by procedure statements.
+<p>
+<PRE>
+
+ProcDecl ::= ProcHead ';' Block
+Block    ::= 'DECLARE' Decl { ';' Decl }
+             'BEGIN' StatSeq 'END'
+Decl     ::= VarDecl | ProcDecl
+</PRE>
+
+The procedure heading specifies the identifier naming the  procedure  and  the
+formal  parameter  identifiers  (if  any).  The parameters are either value or
+variable parameters.
+<p>
+<PRE>
+
+ProcHead ::= 'PROCEDURE' Id 
+             [ '(' Formal { ';' Formal } ')' ]
+Formal   ::= [ 'VAR' ] Id ':' Type
+</PRE>
+
+If a formal starts with the delimiter VAR it specifies a  variable  parameter,
+otherwise a value parameter.
+<p>
+     The statement sequence of the block specifies the algorithmic actions  to
+be executed upon an activation of the procedure by a procedure statement.
+<p>
+     All identifiers introduced in the formal parameter part of the  procedure
+heading  and  in the declaration part of the associated block are local to the
+procedure declaration which is called the scope of  these  identifiers.   They
+are  not  known  outside  their  scope.  In the case of local variables, their
+values are undefined at the beginning of the statement part.
+<p>
+     The use of the procedure identifier in a procedure statement  within  its
+declaration implies recursive execution of the procedure.
+<p>
+Examples of procedure declarations:
+<p>
+<PRE>
+
+PROCEDURE ReadPosInteger (VAR i: INTEGER);
+DECLARE
+  j: INTEGER;
+BEGIN
+  i := 0;
+  WHILE NOT (0 < i) DO READ (i) END
+END
+
+PROCEDURE Sort
+  (VAR a: ARRAY [1..10] OF REAL; n: INTEGER);
+DECLARE
+  i: INTEGER; j: INTEGER; k: INTEGER; h: REAL;
+BEGIN
+  i := 1;
+  WHILE i < n DO
+    (* a [1], ... , a [i] is sorted *)
+    j := i; k := i;
+    WHILE j < n DO
+      (* a [k] = min {a [i], ... , a [j]} *)
+      j := j + 1;
+      IF a [j] < a [k] THEN k := j ELSE k := k END
+    END;
+    h := a [i]; a [i] := a [k]; a [k] := h;
+    i := i + 1
+  END
+END
+</PRE>
+
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="mlio.html"><img src="next.gif" border=0></a> <a href="mlexpr.html"><img src="previous.gif" border=0></a></body>
+</html>

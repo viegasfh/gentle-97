@@ -1,0 +1,109 @@
+<html>
+<head><title>A Parser for Expressions</title></head>
+<body bgcolor=white>
+<a href="calculator.html"><img src="next.gif" border=0></a> <a href="glance.html"><img src="previous.gif" border=0></a><br><br>
+<font  face=helvetica size=-1>
+<a href="index.html">HANDBOOK</a>
+ / <a href="primer.html">GENTLE PRIMER</a>
+ / <a href="glance.html">At a Glance</a>
+ /<br><br>
+</font>
+<h1>A Parser for Expressions</h1>
+
+<p>
+This section presents a parser for expressions such as <tt> 10+20*30</tt>.
+<PRE>
+
+'root' expression
+
+'nonterm' expression
+
+   'rule' expression: expr2
+   'rule' expression: expression "+" expr2
+   'rule' expression: expression "-" expr2
+
+'nonterm' expr2
+
+   'rule' expr2: expr3
+   'rule' expr2: expr2 "*" expr3
+   'rule' expr2: expr2 "/" expr3
+
+'nonterm' expr3
+
+   'rule' expr3: Number(-> N)
+   'rule' expr3: "-" expr3
+   'rule' expr3: "+" expr3
+   'rule' expr3: "(" expression ")"
+
+'token' Number(-> INT)
+</PRE>
+
+<p>
+In <i> Gentle</i> a parser is written as a grammar for the
+language to be processed. Such a grammar consists of a set of
+nonterminal symbols that represent phrases,
+and terminal symbols (tokens) that stand for themselves.
+<p>
+The nonterminal symbols that represent phrases are defined by
+rules listing the constituents of the phrase.
+<PRE>
+
+   'nonterm' expression
+</PRE>
+introduces the nonterminal <tt> expression</tt>.
+The rule
+<PRE>
+
+   'rule' expression: expression "+" expr2
+</PRE>
+specifies that a phrase of the class
+<tt> expression</tt> may be given by a (simpler) phrase of
+the class <tt> expression</tt>, followed by a plus symbol, followed by a phrase of
+the class <tt> expr2</tt> (expressions involving operators with a higher
+priority than
+plus and minus).
+For example,
+if <tt> 10</tt> is an <tt> expression</tt> and if <tt> 20*30</tt> is an <tt> expr2</tt>,
+then <tt> 10+20*30</tt> is an <tt> expression</tt>.
+<p>
+Terminal symbols appear in quotes
+(e.g <tt> "+"</tt>) or are introduced
+by token declarations.
+<PRE>
+
+   'token' Number(-> INT)
+</PRE>
+introduces a token <tt> Number</tt>, the representation of which is not given
+in this specification.
+It is defined elsewhere as a nonempty sequence
+of decimal digits. The actual value of the symbol is of type <tt> INT</tt>
+(we ignore parameters in this section).
+<p>
+The line
+<PRE>
+
+   'root' expression
+</PRE>
+states that this specification is elaborated
+by invoking the expression parser.
+<p>
+As it stands, this program is not of much use:
+it reads and analyzes its input, and if the input is a valid expression,
+it does nothing. If the input is not an expression according to the
+given grammar, the program will flag the first token that does not allow us
+to complete the text read so far as a valid expression.
+<p>
+Note that the phrase structure imposed on the input reflects the binding
+strengths of the operators. E.g. <tt> 10+20*30</tt> is parsed as
+the sum of <tt> 10</tt> and the product of <tt> 20</tt> and <tt> 30</tt>.
+This is not necessary if the
+task is just to reject invalid expressions, but it is helpful in the
+next example.
+<p>
+
+<br><br>
+</ul>
+</ul>
+</ul>
+<a href="calculator.html"><img src="next.gif" border=0></a> <a href="glance.html"><img src="previous.gif" border=0></a></body>
+</html>
