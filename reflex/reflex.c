@@ -103,22 +103,26 @@ void args(int argc, char **argv) {
     len = strlen(argv[i]);
 
     eq = -1;
+
     for (j = 0; j < len; j++) {
       if (argv[i][j] == '=') {
         eq = j;
         break;
       }
     }
+
     if (eq == -1)
       err("missing '=' in argument\n", "");
 
     dot = -1;
+
     for (j = len - 1; j > eq; j--) {
       if (argv[i][j] == '.') {
         dot = j;
         break;
       }
     }
+
     if (dot == -1)
       err("missing '.' in filename\n", "");
 
