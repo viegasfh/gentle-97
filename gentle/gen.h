@@ -7,9 +7,12 @@
 
 */
 
+typedef struct {
+  long attr[2];
+} yyATTRIBUTES;
 
-typedef struct {long attr[2];} yyATTRIBUTES;
 #define YYSTYPE yyATTRIBUTES
+
 extern YYSTYPE yylval;
 
 #define MODULE 257

@@ -7,150 +7,135 @@
 
 */
 
-
 #include <stdio.h>
 
 /*----------------------------------------------------------------------------*/
 
-static printpos (pos)
-   long pos;
+static printpos(pos) long pos;
 {
-   if (pos == 0)
-      printf("at unknown position: ");
-   else {
-      extern char *GetFileName();
-      extern long GetLine();
-      extern long GetCol();
-      printf("\"%s.g\", line %ld, col %ld: ", 
-         GetFileName(pos), GetLine(pos), GetCol(pos));
-   }      
+  if (pos == 0)
+    printf("at unknown position: ");
+  else {
+    extern char *GetFileName();
+    extern long GetLine();
+    extern long GetCol();
+    printf("\"%s.g\", line %ld, col %ld: ", GetFileName(pos), GetLine(pos),
+           GetCol(pos));
+  }
 }
 
 /*----------------------------------------------------------------------------*/
 
 int Option_ALERT = 0;
 
-SetOption_ALERT()
-{
-   Option_ALERT= 1;
-}
+SetOption_ALERT() { Option_ALERT = 1; }
 
 /*----------------------------------------------------------------------------*/
 
 MESSAGE(msg, pos)
-   char *msg;
-   long pos;
+char *msg;
+long pos;
 {
-
 
 #ifdef MAC
 
-   {
-      extern char *GetFileName();
-      extern long GetLine();
-      extern long GetCol();
-	  
-      if (Option_ALERT) {
-	 FILE *CmdFile;
+  {
+    extern char *GetFileName();
+    extern long GetLine();
+    extern long GetCol();
 
-         CmdFile = fopen ("CmdFile", "w");
-         if (CmdFile < 0) {
-            Fatal("Cannot open CmdFile");
-         }
-	 fprintf(CmdFile, "Open \"%s.g\"; Find %ld \"%s.g\"\n",
-	    GetFileName(pos), GetLine(pos), GetFileName(pos));
-	 fprintf(CmdFile, "Alert -s %s\n", msg);
-	 exit (2);
+    if (Option_ALERT) {
+      FILE *CmdFile;
 
+      CmdFile = fopen("CmdFile", "w");
+      if (CmdFile < 0) {
+        Fatal("Cannot open CmdFile");
       }
-      else {
-	 printf("### Error: %s\n", msg);
-         printf("    File \"%s.g\"; Line %ld\n", GetFileName(pos), GetLine(pos));
-      }
-	
-      exit(1);
-   }
+      fprintf(CmdFile, "Open \"%s.g\"; Find %ld \"%s.g\"\n", GetFileName(pos),
+              GetLine(pos), GetFileName(pos));
+      fprintf(CmdFile, "Alert -s %s\n", msg);
+      exit(2);
+
+    } else {
+      printf("### Error: %s\n", msg);
+      printf("    File \"%s.g\"; Line %ld\n", GetFileName(pos), GetLine(pos));
+    }
+
+    exit(1);
+  }
 
 #else
 
-   printpos(pos);
-   printf("%s\n", msg);
-   exit(1);
-   
-#endif
+  printpos(pos);
+  printf("%s\n", msg);
+  exit(1);
 
-   
+#endif
 }
 
 /*----------------------------------------------------------------------------*/
 
 MESSAGE1(msg1, id, msg2, pos)
-   char *msg1;
-   long id;
-   char *msg2;
-   long pos;
+char *msg1;
+long id;
+char *msg2;
+long pos;
 {
-   char buf [200];
-   char *str;
-   id_to_string (id, &str);
-   sprintf(buf, "%s%s%s", msg1, str, msg2);
-   MESSAGE (buf, pos);
+  char buf[200];
+  char *str;
+  id_to_string(id, &str);
+  sprintf(buf, "%s%s%s", msg1, str, msg2);
+  MESSAGE(buf, pos);
 }
 
 /*----------------------------------------------------------------------------*/
 
 MESSAGE2(msg1, id1, msg2, id2, msg3, pos)
-   char *msg1;
-   long id1;
-   char *msg2;
-   long id2;
-   char *msg3;
-   long pos;
+char *msg1;
+long id1;
+char *msg2;
+long id2;
+char *msg3;
+long pos;
 {
-   char buf[200];
-   char *str1;
-   char *str2;
-   id_to_string (id1, &str1);
-   id_to_string (id2, &str2);
-   sprintf(buf, "%s%s%s%s%s", msg1, str1, msg2, str2, msg3);
-   MESSAGE (buf, pos);
+  char buf[200];
+  char *str1;
+  char *str2;
+  id_to_string(id1, &str1);
+  id_to_string(id2, &str2);
+  sprintf(buf, "%s%s%s%s%s", msg1, str1, msg2, str2, msg3);
+  MESSAGE(buf, pos);
 }
 
 /*----------------------------------------------------------------------------*/
 
-yyerror(msg)
-   char *msg;
+yyerror(msg) char *msg;
 {
-   long pos;
-   yyGetPos(&pos);
-   MESSAGE(msg, pos);
+  long pos;
+  yyGetPos(&pos);
+  MESSAGE(msg, pos);
 }
 
 /*----------------------------------------------------------------------------*/
 
-yyerrorexit(rc)
-   int rc;
+yyerrorexit(rc) int rc;
+{ exit(1); }
+
+/*----------------------------------------------------------------------------*/
+
+ScanError(msg) char *msg;
 {
-   exit(1);
+  long pos;
+  yyGetPos(&pos);
+  MESSAGE(msg, pos);
 }
 
 /*----------------------------------------------------------------------------*/
 
-ScanError (msg)
-   char * msg;
+Fatal(msg) char *msg;
 {
-   long pos;   
-   yyGetPos(&pos);
-   MESSAGE (msg, pos);
-}
-
-/*----------------------------------------------------------------------------*/
-
-Fatal (msg)
-   char * msg;
-{
-   printf("Fatal Error: %s\n", msg);
-   exit(1);
+  printf("Fatal Error: %s\n", msg);
+  exit(1);
 }
 
 /*----------------------------------------------------------------------------*/

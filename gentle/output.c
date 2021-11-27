@@ -7,12 +7,10 @@
 
 */
 
-
 #include <stdio.h>
 
 #define OutBufSize 6000
 #define FlushPos 5000
-
 
 static char OutBuf[OutBufSize];
 static char *OutBufPtr;
@@ -21,111 +19,103 @@ static long OutFileIsOpen = 0;
 
 /*----------------------------------------------------------------------------*/
 
-Tell(Name)
-   char *Name;
+Tell(Name) char *Name;
 {
-   Told();
-   OutFile = fopen(Name, "w");
-   if (OutFile == NULL) {
-      char msg[200];
-      sprintf(msg, "cannot open %s\n", Name);
-      exit(1);
-   }
-   OutBufPtr = &OutBuf[0];
-   OutFileIsOpen = 1;
+  Told();
+  OutFile = fopen(Name, "w");
+  if (OutFile == NULL) {
+    char msg[200];
+    sprintf(msg, "cannot open %s\n", Name);
+    exit(1);
+  }
+  OutBufPtr = &OutBuf[0];
+  OutFileIsOpen = 1;
 }
 
 /*----------------------------------------------------------------------------*/
 
-Told()
-{
-   if (OutFileIsOpen) {
-      fwrite(OutBuf, 1, OutBufPtr - &OutBuf[0], OutFile);
-      fclose(OutFile);
-      OutFileIsOpen = 0;
-   }
+Told() {
+  if (OutFileIsOpen) {
+    fwrite(OutBuf, 1, OutBufPtr - &OutBuf[0], OutFile);
+    fclose(OutFile);
+    OutFileIsOpen = 0;
+  }
 }
 
 /*----------------------------------------------------------------------------*/
 
-s(Str)
-   char *Str;
+s(Str) char *Str;
 {
-   while(*Str) {
-      *OutBufPtr++ = *Str++; 
-   }
+  while (*Str) {
+    *OutBufPtr++ = *Str++;
+  }
 }
 
 /*----------------------------------------------------------------------------*/
 
-qu_s(Str)
-   char *Str;
+qu_s(Str) char *Str;
 {
-   *OutBufPtr++ = '\"';
+  *OutBufPtr++ = '\"';
 
-   while(*Str) {
-      switch (*Str) {
+  while (*Str) {
+    switch (*Str) {
 
-      case '\\':
-	 *OutBufPtr++ = '\\';
-	 *OutBufPtr++ = '\\';
-	 Str++;
-	 break;
-      case '\n':
-	 *OutBufPtr++ = '\\';
-	 *OutBufPtr++ = 'n';
-	 Str++;
-	 break;
-      case '\"':
-	 *OutBufPtr++ = '\\';
-	 *OutBufPtr++ = '"';
-	 Str++;
-	 break;
+    case '\\':
+      *OutBufPtr++ = '\\';
+      *OutBufPtr++ = '\\';
+      Str++;
+      break;
+    case '\n':
+      *OutBufPtr++ = '\\';
+      *OutBufPtr++ = 'n';
+      Str++;
+      break;
+    case '\"':
+      *OutBufPtr++ = '\\';
+      *OutBufPtr++ = '"';
+      Str++;
+      break;
 
-      default:
-         *OutBufPtr++ = *Str++; 
-      }
-   }
+    default:
+      *OutBufPtr++ = *Str++;
+    }
+  }
 
-   *OutBufPtr++ = '\"';
+  *OutBufPtr++ = '\"';
 }
 
 /*----------------------------------------------------------------------------*/
 
-doublequote ()
+doublequote() { s("\""); }
+
+/*----------------------------------------------------------------------------*/
+
+i(N) long N;
 {
-   s("\"");
+  long butlast;
+  long last;
+  if (N < 0) {
+    *OutBufPtr++ = '-';
+    N = -N;
+  }
+  last = N % 10;
+  butlast = N / 10;
+  if (butlast > 0)
+    i(butlast);
+  *OutBufPtr++ = last + '0';
 }
 
 /*----------------------------------------------------------------------------*/
 
-i(N)
-   long N;
-{
-   long butlast;
-   long last;
-   if (N < 0) {
-      *OutBufPtr++ = '-';
-      N = - N;
-   }
-   last = N % 10;
-   butlast = N / 10;
-   if (butlast > 0) i(butlast);
-   *OutBufPtr++ = last + '0';
-}
-
-/*----------------------------------------------------------------------------*/
-
-nl()
-{
+nl() {
 #ifdef EMIT_CR
-   *OutBufPtr++ = '\r';
+  *OutBufPtr++ = '\r';
 #endif
-   *OutBufPtr++ = '\n';
-   if (OutBufPtr > &OutBuf[FlushPos]) {
-      fwrite(OutBuf, 1, OutBufPtr - &OutBuf[0], OutFile);
-      OutBufPtr = &OutBuf[0];
-   }
+  *OutBufPtr++ = '\n';
+  if (OutBufPtr > &OutBuf[FlushPos]) {
+    fwrite(OutBuf, 1, OutBufPtr - &OutBuf[0], OutFile);
+    OutBufPtr = &OutBuf[0];
+  }
 }
 
 /*----------------------------------------------------------------------------*/
@@ -134,59 +124,52 @@ static long SUBDIR = 0;
 
 /*----------------------------------------------------------------------------*/
 
-SetOption_SUBDIR()
+SetOption_SUBDIR() { SUBDIR = 1; }
+
+/*----------------------------------------------------------------------------*/
+
+TellFile(Name) char *Name;
 {
-   SUBDIR = 1;
+  char buf[200];
+
+  if (SUBDIR)
+    sprintf(buf, "_G_/%s", Name);
+  else
+    sprintf(buf, "%s", Name);
+  Tell(buf);
 }
 
 /*----------------------------------------------------------------------------*/
 
-TellFile(Name)
-   char *Name;
-{
-   char buf[200];
+TellClauseFile() {
+  char name[100];
+  extern char *SourceName();
 
-   if (SUBDIR)
-      sprintf(buf, "_G_/%s", Name);
-   else
-      sprintf(buf, "%s", Name);
-   Tell(buf);
+  sprintf(name, "%s.c", SourceName());
+
+  TellFile(name);
 }
 
 /*----------------------------------------------------------------------------*/
 
-TellClauseFile()
-{
-   char name[100];
-   extern char *SourceName();
-   
-   sprintf(name, "%s.c", SourceName());
+TellSymbolFile() {
+  char name[100];
+  extern char *SourceName();
 
-   TellFile(name);
+  sprintf(name, "%s.if", SourceName());
+
+  TellFile(name);
 }
 
 /*----------------------------------------------------------------------------*/
 
-TellSymbolFile()
-{
-   char name[100];
-   extern char *SourceName();
-   
-   sprintf(name, "%s.if", SourceName());
+TellXRefFile() {
+  char name[100];
+  extern char *SourceName();
 
-   TellFile(name);
-}
+  sprintf(name, "%s.nst", SourceName());
 
-/*----------------------------------------------------------------------------*/
-
-TellXRefFile()
-{
-   char name[100];
-   extern char *SourceName();
-   
-   sprintf(name, "%s.nst", SourceName());
-
-   TellFile(name);
+  TellFile(name);
 }
 
 /*----------------------------------------------------------------------------*/
