@@ -1,0 +1,7 @@
+*.h
+gen.*
+*.c
+lex.yy.c
+y.tab.c
+!micro/regalloc.c
+!virtual/machine.c

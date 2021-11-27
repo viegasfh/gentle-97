@@ -1,1 +1,5 @@
 *.o
+examples/calc/calc
+examples/polish/polish
+gentle/gentle
+reflex/reflex
