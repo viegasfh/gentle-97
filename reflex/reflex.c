@@ -19,34 +19,34 @@
 /* (15) YYWRAP block */
 
 /* ( 1) %{ */
-char *leftpar[] = {"%{", ""};
+const char *leftpar[] = {"%{", ""};
 /* ( 2) YYSTYPE block */
-char *yystype[] = {"#include \"gen.h\"", "extern YYSTYPE yylval;", ""};
+const char *yystype[] = {"#include \"gen.h\"", "extern YYSTYPE yylval;", ""};
 /* ( 3) SETPOS block */
-char *setpos[] = {
+const char *setpos[] = {
     "extern long yypos;",
     "#define yysetpos() { yylval.attr[0] = yypos; yypos += yyleng; }", ""};
 /* ( 4) LITBLOCK block */
-char *litblock[] = {""};
+const char *litblock[] = {""};
 /* ( 5) %} */
-char *rightpar[] = {"%}", ""};
+const char *rightpar[] = {"%}", ""};
 /* ( 6) LEXDEF block */
-char *lexdef[] = {""};
+const char *lexdef[] = {""};
 /* ( 7) %% */
-char *separator[] = {"%%", ""};
+const char *separator[] = {"%%", ""};
 /* ( 8) gen.lit */
 /* ( 9) <token>.t for each <token> in gen.tkn */
 /* (10) COMMENTS block */
-char *comments[] = {""};
+const char *comments[] = {""};
 /* (11) LAYOUT block */
-char *layout[] = {"\\  { yypos += 1; }", "\\n { yyPosToNextLine(); }",
+const char *layout[] = {"\\  { yypos += 1; }", "\\n { yyPosToNextLine(); }",
                   "\\t { yypos += 1; }", ""};
 /* (12) ILLEGAL block */
-char *illegal[] = {". { yysetpos(); yyerror(\"illegal token\"); }", ""};
+const char *illegal[] = {". { yysetpos(); yyerror(\"illegal token\"); }", ""};
 /* (14) LEXFUNC block */
-char *lexfunc[] = {""};
+const char *lexfunc[] = {""};
 /* (15) YYWRAP block */
-char *yywrap[] = {"#ifndef yywrap", "yywrap() { return 1; }", "#endif", ""};
+const char *yywrap[] = {"#ifndef yywrap", "yywrap() { return 1; }", "#endif", ""};
 
 FILE *OUTFILE;
 
@@ -73,9 +73,9 @@ struct info *info_list = 0;
 // The C compilers complain if they are not prototypes, but it compiles anyhow.
 // Better to get rid of all the warnings and make the code cleaner.
 // I think I will move these to separate include files and definition files.
-void emit(char *text[]);
+void emit(const char *text[]);
 void copy(FILE *INFILE);
-void copy_or_text(char *filename, char *text[]);
+void copy_or_text(const char *filename, const char *text[]);
 void filelist();
 
 /*----------------------------------------------------------------------------*/
@@ -83,7 +83,7 @@ void filelist();
  * This function is used to report errors and exit the application with
  * 1, meaning that it didn't terminate successfully.
  */
-void err(char *fmt, char *a) {
+void err(const char *fmt, const char *a) {
   printf(fmt, a);
   exit(1);
 }
@@ -99,7 +99,7 @@ void err(char *fmt, char *a) {
  * info_list is the list of parameters with a mapping of the token file to the
  * user defined one.
  */
-FILE *OPEN(char *name) {
+FILE *OPEN(const char *name) {
   FILE *F;
   struct info *cur;
 
@@ -280,7 +280,7 @@ int main(int argc, char **argv) {
  * I can be refactored so that it doesn't use a global file, but takes a
  * pointer to a file as parameter as well.
  */
-void emit(char *text[]) {
+void emit(const char *text[]) {
   int i;
 
   for (i = 0; text[i][0]; i++)
@@ -315,7 +315,7 @@ void copy(FILE *INFILE) {
  * It relies on the copy function to copy the file to the gen.l file,
  * or the emit function to copy the text to the file.
  */
-void copy_or_text(char *filename, char *text[]) {
+void copy_or_text(const char *filename, const char *text[]) {
   FILE *INFILE;
 
   INFILE = OPEN(filename);
