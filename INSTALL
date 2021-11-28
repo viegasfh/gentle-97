@@ -29,7 +29,7 @@
    This creates the executable program `reflex',
    a generator for Lex specifications.
 
-   Consult the file `USAGE' for instructions
+   Consult the file `docs/USAGE' for instructions
    how to run a first example.
 
    Refer to the manual `Getting Started' for further details.
