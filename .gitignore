@@ -1,5 +1,8 @@
 *.o
 examples/calc/calc
 examples/polish/polish
+examples/micro/micro
+examples/virtual/virtual
+examples/nested/nested
 gentle/gentle
 reflex/reflex
