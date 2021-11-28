@@ -51,13 +51,6 @@
 
       See the file `INSTALL' for instructions how to install Gentle.
 
-
-   USAGE
-   -----
-
-      See the file `USAGE' for a first example how to use Gentle.
-
-
    DOCUMENTATION
    -------------
 
@@ -68,10 +61,12 @@
 	    R. Oldenbourg, Munich and Vienna, 1997
 	    142 pages, DM 44.00
 	    ISBN 3-486-247034-4
-      
-      The file `BOOK.ps' contains a PostScript version of this book.
+
+      The file `docs/BOOK.ps' contains a PostScript version of this book.
       This distribution also contains an online version of the book,
-      see `BOOK.html' and the directory `html'.
+      see `docs/html/BOOK.html'.
+
+      See the file `USAGE' for a first example how to use Gentle.
 
 
    FURTHER INFORMATION
