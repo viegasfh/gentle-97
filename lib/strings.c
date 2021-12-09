@@ -19,7 +19,7 @@ PRIVATE long SIZE = 500;
 
 /*--------------------------------------------------------------------*/
 
-PRIVATE Allocate ()
+PRIVATE void Allocate ()
 {
    p = (char *) malloc (SIZE);
    if (p == 0) {
@@ -33,16 +33,14 @@ PRIVATE Allocate ()
 
 /*--------------------------------------------------------------------*/
 
-PRIVATE Initialize()
+PRIVATE void Initialize()
 {
    Allocate();
    initialized = 1;
 }
 
 /*--------------------------------------------------------------------*/
-AppendToString (ch)
-   char ch;
-{
+void AppendToString (char ch) {
    if ( ! initialized) Initialize();
 
    if (p == stop) { /* buffer full */
@@ -61,9 +59,7 @@ AppendToString (ch)
 }
 
 /*--------------------------------------------------------------------*/
-GetStringRef(ref_string)
-   char **ref_string;
-{
+void GetStringRef(char **ref_string) {
    if ( ! initialized) Initialize();
    AppendToString(0);
    *ref_string = first;
