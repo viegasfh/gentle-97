@@ -9,6 +9,8 @@
 #define STRINGTAB_PIECE  10000
 #define STRINGTAB_EXTRA    500
 
+void Error(char *msg, long pos);
+
 typedef struct IDENTSTRUCT *IDENT;
 
 struct IDENTSTRUCT
@@ -31,8 +33,7 @@ PRIVATE int initialized = 0;
 
 /*--------------------------------------------------------------------*/
 
-PRIVATE allocate_idstringtab ()
-{
+PRIVATE void allocate_idstringtab () {
    idstringtab_ptr =
       (char *) malloc (STRINGTAB_PIECE + STRINGTAB_EXTRA);
    if (idstringtab_ptr == 0) {
@@ -47,8 +48,7 @@ PRIVATE allocate_idstringtab ()
 #define IDTABPIECESIZE 500
 typedef struct IDENTSTRUCT IDTAB [IDTABPIECESIZE];
 
-PRIVATE allocate_idtab ()
-{
+PRIVATE void allocate_idtab () {
    idtab_ptr =
       (struct IDENTSTRUCT *)
       malloc (sizeof (IDTAB /*struct IDENTSTRUCT [IDTABPIECESIZE]*/ ) );
@@ -61,8 +61,7 @@ PRIVATE allocate_idtab ()
 
 /*--------------------------------------------------------------------*/
 
-PRIVATE InitIdents ()
-{
+PRIVATE void InitIdents () {
    long i;
 
    for (i = 0; i<=HashTabSize-1; i++) HashTab[i] = 0;
@@ -75,10 +74,10 @@ PRIVATE InitIdents ()
 
 /*--------------------------------------------------------------------*/
 
-slice_to_id (idstart, idstop, ref_id)
-   char *idstart; /* position of first character */
-   char *idstop;  /* position  a f t e r  last character */
-   IDENT *ref_id;
+void slice_to_id (char *idstart, char *idstop, IDENT *ref_id)
+//   char *idstart; /* position of first character */
+//   char *idstop;  /* position  a f t e r  last character */
+//   IDENT *ref_id;
 
 {
    long  hash, length;
@@ -156,10 +155,7 @@ slice_to_id (idstart, idstop, ref_id)
 }
 
 /*--------------------------------------------------------------------*/
-void string_to_id (string, ref_id)
-   char *string;
-   IDENT *ref_id;
-{
+void string_to_id (char *string, IDENT *ref_id) {
    char *idstop;
 
    idstop = string;
@@ -168,33 +164,22 @@ void string_to_id (string, ref_id)
 }
 
 /*--------------------------------------------------------------------*/
-void id_to_string (id, ref_string)
-   IDENT id;
-   char **ref_string;
-{
+void id_to_string (IDENT id, char **ref_string) {
    *ref_string = id->firstposptr;
 }
 
 /*--------------------------------------------------------------------*/
-void DefMeaning (id, m)
-   IDENT id;
-   long m;
-{
+void DefMeaning (IDENT id, long m) {
    id->meaning = m;
 }
 
 /*--------------------------------------------------------------------*/
-void UndefMeaning (id)
-   IDENT id;
-{
+void UndefMeaning (IDENT id) {
    id->meaning = 0;
 }
 
 /*--------------------------------------------------------------------*/
-int HasMeaning (id, ref_meaning)
-   IDENT id;
-   long *ref_meaning;
-{
+int HasMeaning (IDENT id, long *ref_meaning) {
    if (id->meaning == 0)
       return 0;
    *ref_meaning = id->meaning;
@@ -202,12 +187,7 @@ int HasMeaning (id, ref_meaning)
 }
 
 /*--------------------------------------------------------------------*/
-ErrorI (str1, id, str2, pos)
-   char *str1;
-   IDENT id;
-   char *str2;
-   long pos;
-{
+void ErrorI (char *str1, IDENT id, char *str2, long pos) {
    char *idrepr;
    char buf[300];
 
