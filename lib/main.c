@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 extern FILE *yyin;
+void ROOT();
 
 int main(int argc, char **argv) {
 
