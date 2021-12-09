@@ -18,10 +18,9 @@ PRIVATE char *OutBufPtr;
 PRIVATE FILE *OutFile;
 
 /*--------------------------------------------------------------------*/
+void CloseOutput();
 
-OpenOutput (Name)
-   char *Name;
-{
+int OpenOutput (char *Name) {
    CloseOutput ();
    OutFile = fopen(Name, "w");
 
@@ -34,8 +33,7 @@ OpenOutput (Name)
 }
 
 /*--------------------------------------------------------------------*/
-CloseOutput ()
-{
+void CloseOutput () {
    if (OutFileOpen) {
       fwrite(OutBuf, 1, OutBufPtr - &OutBuf[0], OutFile);
       fclose(OutFile);
@@ -43,16 +41,12 @@ CloseOutput ()
 }
 
 /*--------------------------------------------------------------------*/
-Put(Str)
-   char *Str;
-{
+void Put(char *Str) {
    while(*Str) *OutBufPtr++ = *Str++;
 }
 
 /*--------------------------------------------------------------------*/
-PutI (N)
-   long N;
-{
+void PutI (long N) {
    if (N < 0) {
       *OutBufPtr++ = '-';
       N = -N;
@@ -66,8 +60,8 @@ PutI (N)
    }
    else {
       char buf[50];
-      register i;
-      register n = N;
+      long i;
+      long n = N;
 
       i = 0;
 
@@ -82,8 +76,7 @@ PutI (N)
 }
 
 /*--------------------------------------------------------------------*/
-Nl ()
-{
+void Nl () {
    if (OutBufPtr > &OutBuf[FlushPos]) {
       fwrite(OutBuf, 1, OutBufPtr - &OutBuf[0], OutFile);
       OutBufPtr = &OutBuf[0];
