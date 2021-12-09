@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #define PRIVATE static
 
 #include <stdio.h>
@@ -44,7 +46,7 @@ CloseOutput ()
 Put(Str)
    char *Str;
 {
-   while(*Str) *OutBufPtr++ = *Str++; 
+   while(*Str) *OutBufPtr++ = *Str++;
 }
 
 /*--------------------------------------------------------------------*/

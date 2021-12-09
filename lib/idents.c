@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 #define PRIVATE static
 
 /*--------------------------------------------------------------------*/
@@ -85,19 +88,19 @@ slice_to_id (idstart, idstop, ref_id)
    if (! initialized) InitIdents();
 
    length = idstop-idstart;
-   hash = ( length*256 + ((*idstart)&0xf)*16 + (*(idstop-1)&0xf) ) 
+   hash = ( length*256 + ((*idstart)&0xf)*16 + (*(idstop-1)&0xf) )
    & (HashTabSize-1);
    chain = HashTab[hash];
 
    for(;;) {
       if (chain == 0) {
-      
+
 	 /* not in table */
-	 
+
 	 register char *i, *freeptr, *stop;
 
 	 NewId = idtab_ptr;
-	    
+
 	 if (idtab_ptr == idtab_endptr)
 	    allocate_idtab();
          else
@@ -114,22 +117,22 @@ slice_to_id (idstart, idstop, ref_id)
 	 }
 	 *freeptr = '\0';
 	 freeptr++;
-	    
+
 	 NewId->firstposptr = idstringtab_ptr;
 	 NewId->length = length;
 	 NewId->next = HashTab[hash];
          NewId->meaning = 0;
-	    
+
 	 HashTab[hash] = NewId;
 
 	 idstringtab_ptr= freeptr;
-	 
+
 
 	 break;
       }
 
       /* current token == ident at chain ? */
-      
+
       if (chain->length == length) {
          register char *i, *j;
 	 i = idstart; j = chain->firstposptr;
@@ -138,9 +141,9 @@ slice_to_id (idstart, idstop, ref_id)
          }
 
 	 if (i == idstop && *j == '\0') {
-	    
+
 	    /* found */
-	    
+
 	    NewId = chain;
 	    break;
 	 }
