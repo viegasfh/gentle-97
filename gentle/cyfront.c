@@ -10650,7 +10650,7 @@ Code_DECLARATION(yyin_1) yy yyin_1;
     yy_1_1 = ((yy) "int yyparse_rc = 0;");
     s(yy_1_1);
     nl();
-    yy_3_1 = ((yy) "ROOT()");
+    yy_3_1 = ((yy) "void ROOT()");
     s(yy_3_1);
     nl();
     yy_5_1 = ((yy) "{");
