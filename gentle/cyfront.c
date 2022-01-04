@@ -12,7 +12,7 @@ typedef long *yy;
 static yy yynull;
 extern yy yyh;
 extern yy yyhx;
-static yyErr(n, l) { yyAbort(n, "cyfront", l); }
+static void yyErr(n, l) { yyAbort(n, "cyfront", l); }
 yyeq_IDENT(t1, t2) yy t1, t2;
 { return t1 == t2; }
 yyPrint_IDENT(t) yy t;
@@ -23049,7 +23049,7 @@ Prelude() {
     nl();
     GetSourceName(&yy_11_1);
     yyv_F = yy_11_1;
-    yy_12_1 = ((yy) "static yyErr(n,l)");
+    yy_12_1 = ((yy) "static void yyErr(n,l)");
     s(yy_12_1);
     nl();
     yy_14_1 = ((yy) "{");

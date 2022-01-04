@@ -13,7 +13,7 @@ typedef long *yy;
 static yy yynull;
 extern yy yyh;
 extern yy yyhx;
-static yyErr(n, l) { yyAbort(n, "cyfront", l); }
+static void yyErr(n, l) { yyAbort(n, "cyfront", l); }
 /* start */
 /* end */
 extern yy yyglov_currentGroupIdent;
