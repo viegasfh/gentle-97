@@ -11,7 +11,7 @@ instruction code[CODESIZE];
 
 int pc = -1;
 
-append (f, l, a)
+void append (f, l, a)
    enum opcode f; int l; int a;
 {
    pc++;
@@ -23,35 +23,35 @@ append (f, l, a)
 }
 
 
-LIT(N) { append (lit, 0, N); }
+void LIT(N) { append (lit, 0, N); }
 
-OPR(N) { append (opr, 0, N); }
+void OPR(N) { append (opr, 0, N); }
 
-LOD(L, A) { append (lod, L, A); }
+void LOD(L, A) { append (lod, L, A); }
 
-STO(L, A) { append (sto, L, A); }
+void STO(L, A) { append (sto, L, A); }
 
-CAL(L, A) { append (cal, L, A); }
+void CAL(L, A) { append (cal, L, A); }
 
-INT_(N) { append (int_, 0, N); }
+void INT_(N) { append (int_, 0, N); }
 
-JMP(N) { append (jmp, 0, N); }
+void JMP(N) { append (jmp, 0, N); }
 
-JPC(N) { append (jpc, 0, N); }
+void JPC(N) { append (jpc, 0, N); }
 
 
-PC(REF_N)
+void PC(REF_N)
    long *REF_N;
 {
    *REF_N = pc+1;
 }
 
-PATCH(i)
+void PATCH(i)
 {
    code[i].a = pc+1;
 }
 
-printcode ()
+void printcode ()
 {
    int i;
    for (i = 1; i <= pc; i++) {
@@ -74,7 +74,7 @@ int p, b, t;
 instruction i;
 int s[STACKSIZE];
 
-check_t()
+void check_t()
 {
    if (t+3 >= STACKSIZE) {
       printf("machine: stack overflow (STACKSIZE = %d)\n", STACKSIZE);
@@ -93,7 +93,7 @@ int base(l)
    return b1;
 }
 
-execute()
+void execute()
 {
 
    t = 0; b = 1; p = 0;
