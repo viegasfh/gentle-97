@@ -127,7 +127,7 @@ int yylex(void);
 int yylex(void);
 #endif
 #endif
-int yyparse(void);
+long yyparse(void);
 
 #endif
 #define yyclearin yychar = -1
@@ -649,9 +649,9 @@ int yycvtok(i) int i;
 ** yyparse - return 0 if worked, 1 if syntax error not recovered from
 */
 #if defined(__STDC__) || defined(__cplusplus)
-int yyparse(void)
+long yyparse(void)
 #else
-int yyparse()
+long yyparse()
 #endif
 {
   register YYSTYPE *yypvt; /* top of value stack for $vars */

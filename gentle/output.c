@@ -44,7 +44,7 @@ Told() {
 
 /*----------------------------------------------------------------------------*/
 
-s(Str) char *Str;
+void s(Str) char *Str;
 {
   while (*Str) {
     *OutBufPtr++ = *Str++;
@@ -53,7 +53,7 @@ s(Str) char *Str;
 
 /*----------------------------------------------------------------------------*/
 
-qu_s(Str) char *Str;
+void qu_s(Str) char *Str;
 {
   *OutBufPtr++ = '\"';
 
@@ -86,11 +86,11 @@ qu_s(Str) char *Str;
 
 /*----------------------------------------------------------------------------*/
 
-doublequote() { s("\""); }
+void doublequote() { s("\""); }
 
 /*----------------------------------------------------------------------------*/
 
-i(N) long N;
+void i(N) long N;
 {
   long butlast;
   long last;
@@ -107,7 +107,7 @@ i(N) long N;
 
 /*----------------------------------------------------------------------------*/
 
-nl() {
+void nl() {
 #ifdef EMIT_CR
   *OutBufPtr++ = '\r';
 #endif
@@ -124,11 +124,11 @@ static long SUBDIR = 0;
 
 /*----------------------------------------------------------------------------*/
 
-SetOption_SUBDIR() { SUBDIR = 1; }
+void SetOption_SUBDIR() { SUBDIR = 1; }
 
 /*----------------------------------------------------------------------------*/
 
-TellFile(Name) char *Name;
+void TellFile(Name) char *Name;
 {
   char buf[200];
 
@@ -141,7 +141,7 @@ TellFile(Name) char *Name;
 
 /*----------------------------------------------------------------------------*/
 
-TellClauseFile() {
+void TellClauseFile() {
   char name[100];
   extern char *SourceName();
 
@@ -152,7 +152,7 @@ TellClauseFile() {
 
 /*----------------------------------------------------------------------------*/
 
-TellSymbolFile() {
+void TellSymbolFile() {
   char name[100];
   extern char *SourceName();
 
@@ -163,7 +163,7 @@ TellSymbolFile() {
 
 /*----------------------------------------------------------------------------*/
 
-TellXRefFile() {
+void TellXRefFile() {
   char name[100];
   extern char *SourceName();
 
