@@ -8,11 +8,14 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
+
+//extern void id_to_string(Ident id, char **repr)
+extern void yyGetPos(long *n);
 
 /*----------------------------------------------------------------------------*/
 
-static printpos(pos) long pos;
-{
+static void printpos(long pos) {
   if (pos == 0)
     printf("at unknown position: ");
   else {
@@ -28,14 +31,11 @@ static printpos(pos) long pos;
 
 int Option_ALERT = 0;
 
-SetOption_ALERT() { Option_ALERT = 1; }
+void SetOption_ALERT() { Option_ALERT = 1; }
 
 /*----------------------------------------------------------------------------*/
 
-MESSAGE(msg, pos)
-char *msg;
-long pos;
-{
+void MESSAGE(char *msg, long pos) {
 
 #ifdef MAC
 
@@ -75,12 +75,7 @@ long pos;
 
 /*----------------------------------------------------------------------------*/
 
-MESSAGE1(msg1, id, msg2, pos)
-char *msg1;
-long id;
-char *msg2;
-long pos;
-{
+void MESSAGE1(char *msg1, long id, char *msg2, long pos) {
   char buf[200];
   char *str;
   id_to_string(id, &str);
@@ -90,14 +85,7 @@ long pos;
 
 /*----------------------------------------------------------------------------*/
 
-MESSAGE2(msg1, id1, msg2, id2, msg3, pos)
-char *msg1;
-long id1;
-char *msg2;
-long id2;
-char *msg3;
-long pos;
-{
+void MESSAGE2(char *msg1, long id1, char *msg2, long id2, char *msg3, long pos) {
   char buf[200];
   char *str1;
   char *str2;
@@ -109,8 +97,7 @@ long pos;
 
 /*----------------------------------------------------------------------------*/
 
-yyerror(msg) char *msg;
-{
+void yyerror(char *msg) {
   long pos;
   yyGetPos(&pos);
   MESSAGE(msg, pos);
@@ -118,13 +105,12 @@ yyerror(msg) char *msg;
 
 /*----------------------------------------------------------------------------*/
 
-yyerrorexit(rc) int rc;
+void yyerrorexit(int rc)
 { exit(1); }
 
 /*----------------------------------------------------------------------------*/
 
-ScanError(msg) char *msg;
-{
+void ScanError(char *msg) {
   long pos;
   yyGetPos(&pos);
   MESSAGE(msg, pos);
@@ -132,8 +118,7 @@ ScanError(msg) char *msg;
 
 /*----------------------------------------------------------------------------*/
 
-Fatal(msg) char *msg;
-{
+void Fatal(char *msg) {
   printf("Fatal Error: %s\n", msg);
   exit(1);
 }
