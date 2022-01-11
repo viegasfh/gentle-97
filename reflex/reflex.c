@@ -46,7 +46,7 @@ const char *illegal[] = {". { yysetpos(); yyerror(\"illegal token\"); }", ""};
 /* (14) LEXFUNC block */
 const char *lexfunc[] = {""};
 /* (15) YYWRAP block */
-const char *yywrap[] = {"#ifndef yywrap", "yywrap() { return 1; }", "#endif", ""};
+const char *yywrap[] = {"#ifndef yywrap", "int yywrap() { return 1; }", "#endif", ""};
 
 FILE *OUTFILE;
 
