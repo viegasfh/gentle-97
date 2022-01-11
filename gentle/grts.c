@@ -54,7 +54,7 @@ static yyt NEWBLOCK() {
   return p;
 }
 
-static FREEBLOCK(yyt p) {
+static void FREEBLOCK(yyt p) {
   *p = (long)FREELIST;
   FREELIST = p;
 }
@@ -135,7 +135,7 @@ void yyPrintOpaque(long i) {
   printf("<<%d>>", i);
 }
 
-yyPrintIndex(long i) {
+void yyPrintIndex(long i) {
   printf("#%d", i);
 }
 
@@ -191,7 +191,7 @@ void yyPrint_STRING(char *Str) {
 
 static long yyIndentation = 0;
 
-static yyIndent() {
+static void yyIndent() {
   int i;
 
   for (i = 1; i <= yyIndentation; i++) {
@@ -199,26 +199,26 @@ static yyIndent() {
   }
 }
 
-yyTerm(f) { printf("%s", f); }
+void yyTerm(f) { printf("%s", f); }
 
-yyFirstArg() {
+void yyFirstArg() {
   printf("(\n");
   yyIndentation++;
   yyIndent();
 }
 
-yyNextArg() {
+void yyNextArg() {
   printf(",\n");
   yyIndent();
 }
 
-yyEndArgs() {
+void yyEndArgs() {
   yyIndentation--;
   printf("\n");
   yyIndent();
   printf(")");
 }
 
-yyNoArgs() { ; }
+void yyNoArgs() { ; }
 
-yyEndPrint() { printf("\n"); }
+void yyEndPrint() { printf("\n"); }
