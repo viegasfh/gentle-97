@@ -13,11 +13,11 @@ static yy yynull;
 extern yy yyh;
 extern yy yyhx;
 static void yyErr(n, l) { yyAbort(n, "cyfront", l); }
-yyeq_IDENT(t1, t2) yy t1, t2;
+int yyeq_IDENT(t1, t2) yy t1, t2;
 { return t1 == t2; }
-yyPrint_IDENT(t) yy t;
-{ yyPrintOpaque(t); }
-yybroadcast_IDENT(t, In, Out, Handler) yy t, In, *Out;
+void yyPrint_IDENT(t) yy t;
+{ yyPrintOpaque(*t); }
+void yybroadcast_IDENT(t, In, Out, Handler) yy t, In, *Out;
 int (*Handler)();
 {
   yy A, B;
@@ -26,7 +26,7 @@ int (*Handler)();
     *Out = In;
   }
 }
-yyeq_UNIT(t1, t2) yy t1, t2;
+int yyeq_UNIT(t1, t2) yy t1, t2;
 {
   switch (t1[0]) {
   case 1:
@@ -35,7 +35,7 @@ yyeq_UNIT(t1, t2) yy t1, t2;
            yyeq_DECLARATIONLIST((yy)t1[3], (yy)t2[3]) && (t1[4] == t2[4]);
   }
 }
-yyPrint_UNIT(t) yy t;
+void yyPrint_UNIT(t) yy t;
 {
   switch (t[0]) {
   case 1:
@@ -1479,7 +1479,7 @@ int (*Handler)();
     }
   }
 }
-yyeq_REF_IDENTLIST(t1, t2) yy t1, t2;
+int yyeq_REF_IDENTLIST(t1, t2) yy t1, t2;
 { return t1 == t2; }
 yyPrint_REF_IDENTLIST(t) yy t;
 { yyPrintIndex(t); }
@@ -2032,7 +2032,7 @@ int (*Handler)();
     }
   }
 }
-yyeq_TokenIndex(t1, t2) yy t1, t2;
+int yyeq_TokenIndex(t1, t2) yy t1, t2;
 { return t1 == t2; }
 yyPrint_TokenIndex(t) yy t;
 { yyPrintIndex(t); }
@@ -2245,7 +2245,7 @@ int (*Handler)();
     }
   }
 }
-yyeq_RULE_ENTRY(t1, t2) yy t1, t2;
+int yyeq_RULE_ENTRY(t1, t2) yy t1, t2;
 { return t1 == t2; }
 yyPrint_RULE_ENTRY(t) yy t;
 { yyPrintIndex(t); }
@@ -2687,7 +2687,7 @@ int (*Handler)();
   }
 }
 int yyparse_rc = 0;
-ROOT() {
+void ROOT() {
   extern char *THIS_RUNTIME_SYSTEM;
   char *GENTLE = "Gentle 3.0 (C) 1992, 1997";
   if (strcmp(THIS_RUNTIME_SYSTEM, GENTLE)) {
@@ -2697,7 +2697,7 @@ ROOT() {
   yyExtend();
   yyparse_rc = yyparse();
 }
-PrepareImport(yyin_1) yy yyin_1;
+void PrepareImport(yyin_1) yy yyin_1;
 {
   {
     yy yyb;
@@ -2739,7 +2739,7 @@ PrepareImport(yyin_1) yy yyin_1;
   }
   yyErr(2, 1101);
 }
-New_REF_IDENTLIST(yyout_1) yy *yyout_1;
+void New_REF_IDENTLIST(yyout_1) yy *yyout_1;
 {
   {
     yy yyb;
@@ -2756,7 +2756,7 @@ New_REF_IDENTLIST(yyout_1) yy *yyout_1;
     return;
   }
 }
-EnterLiteral(yyin_1, yyin_2, yyout_1) yy yyin_1;
+void EnterLiteral(yyin_1, yyin_2, yyout_1) yy yyin_1;
 yy yyin_2;
 yy *yyout_1;
 {
@@ -7533,11 +7533,13 @@ yy yyin_2;
       yy_12_1_10_3 = yyb + 1;
       yy_12_1_10_3[0] = 2;
       TokenCode_DECLARATIONLIST(yy_12_1_10_1, yy_12_1_10_2, yy_12_1_10_3);
+      // This is where the yacc file is generated
       yy_12_1_11_1 = ((yy) "gen.y");
       TellFile(yy_12_1_11_1);
       yy_12_1_12_1 = ((yy) "%{");
       s(yy_12_1_12_1);
       nl();
+      // the prelude is called here
       Prelude();
       yy_12_1_15_1 = ((yy) "/* start */");
       s(yy_12_1_15_1);
@@ -8688,7 +8690,7 @@ Code_TableEQRoutines(yyin_1) yy yyin_1;
     yy yy_9_1;
     yy_0_1 = yyin_1;
     yyv_Id = yy_0_1;
-    yy_1_1 = ((yy) "yyeq_");
+    yy_1_1 = ((yy) "int yyeq_");
     s(yy_1_1);
     yy_2_1 = yyv_Id;
     id(yy_2_1);
@@ -8721,7 +8723,7 @@ Code_TablePrintRoutine(yyin_1) yy yyin_1;
     yy yy_9_1;
     yy_0_1 = yyin_1;
     yyv_Id = yy_0_1;
-    yy_1_1 = ((yy) "yyPrint_");
+    yy_1_1 = ((yy) "void yyPrint_");
     s(yy_1_1);
     yy_2_1 = yyv_Id;
     id(yy_2_1);
@@ -8772,7 +8774,7 @@ yy yyin_3;
     yyv_Id = yy_0_1;
     yyv_Kind = yy_0_2;
     yyv_SpecList = yy_0_3;
-    yy_1_1 = ((yy) "yyeq_");
+    yy_1_1 = ((yy) "int yyeq_");
     s(yy_1_1);
     yy_2_1 = yyv_Id;
     id(yy_2_1);
@@ -8858,7 +8860,7 @@ yy yyin_3;
     yyv_Id = yy_0_1;
     yyv_Kind = yy_0_2;
     yyv_SpecList = yy_0_3;
-    yy_1_1 = ((yy) "yyPrint_");
+    yy_1_1 = ((yy) "void yyPrint_");
     s(yy_1_1);
     yy_2_1 = yyv_Id;
     id(yy_2_1);
@@ -8888,7 +8890,7 @@ yy yyin_3;
       yysl_240_1_7_1_1:;
         yyb = yysb;
       }
-      yy_7_1_2_1 = ((yy) "yyPrintOpaque(t);");
+      yy_7_1_2_1 = ((yy) "yyPrintOpaque(*t);");
       s(yy_7_1_2_1);
       nl();
       goto yysl_240_1_7;
@@ -8951,7 +8953,7 @@ yy yyin_3;
     yyv_Id = yy_0_1;
     yyv_Kind = yy_0_2;
     yyv_SpecList = yy_0_3;
-    yy_1_1 = ((yy) "yybroadcast_");
+    yy_1_1 = ((yy) "void yybroadcast_");
     s(yy_1_1);
     yy_2_1 = yyv_Id;
     id(yy_2_1);
@@ -23032,6 +23034,46 @@ Prelude() {
     yy yy_17_1;
     yy yy_18_1;
     yy yy_20_1;
+    // Add the following to the prelude
+    yy yy_str;
+    yy_str = ((yy) "#include <stdio.h>");
+    s(yy_str);
+    nl();
+    yy_str = ((yy) "#include <string.h>");
+    s(yy_str);
+    nl();
+    yy_str = ((yy) "#include <stdlib.h>");
+    s(yy_str);
+    nl();
+    nl();
+    yy_str = ((yy) "extern void yyPrintOpaque(long i);");
+    s(yy_str);
+    nl();
+    yy_str = ((yy) "extern void yyAbort(int Code, char *FileName, int Line);");
+    s(yy_str);
+    nl();
+    yy_str = ((yy) "extern void yyerror(const char *err);");
+    s(yy_str);
+    nl();
+    yy_str = ((yy) "extern int yyparse();");
+    s(yy_str);
+    nl();
+    yy_str = ((yy) "extern int yylex();");
+    s(yy_str);
+    nl();
+    yy_str = ((yy) "extern void yyGetPos(long *n);");
+    s(yy_str);
+    nl();
+    yy_str = ((yy) "extern void yyExtend();");
+    s(yy_str);
+    nl();
+    //yy_str = ((yy) "extern void yyPosToNextLine();");
+    //s(yy_str);
+    //nl();
+    yy_str = ((yy) "extern void yyPrintIndex(long i);");
+    s(yy_str);
+    nl();
+    nl();
     yy_1_1 = ((yy) "typedef long * yy;");
     s(yy_1_1);
     nl();
@@ -23049,7 +23091,7 @@ Prelude() {
     nl();
     GetSourceName(&yy_11_1);
     yyv_F = yy_11_1;
-    yy_12_1 = ((yy) "static void yyErr(n,l)");
+    yy_12_1 = ((yy) "static void yyErr(int n,int l)");
     s(yy_12_1);
     nl();
     yy_14_1 = ((yy) "{");
