@@ -27,4 +27,4 @@ $CC -o polish \
    $LIB/main.o \
    $GRTS
 
-polish testfile
+./polish testfile

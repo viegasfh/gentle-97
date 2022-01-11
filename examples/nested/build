@@ -27,4 +27,4 @@ $CC -o nested \
    $LIB/idents.o $LIB/errmsg.o $LIB/main.o \
    $GRTS
 
-nested testfile
+./nested testfile

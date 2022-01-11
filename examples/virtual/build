@@ -27,4 +27,4 @@ $CC -o virtual \
    $LIB/idents.o $LIB/errmsg.o $LIB/output.o $LIB/main.o \
    $GRTS
 
-virtual testfile
+./virtual testfile
