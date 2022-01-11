@@ -6,3 +6,4 @@ examples/virtual/virtual
 examples/nested/nested
 gentle/gentle
 reflex/reflex
+examples/micro/out.s
