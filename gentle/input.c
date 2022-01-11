@@ -8,9 +8,9 @@
 */
 
 static long is_defined();
-static open_next_file();
-static next_file();
-static FillBuf();
+static void open_next_file();
+static void next_file();
+static void FillBuf();
 
 /*----------------------------------------------------------------------------*/
 /*  Input Files                                                               */
@@ -71,7 +71,7 @@ static FILE *open_file(unit) char *unit;
 
 /*----------------------------------------------------------------------------*/
 
-static open_next_file() {
+static void open_next_file() {
   long i;
   char *p;
 
@@ -151,18 +151,18 @@ static char *lastptr;
 static char *sentinelptr;
 static char *firstcolptr;
 static char buf[bufsize];
-static ResetBuffer();
+static void ResetBuffer();
 
 /*----------------------------------------------------------------------------*/
 
-static next_file() {
+static void next_file() {
   open_next_file();
   ResetBuffer();
 }
 
 /*----------------------------------------------------------------------------*/
 
-static ResetBuffer() {
+static void ResetBuffer() {
   lastptr = &buf[0];
   bufptr = &buf[0];
   sentinelptr = bufptr;
@@ -175,7 +175,7 @@ static ResetBuffer() {
 
 /*----------------------------------------------------------------------------*/
 
-static FillBuf() {
+static void FillBuf() {
   register char *i, *p;
   long n;
   long nbytes;
@@ -256,7 +256,7 @@ static FillBuf() {
 
 /*----------------------------------------------------------------------------*/
 
-yyGetPos(n) long *n;
+void yyGetPos(n) long *n;
 { *n = CurFile * MaxLines * MaxCols + CurLine * MaxCols + CurCol; }
 
 /*----------------------------------------------------------------------------*/
@@ -276,7 +276,7 @@ long GetLine(Pos) long Pos;
 
 /*----------------------------------------------------------------------------*/
 
-PosToLineNumber(Pos, N) long Pos;
+void PosToLineNumber(Pos, N) long Pos;
 long *N;
 { *N = GetLine(Pos); }
 
@@ -865,7 +865,7 @@ again:
 
 /*----------------------------------------------------------------------------*/
 
-init_scanner() {
+void init_scanner() {
   char ch;
   long i;
 
@@ -965,7 +965,7 @@ init_scanner() {
 char string_buffer[MAXSTRING];
 int string_buf_index = 0;
 
-app_to_string(ch) char ch;
+void app_to_string(ch) char ch;
 {
   if (string_buf_index >= MAXSTRING - 1) {
     ScanError("string too long");
@@ -977,7 +977,7 @@ app_to_string(ch) char ch;
 char *string_tab_ptr = (char *)222;
 char *string_tab_endptr = (char *)111; /* < 222 : triggers allocation */
 
-close_string(ref_str) char **ref_str;
+void close_string(ref_str) char **ref_str;
 {
   int i;
 
