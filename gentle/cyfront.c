@@ -9823,8 +9823,7 @@ yy yyin_4;
   }
   yyErr(2, 2143);
 }
-Code_DECLARATION(yyin_1) yy yyin_1;
-{
+void Code_DECLARATION(yy yyin_1) {
   {
     yy yyb;
     yy yy_0_1;
@@ -10387,6 +10386,9 @@ Code_DECLARATION(yyin_1) yy yyin_1;
     yy_3_1 = yyv_Class;
     ResultType(yy_3_1);
     yy_4_1 = yyv_Name;
+    // this is where the predicates
+    // are declared as c functions
+    s((yy) "void ");
     name(yy_4_1);
     yy_5_1 = ((yy) "(");
     s(yy_5_1);
@@ -18409,10 +18411,7 @@ yy *yyout_2;
     return;
   }
 }
-Code_LoopBody(yyin_1, yyin_2, yyin_3) yy yyin_1;
-yy yyin_2;
-yy yyin_3;
-{
+void Code_LoopBody(yy yyin_1, yy yyin_2, yy yyin_3) {
   {
     yy yyb;
     yy yyv_Members;
@@ -22729,7 +22728,7 @@ yy yyin_3;
     return;
   }
 }
-DefineLocalVar(yyin_1, yyin_2, yyin_3, yyin_4) yy yyin_1;
+void DefineLocalVar(yyin_1, yyin_2, yyin_3, yyin_4) yy yyin_1;
 yy yyin_2;
 yy yyin_3;
 yy yyin_4;
@@ -22818,7 +22817,7 @@ yy yyin_4;
   }
   yyErr(2, 4015);
 }
-ApplyLocalVar(yyin_1, yyin_2, yyin_3) yy yyin_1;
+void ApplyLocalVar(yyin_1, yyin_2, yyin_3) yy yyin_1;
 yy yyin_2;
 yy yyin_3;
 {
@@ -22885,7 +22884,7 @@ yy yyin_3;
   }
   yyErr(2, 4026);
 }
-CheckEqType(yyin_1, yyin_2, yyin_3, yyin_4) yy yyin_1;
+void CheckEqType(yyin_1, yyin_2, yyin_3, yyin_4) yy yyin_1;
 yy yyin_2;
 yy yyin_3;
 yy yyin_4;
@@ -22934,7 +22933,7 @@ yy yyin_4;
     return;
   }
 }
-CheckTypeOfLocalVar(yyin_1, yyin_2, yyin_3) yy yyin_1;
+void CheckTypeOfLocalVar(yyin_1, yyin_2, yyin_3) yy yyin_1;
 yy yyin_2;
 yy yyin_3;
 {
@@ -22983,7 +22982,7 @@ yy yyin_3;
     return;
   }
 }
-DefYYSTYPE() {
+void DefYYSTYPE() {
   {
     yy yyb;
     yy yyv_N;
@@ -23018,7 +23017,7 @@ DefYYSTYPE() {
     return;
   }
 }
-Prelude() {
+void Prelude() {
   {
     yy yyb;
     yy yy_1_1;
@@ -23067,9 +23066,6 @@ Prelude() {
     yy_str = ((yy) "extern void yyExtend();");
     s(yy_str);
     nl();
-    //yy_str = ((yy) "extern void yyPosToNextLine();");
-    //s(yy_str);
-    //nl();
     yy_str = ((yy) "extern void yyPrintIndex(long i);");
     s(yy_str);
     nl();

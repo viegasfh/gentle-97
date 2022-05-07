@@ -9,9 +9,7 @@
 
 static scanargs();
 
-main(argc, argv) int argc;
-char **argv;
-{
+void main(int argc, char **argv) {
 
   scanargs(argc, argv);
 

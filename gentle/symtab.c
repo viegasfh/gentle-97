@@ -64,11 +64,9 @@ static allocate_idtab() {
 
 /*----------------------------------------------------------------------------*/
 
-slice_to_id(idstart, idstop,
-            ref_id) char *idstart; /* position of first character */
-char *idstop;                      /* position  a f t e r  last character */
-Ident *ref_id;
-{
+// *idstart: the position of the first character
+// *idstop: the position after the last character
+void slice_to_id(char *idstart, char *idstop, Ident *ref_id) {
   long hash, length;
   Ident chain;
   Ident NewId;
@@ -148,9 +146,7 @@ Ident *ref_id;
 
 /*----------------------------------------------------------------------------*/
 
-string_to_id(idstart, ref_id) char *idstart;
-Ident *ref_id;
-{
+void string_to_id(char *idstart, Ident *ref_id) {
   char *idstop;
 
   idstop = idstart;
@@ -178,8 +174,7 @@ void init_idtab() {
 
 /*----------------------------------------------------------------------------*/
 
-init_id_attributes(new) Ident new;
-{
+void init_id_attributes(Ident new) {
 
   new->LocalMeaning = 0;
   new->GlobalMeaning = 0;
@@ -194,19 +189,16 @@ init_id_attributes(new) Ident new;
 
 /*----------------------------------------------------------------------------*/
 
-DefGlobalMeaning(id, m, f) Ident id;
-long m;
-long f;
-{
+void DefGlobalMeaning(Ident id, long m, long f) {
   id->GlobalMeaning = m;
   id->ExportFlag = f;
 }
 
 /*----------------------------------------------------------------------------*/
 
-DefFunctorMeaning(id, m) Ident id;
-long m;
-{ id->FunctorMeaning = m; }
+void DefFunctorMeaning(Ident id, long m) {
+  id->FunctorMeaning = m;
+}
 
 /*----------------------------------------------------------------------------*/
 
