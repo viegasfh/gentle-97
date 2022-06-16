@@ -8,7 +8,6 @@
 */
 
 #include "gen.h"
-
 typedef struct IdentRec *Ident;
 
 struct IdentRec {
@@ -41,6 +40,7 @@ Ident HashTab[HashTabSize];
 
 typedef struct IdentRec IDTAB[IDTABSIZE]; /* preliminary */
 
+void init_id_attributes(Ident new);
 /*----------------------------------------------------------------------------*/
 
 static allocate_idstringtab() {
