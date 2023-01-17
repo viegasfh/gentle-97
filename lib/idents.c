@@ -74,10 +74,10 @@ PRIVATE void InitIdents () {
 
 /*--------------------------------------------------------------------*/
 
-void slice_to_id (char *idstart, char *idstop, IDENT *ref_id)
 //   char *idstart; /* position of first character */
 //   char *idstop;  /* position  a f t e r  last character */
 //   IDENT *ref_id;
+void slice_to_id (char *idstart, char *idstop, IDENT *ref_id)
 
 {
    long  hash, length;
